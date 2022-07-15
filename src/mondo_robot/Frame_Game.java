@@ -18,8 +18,11 @@ class Frame_Game extends JFrame implements PropertyChangeListener{
 	private JLabel cont = new JLabel("0");
 	private JButton incr = new JButton("+");
 	private JButton decr = new JButton("-");
+	private boolean gameMode;
 
-	Frame_Game() {
+	Frame_Game(boolean b) {
+		this.gameMode = b;
+		
 		this.setTitle("Contatore");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(200, 250);

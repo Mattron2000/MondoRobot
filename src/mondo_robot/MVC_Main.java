@@ -1,26 +1,37 @@
 package mondo_robot;
 
 import java.io.File;
-import javax.swing.ImageIcon;
 
-/*
- * questo file é il main, da qui partirá il tutto...
+/**
+ * Questa classe e' il file di partenza del progetto
+ * 
  */
 public class MVC_Main {
 
-	/*
-	 * percorso alla directory "images"
+	/**
+	 * Questo e' il percorso alla cartella "images", dove contiene tutte le
+	 * immagini
+	 * 
 	 */
-	static final String PATH_IMAGES_DIRECTORY = System.getProperty("user.dir") + File.separator + "bin" + File.separator
-			+ "mondo_robot" + File.separator + "images" + File.separator;
+	private static final String PATH_IMAGES_DIRECTORY = "./src/mondo_robot/images/";
 
-	/*
-	 * percorso al favicon di "Mondo Robot"
+	/**
+	 * Questo e' il percorso al favicon di "Mondo Robot".
+	 * 
 	 */
-	static ImageIcon favicon = new ImageIcon(PATH_IMAGES_DIRECTORY + "favicon.png");
+	static final String FAVICON = PATH_IMAGES_DIRECTORY + "favicon.png";
 
+	/**
+	 * Questa funzione main esegue solo:
+	 * {@code new Controller_Menu(new Frame_Menu());}
+	 * 
+	 * @param args Argomento inutilizzato
+	 * @see Controller_Menu
+	 * @see Frame_Menu
+	 * 
+	 */
 	public static void main(String[] args) {
-		Frame_Menu v = new Frame_Menu();
-		new Controller_Menu(v);
+		// System.out.println(PATH_IMAGES_DIRECTORY);
+		new Controller_Menu(new Frame_Menu());
 	}
 }
