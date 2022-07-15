@@ -1,7 +1,5 @@
 package mondo_robot;
 
-import java.io.File;
-
 /**
  * Questa classe e' il file di partenza del progetto
  * 
