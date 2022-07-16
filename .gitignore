@@ -1,10 +1,13 @@
-/.vscode
-/README.md
-/*.html
-/*.zip
-/jquery
-/mondo_robot
-/resources
-/element-list
-/*.js
-/*.css
+# 	Faccio una blacklist completa di tutta la cartella del progetto
+*
+*/
+
+# 	Da qui parte la lista di tutti i file e cartelle che entreranno 
+#	nella whitelist, come eccezione alla regola di prima
+!.gitignore
+
+!src/mondo_robot/*.java
+!src/mondo_robot/images/*.png
+
+!/makeJavadoc.bat
+!/makeJavadoc.sh
