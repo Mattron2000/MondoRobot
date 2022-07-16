@@ -10,5 +10,4 @@
 !src/mondo_robot/*.java
 !src/mondo_robot/images/*.png
 
-!/makeJavadoc.bat
-!/makeJavadoc.sh
+!/makeJavadoc.*
