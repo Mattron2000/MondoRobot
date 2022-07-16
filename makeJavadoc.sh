@@ -1,2 +1,4 @@
 #!/bin/bash
-exec javadoc.exe -package ./src/mondo_robot/*.java
+
+# script shell di javadoc per i linuxiani
+exec javadoc -package ./src/mondo_robot/*.java

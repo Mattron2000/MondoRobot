@@ -4,6 +4,7 @@
 
 # 	Da qui parte la lista di tutti i file e cartelle che entreranno 
 #	nella whitelist, come eccezione alla regola di prima
+#	(cambia solo il punto esclamativo all'inizio di ogni riga)
 !.gitignore
 
 !src/mondo_robot/*.java
