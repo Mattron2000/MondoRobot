@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-class Frame_Game extends JFrame implements PropertyChangeListener{
+class Frame_Game extends JFrame implements PropertyChangeListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -18,12 +18,16 @@ class Frame_Game extends JFrame implements PropertyChangeListener{
 	private JLabel cont = new JLabel("0");
 	private JButton incr = new JButton("+");
 	private JButton decr = new JButton("-");
-	private boolean gameMode;
+	private boolean gamemode;
 
 	Frame_Game(boolean b) {
-		this.gameMode = b;
-		
-		this.setTitle("Contatore");
+		this.gamemode = b;
+
+		if (this.gamemode)
+			this.setTitle("Contatore - Developer");
+		else
+			this.setTitle("Contatore - Game");
+			
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(200, 250);
 
@@ -56,7 +60,7 @@ class Frame_Game extends JFrame implements PropertyChangeListener{
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		setCont((int) evt.getNewValue());		
+		setCont((int) evt.getNewValue());
 	}
 
 }
