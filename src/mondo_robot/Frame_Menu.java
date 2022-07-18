@@ -38,6 +38,12 @@ public class Frame_Menu extends JFrame {
 	private JRadioButton dev_mode;
 
 	/**
+	 * Bottone per iniziare una partita con mappa generata casualmente dal PC
+	 * 
+	 */
+	private JButton aiuto;;
+
+	/**
 	 * Questa e' la view del menu' principale di "Mondo Robot"
 	 * 
 	 */
@@ -50,7 +56,7 @@ public class Frame_Menu extends JFrame {
 																		// barra delle applicazioni
 		this.setTitle("Menú principale di Mondo Robot"); // il titolo della finestra
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // imposto il comportamento del tasto X in alto a destra
-		this.setLayout(new GridLayout(3, 1, 0, 20)); // schema di come sono organizzati i componenti
+		this.setLayout(new GridLayout(4, 1, 0, 20)); // schema di come sono organizzati i componenti
 		this.setResizable(false); // evito di ridimensionare la finestra tenendo premuto i bordi
 
 		/*
@@ -85,9 +91,20 @@ public class Frame_Menu extends JFrame {
 		dev_mode.setHorizontalAlignment(JRadioButton.CENTER);
 		dev_mode.setFont(new Font(null, Font.PLAIN, 20));
 
+		/*
+		 * imposto il bottone aiuto che crea un file txt che spiega il gioco
+		 * 
+		 */
+		aiuto = instanceButton("Aiuto");
+
+		/*
+		 * aggiungo gli elementi al frame
+		 * 
+		 */
 		this.add(title);
 		this.add(panel_btn);
 		this.add(dev_mode);
+		this.add(aiuto);
 
 		/*
 		 * ultimi ritocchi prima di rendere visibile
@@ -136,6 +153,7 @@ public class Frame_Menu extends JFrame {
 	void addListener(Controller_Menu controller_MondoRobot) {
 		nuovaPartita.addActionListener(controller_MondoRobot);
 		caricaPartita.addActionListener(controller_MondoRobot);
+		aiuto.addActionListener(controller_MondoRobot);
 	}
 
 	/**
