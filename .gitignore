@@ -1,4 +1,4 @@
-# 	Faccio una blacklist completa di tutta la cartella del progetto
+# 	Faccio una blacklist completa di tutta le cartelle del progetto
 *
 */
 
@@ -7,7 +7,9 @@
 #	(cambia solo il punto esclamativo all'inizio di ogni riga)
 !.gitignore
 
+!src
+!src/mondo_robot
 !src/mondo_robot/*.java
-!src/mondo_robot/images/*.png
+!src/mondo_robot/images/*.png'
 
 !/makeJavadoc.*
