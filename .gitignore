@@ -12,4 +12,6 @@
 !src/mondo_robot/*.java
 !src/mondo_robot/images/*.png'
 
-!/makeJavadoc.*
+!makeJavadoc.*
+
+!guida-MondoRobot.txt
