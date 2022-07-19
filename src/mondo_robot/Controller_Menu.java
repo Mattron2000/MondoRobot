@@ -2,13 +2,16 @@ package mondo_robot;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * Il controller che gestisce gli input utente del menu' principale di
@@ -41,12 +44,14 @@ class Controller_Menu implements ActionListener {
 	 * 
 	 */
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent ae) {
 
 		// controllino manualino per capire se arriva il bottone giusto
 		// System.out.println(((JButton) e.getSource()).getText());
 
-		switch (((JButton) e.getSource()).getText()) {
+		Model_Game model;
+
+		switch (((JButton) ae.getSource()).getText()) {
 			case "Nuova partita":
 				/*
 				 * creo un JDialog con JOptionPane, una finestra a comparsa in modo da chiedere
@@ -107,8 +112,13 @@ class Controller_Menu implements ActionListener {
 				 * generazione della mappa
 				 * 
 				 */
-				System.out.println("Input: " + optionPane.getInputValue().toString() + ", Mode:" + this.v.gameMode());
+				// System.out.println("Input: " + optionPane.getInputValue().toString() + ",
+				// Mode:" + this.v.gameMode());
 
+				if (optionPane.getValue() == null) {
+					System.out.println("Hai chiuso il JOptionPane!");
+					break;
+				}
 				/*
 				 * libero la finestra in esecuzione e ne creo un'altra (utile per passare al
 				 * gioco vero e proprio)
@@ -121,7 +131,7 @@ class Controller_Menu implements ActionListener {
 				 * vero e proprio)
 				 * 
 				 */
-				Model_Game model = new Model_Game(Integer.parseInt(optionPane.getInputValue().toString()));
+				model = new Model_Game(Integer.parseInt(optionPane.getInputValue().toString()));
 				new Controller_Game(new Frame_Game(false), model);
 
 				/*
@@ -134,7 +144,71 @@ class Controller_Menu implements ActionListener {
 
 				break;
 			case "Carica partita":
+				/*
+				 * questo oggetto permetterà di aprire una finestra capace di esplorare tra i
+				 * file del PC per fare scegliere all'utente il file
+				 * 
+				 */
+				JFileChooser filechooser = new JFileChooser();
 
+				/*
+				 * aggiungo un filtro al filechooser in modo che veda solo file con estensione
+				 * '.txt' e cartelle
+				 * 
+				 */
+				filechooser.setFileFilter(new FileNameExtensionFilter("text files", "txt"));
+				filechooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+
+				/*
+				 * memorizzo lo stato del filechooser che sa la risposta dell'utente
+				 * 
+				 */
+				int res = filechooser.showOpenDialog(null);
+
+				/*
+				 * se l'utente non ha scelto niente e ha premuto 'Annulla' oppure la 'X'
+				 * 
+				 */
+				if (res == JFileChooser.APPROVE_OPTION) {
+					File f = new File(filechooser.getSelectedFile().getAbsolutePath());
+
+					if (!f.getName().endsWith(".txt")) {
+						JOptionPane.showMessageDialog(null, "Si accettano soltanto file con estensione '.txt'",
+								"ERRORE: estensione del file errato", JOptionPane.ERROR_MESSAGE);
+						break;
+					}
+
+					/*
+					 * controllino manualino del percorso assoluto del file txt
+					 */
+					System.out.println(f);
+
+					/*
+					 * libero la finestra in esecuzione e ne creo un'altra (utile per passare al
+					 * gioco vero e proprio)
+					 * 
+					 */
+					this.v.dispose();
+
+					/*
+					 * appena liberata la finestra, ne creo un altra (utile per passare al gioco
+					 * vero e proprio)
+					 * 
+					 */
+					model = new Model_Game(f);
+					new Controller_Game(new Frame_Game(false), model);
+
+					/*
+					 * se l'utente ha impostato la modalità sviluppatore a ON, verrà creata una
+					 * seconda finestra con parametri da modalità sviluppatore
+					 * 
+					 */
+					if (this.v.gameMode())
+						new Controller_Game(new Frame_Game(true), model);
+				}
+
+				break;
+			case "Aiuto":
 		}
 	}
 }
