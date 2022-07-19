@@ -15,7 +15,8 @@ public class Model_Game {
 	}
 
 	public Model_Game(File f){
-		
+		this.cont = 0;
+		this.support = new PropertyChangeSupport(this);
 	}
 
 	public void setCont(int num) {
