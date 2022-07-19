@@ -3,6 +3,10 @@ package mondo_robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -206,9 +210,54 @@ class Controller_Menu implements ActionListener {
 					if (this.v.gameMode())
 						new Controller_Game(new Frame_Game(true), model);
 				}
-
 				break;
 			case "Aiuto":
+				/*
+				 * creo il file 'guida' o se esiste scelgo quello
+				 * 
+				 */
+				File f = new File("guida-MondoRobot.txt");
+
+				/*
+				 * se non esiste il file, ovviamnete lo creo
+				 * 
+				 */
+				if (!f.exists())
+					try {
+						f.createNewFile();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				
+				/*
+				 * in entrambi i casi, se esisteva il file o è stato appena creato, per sicurezza lo rendo scrivibile
+				 * 
+				 */
+				f.setWritable(true);
+
+				/*
+				 * qui inizierà lo scrivaggio selvaggio dell'intera guida, tipo man page di linux
+				 * 
+				 */
+				try {
+					PrintWriter writer = new PrintWriter(f);
+					writer.print("Scrivere la guida QUI");
+					writer.close();
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+				/*
+				 * finito tutto ciò, lo rendo read-only, perchè tanto è quello che basta, ovvero essere letto dall'utente
+				 * 
+				 */
+				f.setReadOnly();
+
+				/*
+				 * feedback all'utente che il file è finalmente creato
+				 * 
+				 */
+				JOptionPane.showMessageDialog(null, "Ho create il file 'guida-MondoRobot.txt', buona lettura",
+						"INFO: file creato", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 }
