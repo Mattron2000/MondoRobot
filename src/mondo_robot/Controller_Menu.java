@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -83,11 +82,11 @@ class Controller_Menu implements ActionListener {
 				 */
 				ChangeListener changeListener = new ChangeListener() {
 					public void stateChanged(ChangeEvent changeEvent) {
-						JSlider theSlider = (JSlider) changeEvent.getSource();
-						if (!theSlider.getValueIsAdjusting()) {
+						JSlider tmpSlider = (JSlider) changeEvent.getSource();
+						if (!tmpSlider.getValueIsAdjusting()) {
 							optionPane
-									.setMessage(new Object[] { "Valore selezionato: " + theSlider.getValue(), slider });
-							optionPane.setInputValue(theSlider.getValue());
+									.setMessage(new Object[] { "Valore selezionato: " + tmpSlider.getValue(), slider });
+							optionPane.setInputValue(tmpSlider.getValue());
 						}
 					}
 				};
@@ -112,6 +111,15 @@ class Controller_Menu implements ActionListener {
 				dialog.setVisible(true);
 
 				/*
+				 * Se chiudo il dialog con la X
+				 * 
+				 */
+				if (optionPane.getValue() == null) {
+					System.out.println("Hai chiuso il JOptionPane!");
+					break;
+				}
+
+				/*
 				 * controllatina manualina del valore Integer che sará poi utilizzata per la
 				 * generazione della mappa
 				 * 
@@ -119,10 +127,6 @@ class Controller_Menu implements ActionListener {
 				// System.out.println("Input: " + optionPane.getInputValue().toString() + ",
 				// Mode:" + this.v.gameMode());
 
-				if (optionPane.getValue() == null) {
-					System.out.println("Hai chiuso il JOptionPane!");
-					break;
-				}
 				/*
 				 * libero la finestra in esecuzione e ne creo un'altra (utile per passare al
 				 * gioco vero e proprio)
@@ -174,8 +178,16 @@ class Controller_Menu implements ActionListener {
 				 * 
 				 */
 				if (res == JFileChooser.APPROVE_OPTION) {
+					/*
+					 * prendo il file selzionato
+					 * 
+					 */
 					File f = new File(filechooser.getSelectedFile().getAbsolutePath());
 
+					/*
+					 * Se il file scelto non è dell'estensione corretta, faccio una finestra a comparsa che stampa un errore
+					 * 
+					 */
 					if (!f.getName().endsWith(".txt")) {
 						JOptionPane.showMessageDialog(null, "Si accettano soltanto file con estensione '.txt'",
 								"ERRORE: estensione del file errato", JOptionPane.ERROR_MESSAGE);
@@ -185,7 +197,7 @@ class Controller_Menu implements ActionListener {
 					/*
 					 * controllino manualino del percorso assoluto del file txt
 					 */
-					System.out.println(f);
+					// System.out.println(f);
 
 					/*
 					 * libero la finestra in esecuzione e ne creo un'altra (utile per passare al
@@ -195,8 +207,7 @@ class Controller_Menu implements ActionListener {
 					this.v.dispose();
 
 					/*
-					 * appena liberata la finestra, ne creo un altra (utile per passare al gioco
-					 * vero e proprio)
+					 * appena liberata la finestra, ne creo un altra 
 					 * 
 					 */
 					model = new Model_Game(f);
@@ -246,6 +257,7 @@ class Controller_Menu implements ActionListener {
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				}
+				
 				/*
 				 * finito tutto ciò, lo rendo read-only, perchè tanto è quello che basta, ovvero essere letto dall'utente
 				 * 
