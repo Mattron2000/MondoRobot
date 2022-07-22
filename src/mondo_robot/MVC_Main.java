@@ -1,6 +1,10 @@
 package mondo_robot;
 
+import mondo_robot.Controller.Controller_Menu;
+import mondo_robot.View.Frame_Menu;
+
 /**
+ * 
  * Questa classe e' il file di partenza del progetto
  * 
  */
@@ -17,7 +21,7 @@ public class MVC_Main {
 	 * Questo e' il percorso al favicon di "Mondo Robot".
 	 * 
 	 */
-	static final String FAVICON = PATH_IMAGES_DIRECTORY + "favicon.png";
+	public static final String FAVICON = PATH_IMAGES_DIRECTORY + "favicon.png";
 
 	/**
 	 * Questa funzione main esegue solo:

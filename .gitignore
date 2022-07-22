@@ -10,7 +10,12 @@
 !src
 !src/mondo_robot
 !src/mondo_robot/*.java
-!src/mondo_robot/images/*.png'
+
+!src/mondo_robot/Image/*.png
+
+!src/mondo_robot/Model/*.java
+!src/mondo_robot/View/*.java
+!src/mondo_robot/Controller/*.java
 
 !makeJavadoc.*
 
