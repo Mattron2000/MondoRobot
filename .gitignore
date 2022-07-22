@@ -6,6 +6,7 @@
 #	nella whitelist, come eccezione alla regola di prima
 #	(cambia solo il punto esclamativo all'inizio di ogni riga)
 !.gitignore
+!README.md
 
 !src
 !src/mondo_robot
