@@ -257,7 +257,120 @@ public class Controller_Menu implements ActionListener {
 				 */
 				try {
 					PrintWriter writer = new PrintWriter(f);
-					writer.print("Scrivere la guida QUI");
+					writer.print(
+						"Benvenuto nella guida per la creazione di mappe per il gioco MondoRobot.\n\n\n" +
+						
+						
+						"Il gioco consiste nel controllare un drone lavapavimenti e cercare di tenere pulita la casa, ovvero la mappa.\n\n\n" +
+						
+						
+						"La mappa consiste solo e solamente un quadrato composto da N per N caselle e sono rappresentate:\n" +
+								"\t\t- \"M\" sta per Muro.\n" +
+								"\t\t- \"P\" sta per Pavimento.\n" +
+								"\t\t- \"F\" sta per Fornello.\n" +
+								"\t\t- \"L\" sta per Lavatrice.\n" +
+								"\t\t- \"R\" sta per Rubinetto.\n" +
+								"\t\t- \"A\" sta per Animale domestico.\n" +
+								"\t\t- \"D\" sta per Drone che il giocatore ha il controllo.\n\n" +
+						
+						
+							"\tMuro\n" +
+						"Valicabilità: N\n" +
+						"Stato: null\n" +
+						"Attività:\n" +
+								"\t\t- produce un rumore \"Bump!\" se il drone si sbatte contro.\n\n" +
+						
+							"\tPavimento\n" +
+						"Valicabilità: Y\n" +
+						"Stato:\n" +
+								"\t\t- Asciutto:  la casella Pavimento è asciutta, niente di strano\n" +
+								"\t\t- Bagnato:  sulla casella Pavimento è presente una pozza d'acqua \n" +
+									"\t\t\tcausata dalla rottura della Lavatrice o Rubinetto [guarda Lavatrice/Rubinetto->Attività], \n" +
+									"\t\t\tè possibile asciugarla solamente dal passaggio di un Drone [guarda Drone->Attività].\n" +
+						"Attività: null\n\n" +
+						
+							"\tFornello\n" +
+						"Valicabilità: N\n" +
+						"Stato:\n" +
+								"\t\t- Spento/Off:  la casella Fornello non è acceso.\n" +
+								"\t\t- Acceso/On:  La casella Fornello ha acceso il fuoco.\n" +
+						"Attività:\n" +
+								"\t\t- ogni 15 azioni del Drone, il Fornello accende il fuoco impostando lo stato da Off a On, \n" +
+									"\t\t\tl'unico in grado di spegnerlo è il Drone [guarda Drone->Attività].\n\n" +
+							
+							"\tLavatrice\n" +
+						"Valicabilità: N\n" +
+						"Stato:\n" +
+								"\t\t- Spento/Off:  la casella Lavatrice non è acceso.\n" +
+								"\t\t- Acceso/On:  La casella Lavatrice si è rotto e perde acqua.\n" +
+						"Attività:\n" +
+								"\t\t- ogni 5 secondi la Lavatrice inizia a perdere acqua creando in una casella Pavimento adiacente \n" +
+									"\t\t\tuna pozza d'acqua e sempre ogni 5 secondi la pozza d'acqua si ingrandirà di una casella;\n" +
+									"\t\t\tquesta espansione non fermerà finchè il Drone, stando in una casella adiacente e davanti \n" +
+									"\t\t\talla Lavatrice, riparerà il danno.\n\n" +
+							
+							"\tRubinetto\n" +
+						"Valicabilità: N\n" +
+						"Stato:\n" +
+								"\t\t- Spento/Off:  la casella Rubinetto non è acceso.\n" +
+								"\t\t- Acceso/On:  La casella Rubinetto si è rotto e perde acqua.\n" +
+						"Attività: \n" +
+								"\t\t- ogni 10 secondi la Rubinetto inizia a perdere acqua creando in una casella Pavimento adiacente \n" +
+									"\t\t\tuna pozza d'acqua e sempre ogni 10 secondi la pozza d'acqua si ingrandirà di una casella;\n" +
+									"\t\t\tquesta espansione non fermerà finchè il Drone, stando in una casella adiacente e davanti \n" +
+									"\t\t\talla Rubinetto, riparerà il danno.\n\n" +
+						
+							"\tAnimale domestico\n" +
+						"Valicabilità: N\n" +
+						"Stato:\n" +
+								"\t\t- Nord:  l’Animale domestico è rivolto verso l'alto.\n" +
+								"\t\t- Est:  l’Animale domestico è rivolto verso destra.\n" +
+								"\t\t- Sud:  l’Animale domestico è rivolto verso il basso.\n" +
+								"\t\t- Ovest:  l’Animale domestico è rivolto verso sinistra.\n" +
+						"Attività:\n" +
+								"\t\t- produce un rumore \"Bump!\" se il drone si sbatte contro.\n" +
+								"\t\t- dopo ogni turno del robot, l’Animale domestico si può muovere casualmente in una casella \n" +
+									"\t\t\tPavimento adiacente o restare in quella corrente.\n\n" +
+						
+							"\tDrone\n" +
+						"Valicabilità: ?\n" +
+						"Stato:\n" +
+								"\t\t- Nord:  il Drone è rivolto verso l'alto.\n" +
+								"\t\t- Est:  il Drone è rivolto verso destra.\n" +
+								"\t\t- Sud:  il Drone è rivolto verso il basso.\n" +
+								"\t\t- Ovest:  il Drone è rivolto verso sinistra.\n" +
+						"Attività:\n" +
+								"\t\t- può ruotare su se stesso di 90° a destra o a sinistra, passando da uno stato all'altro \n" +
+									"\t\t\t(es. da Nord giro a Est oppure ad Ovest).\n" +
+								"\t\t- può avanzare sulla casella adiacente davanti a sè.\n" +
+								"\t\t- può riparare Fornelli, Lavatrici e Rubinetti presenti sulla casella adiacente davanti a sè.\n" +
+								"\t\t- automaticamente raccoglie informazioni dalle caselle adiacenti (tipo di casella e il loro stato).\n\n\n" +
+						
+						
+						"Il gioco all'avvio mostra varie scelte:\n" +
+								"\t\t- Nuova Partita:  il gioco creerà una mappa generata casualmente e le sue dimensioni sono a scelta dell'utente.\n" +
+								"\t\t- Carica Partita:  il gioco creerà una mappa scritta a mano dall'utente in un file '.txt' in chiaro.\n" +
+								"\t\t- Modalità Sviluppatore:  \n" +
+										"\t\t\t\t- Off:  il gioco si avvierà solo con la finestra di gioco.\n" +
+											"\t\t\t\t\tla mappa della finestra di gioco all'inizio è piena di nebbia, perchè il Drone non conosce la mappa, \n" +
+											"\t\t\t\t\tbasta esplorarla per diradare la nebbia [guarda Drone->Attività].\n" +
+										"\t\t\t\t- On:  il gioco si avvierà sia con la finestra di gioco, sia la finestra di controllo.\n" +
+											"\t\t\t\t\tla finestra di controllo si differisce da quella di gioco solamente dall'assenza di nebbia.	\n" +			
+										"\t\t\t\t- Aiuto:  quel bottone ha generato questa guida.\n\n\n" +
+						
+						
+						"Per creare una mappa a mano, basta creare un file di test con estensione \".txt\" (è l'unica estenzione che il gioco accetta) \n" +
+						"e scrivere al suo interno solamente la mappa utilizzando unicamente le lettere presenti a inizio guida separate tra loro con uno spazio.\n" +
+						"Per degli esempi, osservare i file \".txt\" presenti nella cartella \"Maps\" che hanno una chiara nomenclarura \"mappa_NxN.txt\".\n" +
+						"Che sia presente che esistono limiti nel numero di un tipo di caselle:\n" +
+								"\t\t- \"M\" (Muro):  dev'essere obbligatoriamente presente per tutto il contorno della mappa.\n" +
+								"\t\t- \"P\" (Pavimento):  ci dev'essere almeno uno.\n" +
+								"\t\t- \"F\" (Fornello):  ci dev'essere almeno uno.\n" +
+								"\t\t- \"L\" (Lavatrice):  ci dev'essere almeno uno.\n" +
+								"\t\t- \"R\" (Rubinetto):  ci dev'essere almeno uno.\n" +
+								"\t\t- \"A\" (Animale domestico):  ci dev'essere almeno uno.\n" +
+								"\t\t- \"D\" (Drone):  ci dev'essere solo e solamente uno per mappa (non puoi controllare due droni contemporaneamente...).\n"
+					);
 					writer.close();
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
