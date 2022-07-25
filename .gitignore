@@ -15,8 +15,8 @@
 !src/mondo_robot/Image
 !src/mondo_robot/Image/*.png
 
-!src/mondo_robot/Maps
-!src/mondo_robot/Maps/*.txt
+!Maps
+!Maps/*.txt
 
 !src/mondo_robot/Model
 !src/mondo_robot/Model/*.java
