@@ -12,8 +12,11 @@
 !src/mondo_robot
 !src/mondo_robot/*.java
 
-!src/mondo_robot/Image/*.png
 !src/mondo_robot/Image
+!src/mondo_robot/Image/*.png
+
+!src/mondo_robot/Maps
+!src/mondo_robot/Maps/*.txt
 
 !src/mondo_robot/Model
 !src/mondo_robot/Model/*.java
@@ -23,5 +26,3 @@
 !src/mondo_robot/Controller/*.java
 
 !makeJavadoc.*
-
-!guida-MondoRobot.txt
