@@ -11,7 +11,7 @@ import mondo_robot.View.Frame_Menu;
 public class MVC_Main {
 
 	/**
-	 * Questo e' il percorso alla cartella "images", dove contiene tutte le
+	 * Questo e' il percorso alla cartella "Image", dove contiene tutte le
 	 * immagini
 	 * 
 	 */
@@ -24,7 +24,7 @@ public class MVC_Main {
 	public static final String FAVICON = PATH_IMAGES_DIRECTORY + "favicon.png";
 
 	/**
-	 * Questa funzione main esegue solo:
+	 * Questa funzione main farà solamente avviare
 	 * {@code new Controller_Menu(new Frame_Menu());}
 	 * 
 	 * @param args Argomento inutilizzato
@@ -33,7 +33,6 @@ public class MVC_Main {
 	 * 
 	 */
 	public static void main(String[] args) {
-		// System.out.println(PATH_IMAGES_DIRECTORY);
 		new Controller_Menu(new Frame_Menu());
 	}
 }
