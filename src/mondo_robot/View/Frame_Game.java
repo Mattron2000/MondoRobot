@@ -11,6 +11,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+
 public class Frame_Game extends JFrame implements PropertyChangeListener {
 
 	private static final long serialVersionUID = 1L;
@@ -20,6 +24,10 @@ public class Frame_Game extends JFrame implements PropertyChangeListener {
 	private JButton incr = new JButton("+");
 	private JButton decr = new JButton("-");
 	private boolean gamemode;
+
+	private JMenuItem esciMenu;
+	private JMenuItem salvaMenu;
+	private JMenu guidaMenu;
 
 	public Frame_Game(boolean b) {
 		this.gamemode = b;
@@ -31,6 +39,22 @@ public class Frame_Game extends JFrame implements PropertyChangeListener {
 			
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(200, 250);
+
+		JMenuBar menuBar = new JMenuBar();
+
+		JMenu fileMenu = new JMenu("File");
+		guidaMenu = new JMenu("Comandi");
+
+		salvaMenu = new JMenuItem("Salva Partita");
+		esciMenu = new JMenuItem("Esci");
+
+		fileMenu.add(salvaMenu);
+		fileMenu.add(esciMenu);
+
+		menuBar.add(fileMenu);
+		menuBar.add(guidaMenu);
+
+		this.setJMenuBar(menuBar);
 
 		p = new JPanel();
 		this.add(p);
@@ -57,6 +81,9 @@ public class Frame_Game extends JFrame implements PropertyChangeListener {
 	public void addListener(ActionListener calcListener) {
 		this.incr.addActionListener(calcListener);
 		this.decr.addActionListener(calcListener);
+		this.salvaMenu.addActionListener(calcListener);
+		this.esciMenu.addActionListener(calcListener);
+		this.guidaMenu.addActionListener(calcListener);
 	}
 
 	@Override
