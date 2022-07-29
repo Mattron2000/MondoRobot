@@ -334,7 +334,7 @@ public class Controller_Menu implements ActionListener {
 
 				f.setReadOnly();
 
-				JOptionPane.showMessageDialog(null, "Ho create il file 'guida-MondoRobot.txt', buona lettura",
+				JOptionPane.showMessageDialog(null, "Ho create il file 'guida-MondoRobot.txt', buona lettura!",
 						"INFO: file-guida creato", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
