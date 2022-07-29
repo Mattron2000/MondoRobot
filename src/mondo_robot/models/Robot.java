@@ -148,7 +148,7 @@ public class Robot extends Personaggio{
         switch (this.facing) {
             case NORD:
                 if (this.c.getNeighbours()[0] != null) {
-                    if (this.c.getNeighbours()[0].getItem() == Items.STOVE) {
+                    if (this.c.getNeighbours()[0].getItem() == Items.FORNELLO) {
                         this.support.firePropertyChange("on", this.c, this.c.getNeighbours()[0]);
                     } else {
                         this.support.firePropertyChange("nothing", this.c, this.c.getNeighbours()[0]);
@@ -157,7 +157,7 @@ public class Robot extends Personaggio{
                 break;
             case EST:
                 if (this.c.getNeighbours()[1] != null) {
-                    if (this.c.getNeighbours()[1].getItem() == Items.STOVE) {
+                    if (this.c.getNeighbours()[1].getItem() == Items.FORNELLO) {
                         this.support.firePropertyChange("on", this.c, this.c.getNeighbours()[1]);
                     } else {
                         this.support.firePropertyChange("nothing", this.c, this.c.getNeighbours()[1]);
@@ -166,7 +166,7 @@ public class Robot extends Personaggio{
                 break;
             case SUD:
                 if (this.c.getNeighbours()[2] != null) {
-                    if (this.c.getNeighbours()[2].getItem() == Items.STOVE) {
+                    if (this.c.getNeighbours()[2].getItem() == Items.FORNELLO) {
                         this.support.firePropertyChange("on", this.c, this.c.getNeighbours()[2]);
                     } else {
                         this.support.firePropertyChange("nothing", this.c, this.c.getNeighbours()[2]);
@@ -175,7 +175,7 @@ public class Robot extends Personaggio{
                 break;
             case OVEST:
                 if (this.c.getNeighbours()[3] != null) {
-                    if (this.c.getNeighbours()[3].getItem() == Items.STOVE) {
+                    if (this.c.getNeighbours()[3].getItem() == Items.FORNELLO) {
                         this.support.firePropertyChange("on", this.c, this.c.getNeighbours()[3]);
                     } else {
                         this.support.firePropertyChange("nothing", this.c, this.c.getNeighbours()[3]);
@@ -191,7 +191,7 @@ public class Robot extends Personaggio{
         switch (this.facing) {
             case NORD:
                 if (this.c.getNeighbours()[0] != null) {
-                    if (this.c.getNeighbours()[0].getItem() == Items.SINK) {
+                    if (this.c.getNeighbours()[0].getItem() == Items.LAVANDINO) {
                         this.support.firePropertyChange("repair", this.c, this.c.getNeighbours()[0]);
                     } else {
                         this.support.firePropertyChange("nothing", this.c, this.c.getNeighbours()[0]);
@@ -200,7 +200,7 @@ public class Robot extends Personaggio{
                 break;
             case EST:
                 if (this.c.getNeighbours()[1] != null) {
-                    if (this.c.getNeighbours()[1].getItem() == Items.SINK) {
+                    if (this.c.getNeighbours()[1].getItem() == Items.LAVANDINO) {
                         this.support.firePropertyChange("repair", this.c, this.c.getNeighbours()[1]);
                     } else {
                         this.support.firePropertyChange("nothing", this.c, this.c.getNeighbours()[1]);
@@ -209,7 +209,7 @@ public class Robot extends Personaggio{
                 break;
             case SUD:
                 if (this.c.getNeighbours()[2] != null) {
-                    if (this.c.getNeighbours()[2].getItem() == Items.SINK) {
+                    if (this.c.getNeighbours()[2].getItem() == Items.LAVANDINO) {
                         this.support.firePropertyChange("repair", this.c, this.c.getNeighbours()[2]);
                     } else {
                         this.support.firePropertyChange("nothing", this.c, this.c.getNeighbours()[2]);
@@ -218,7 +218,7 @@ public class Robot extends Personaggio{
                 break;
             case OVEST:
                 if (this.c.getNeighbours()[3] != null) {
-                    if (this.c.getNeighbours()[3].getItem() == Items.SINK) {
+                    if (this.c.getNeighbours()[3].getItem() == Items.LAVANDINO) {
                         this.support.firePropertyChange("repair", this.c, this.c.getNeighbours()[3]);
                     } else {
                         this.support.firePropertyChange("nothing", this.c, this.c.getNeighbours()[3]);

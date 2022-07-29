@@ -11,18 +11,22 @@ public abstract class Personaggio {
     }
 
     public Cella getCell() {
+
         return this.c;
     }
 
     public void setCell(Cella cell) {
+
         this.c = cell;
     }
 
     public boolean isPlaying() {
+
         return this.isPlaying;
     }
 
     public void setPlaying(boolean playing) {
+
         this.isPlaying = playing;
     }
 
