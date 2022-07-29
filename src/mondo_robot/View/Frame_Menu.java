@@ -1,51 +1,60 @@
-package mondo_robot;
+package mondo_robot.View;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import mondo_robot.MVC_Main;
+import mondo_robot.Controller.Controller_Menu;
+
+/**
+ * Questa classe e' la view del menu' principale
+ * 
+ */
 public class Frame_Menu extends JFrame {
 
-	// una roba che serve per non far uscire il warning
 	private static final long serialVersionUID = 1L;
 
-	// i bottoni di questo frame/finestra del menú principale
 	private JButton caricaPartita;
 	private JButton nuovaPartita;
+	private JButton aiuto;
 	private JRadioButton dev_mode;
 
-	Frame_Menu() {
+	public Frame_Menu() {
 		/*
-		 * imposto la finestra del menú principale
+		 * impostazioni del frame del menu' principale
+		 * 
 		 */
-		this.setIconImage(MVC_Main.favicon.getImage()); // iconcina piccola in alto a sinistra e nella barra delle
-														// applicazioni
-		this.setTitle("Menú principale di Mondo Robot"); // il titolo della finestra
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // imposto il comportamento del tasto X in alto a destra
-		this.setLayout(new GridLayout(3, 1, 0, 20)); // schema di come sono rganizzati i componenti awt
-		this.setResizable(false); // evito di ridimensionare la finestra tenendo premuto i bordi
+		this.setIconImage(new ImageIcon(MVC_Main.FAVICON).getImage());
+		this.setTitle("Menú principale di Mondo Robot");
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLayout(new GridLayout(4, 1, 0, 20));
+		this.setResizable(false);
 
 		/*
-		 * creo il titolo
+		 * JLabel titolo del gioco
+		 * 
 		 */
 		JLabel title = new JLabel("Mondo Robot");
-		title.setHorizontalAlignment(JLabel.CENTER); // lo metto al centro della label
+		title.setHorizontalAlignment(JLabel.CENTER);
 		title.setVerticalAlignment(JLabel.CENTER);
-		title.setForeground(Color.DARK_GRAY); // imposto il colore dei caratteri... perché si
-		title.setFont(new Font(Font.MONOSPACED, Font.BOLD, 50)); // un fonto che si avvicina al concetto di robot o dei
-																	// terminali
+		title.setForeground(Color.DARK_GRAY);
+		title.setFont(new Font(Font.MONOSPACED, Font.BOLD, 50));
 
 		/*
-		 * imposto un pannello-contenitore di bottoni nuova e carica partita
+		 * creo il pannello-contenitore di bottoni nuova e carica partita
+		 * 
 		 */
 		JPanel panel_btn = new JPanel();
-		panel_btn.setLayout(new GridLayout(1, 2, 20, 20)); // schema di come sono organizzati i componenti awt
+		panel_btn.setLayout(new GridLayout(1, 2, 20, 20));
 
 		nuovaPartita = instanceButton("Nuova partita");
 		caricaPartita = instanceButton("Carica partita");
@@ -54,22 +63,24 @@ public class Frame_Menu extends JFrame {
 		panel_btn.add(caricaPartita);
 
 		/*
-		 * imposto un bottono on/off per la developer mode
+		 * creo il bottone on/off per la modalita' sviluppatore
+		 * 
 		 */
 		dev_mode = new JRadioButton("Modalitá sviluppatore");
 		dev_mode.setHorizontalAlignment(JRadioButton.CENTER);
 		dev_mode.setFont(new Font(null, Font.PLAIN, 20));
 
+		/*
+		 * bottone aiuto che crea un file-guida txt che spiega il gioco
+		 * 
+		 */
+		aiuto = instanceButton("Aiuto");
+
 		this.add(title);
 		this.add(panel_btn);
 		this.add(dev_mode);
+		this.add(aiuto);
 
-		/*
-		 * ultimi ritocchi prima di rendere visibile
-		 * 
-		 * aggiungo un bordo intorno alla finestra perché mi turba che i bordi dei
-		 * bottoni toccano i bordi della finestra
-		 */
 		getRootPane().setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 		this.pack(); // comprime le dimensioni della finestra nel modo migliore possibile
 		this.setLocationRelativeTo(null); // serve per far apparire la finestra al centro dello schermo
@@ -77,9 +88,13 @@ public class Frame_Menu extends JFrame {
 		this.setVisible(true);
 	}
 
-	/*
-	 * i due bottoni sono ugiali tra loro a parte il messaggio all'interno quindi
-	 * riuso il codice transformando in una funziona a parte
+	/**
+	 * Questa funzione crea bottoni con una determinata grafica e mette il parametro "title" come messaggio all'interno
+	 * 
+	 * @param title La stringa del bottone
+	 * @return Ritorna l'istanza {@link JButton} con tutte le caratteristiche visive
+	 *         scelte
+	 * 
 	 */
 	private JButton instanceButton(String title) {
 		JButton tmp = new JButton(title); // questo bottone crea una nuova partita creando una mappa generata dal PC
@@ -94,12 +109,25 @@ public class Frame_Menu extends JFrame {
 		return tmp;
 	}
 
-	void addListener(Controller_Menu controller_MondoRobot) {
+	/**
+	 * Aggiungo l'ActionListener ai bottoni per poter mandare eventi a
+	 * {@link Controller_Menu}
+	 * 
+	 * @param controller_MondoRobot è il {@link Controller_Menu} in modo che alla pressione dei bottoni, avviano {@link Controller_Menu#actionPerformed(java.awt.event.ActionEvent)}
+	 * 
+	 */
+	public void addListener(Controller_Menu controller_MondoRobot) {
 		nuovaPartita.addActionListener(controller_MondoRobot);
 		caricaPartita.addActionListener(controller_MondoRobot);
+		aiuto.addActionListener(controller_MondoRobot);
 	}
 
-	boolean gameMode() {
+	/**
+	 * Metodo per ottenere la modalita' desiderata dall'utente
+	 * @return ritorna lo stato del JRadioButton {@link Frame_Menu#dev_mode}
+	 * 
+	 */
+	public boolean gameMode() {
 		return dev_mode.isSelected();
 	}
 }

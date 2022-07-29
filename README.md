@@ -1,2 +1,2 @@
 # MondoRobot
-## Progetto d'esame di Java
+## Questa repo contiene il progetto per poter concludere l'esame di Paradigmi 

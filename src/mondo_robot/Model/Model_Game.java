@@ -1,7 +1,8 @@
-package mondo_robot;
+package mondo_robot.Model;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.File;
 
 public class Model_Game {
 	private PropertyChangeSupport support;
@@ -9,6 +10,11 @@ public class Model_Game {
 
 	public Model_Game(Integer n) {
 		System.out.println(n.toString());
+		this.cont = 0;
+		this.support = new PropertyChangeSupport(this);
+	}
+
+	public Model_Game(File f){
 		this.cont = 0;
 		this.support = new PropertyChangeSupport(this);
 	}
