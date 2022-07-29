@@ -1,20 +1,17 @@
-package mondo_robot.models;
+package mondo_robot.Model;
+
+import mondo_robot.Model.Personaggio;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class Lavatrice extends Personaggio{
+public class Lavandino extends Personaggio {
 
     private PropertyChangeSupport support;
 
-    public Lavatrice() {
+    public Lavandino() {
         super();
-    }
-
-    public void breakDown(){
-        for (Cella c: this.getCell().getNeighbours()) {
-            c.addFeels(Feels.BAGNATO);
-        }
+        this.support = new PropertyChangeSupport(this);
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

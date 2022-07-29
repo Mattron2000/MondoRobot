@@ -1,9 +1,14 @@
-package mondo_robot.models;
+package mondo_robot.Model;
+
+import mondo_robot.Model.Cella;
+import mondo_robot.Model.Direzioni;
+import mondo_robot.Model.Items;
+import mondo_robot.Model.Personaggio;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class Animale extends Personaggio{
+public class Animale extends Personaggio {
     private PropertyChangeSupport support;
 
     public Animale() {

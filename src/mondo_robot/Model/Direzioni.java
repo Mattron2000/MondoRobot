@@ -1,4 +1,4 @@
-package mondo_robot.models;
+package mondo_robot.Model;
 
 public enum Direzioni {
     MUOVIAVANTI,
@@ -12,3 +12,4 @@ public enum Direzioni {
     SUD,
     OVEST;
 }
+

@@ -1,15 +1,21 @@
-package mondo_robot.models;
+package mondo_robot.Model;
+
+import mondo_robot.Model.*;
+import mondo_robot.Model.Animale;
+import mondo_robot.Model.Cella;
+import mondo_robot.Model.Feels;
+import mondo_robot.Model.Fornello;
 
 import java.beans.PropertyChangeListener;
 import java.util.HashSet;
 import java.util.Random;
 
 public class House {
-    private Cella[][] mappa;
+    private mondo_robot.Model.Cella[][] mappa;
     private Robot robot;
     private Lavatrice[] lavatrici;
-    private Fornello[] fornelli;
-    private Animale[] animali;
+    private mondo_robot.Model.Fornello[] fornelli;
+    private mondo_robot.Model.Animale[] animali;
     private Lavandino[] lavandini;
     private int dimension;
     private HashSet<String> messages;
@@ -18,10 +24,10 @@ public class House {
 
     public House(int dim) {
         this.dimension = dim;
-        this.mappa = new Cella[this.dimension][this.dimension];
+        this.mappa = new mondo_robot.Model.Cella[this.dimension][this.dimension];
         this.robot = new Robot();
-        this.fornelli = new Fornello[Math.round(this.dimension / 2)];
-        this.animali = new Animale[Math.round(this.dimension / 2)];
+        this.fornelli = new mondo_robot.Model.Fornello[Math.round(this.dimension / 2)];
+        this.animali = new mondo_robot.Model.Animale[Math.round(this.dimension / 2)];
         this.lavatrici = new Lavatrice[Math.round(this.dimension / 2)];
         this.lavandini = new Lavandino[Math.round(this.dimension/2)];
         this.messages = new HashSet<>();
@@ -33,7 +39,7 @@ public class House {
     private void setupHouse() {
         for (int i = 0; i < this.dimension; i++) {
             for (int j = 0; j < this.dimension; j++) {
-                this.mappa[i][j] = new Cella(i, j);
+                this.mappa[i][j] = new mondo_robot.Model.Cella(i, j);
             }
         }
 
@@ -45,7 +51,7 @@ public class House {
         }
     }
 
-    public Cella[][] getMap() {
+    public mondo_robot.Model.Cella[][] getMap() {
         return this.mappa;
     }
 
@@ -98,7 +104,7 @@ public class House {
 
             this.animali[i].setCell(this.mappa[random[0]][random[1]]);
             this.animali[i].getCell().addItem(Items.ANIMALE);
-            this.addNeighbourFeels(this.animali[i].getCell(), Feels.ANIMALE);
+            this.addNeighbourFeels(this.animali[i].getCell(), mondo_robot.Model.Feels.ANIMALE);
             this.animali[i].setPlaying(true);
         }
     }
@@ -114,7 +120,7 @@ public class House {
 
             this.lavatrici[i].setCell(this.mappa[random[0]][random[1]]);
             this.lavatrici[i].getCell().addItem(Items.LAVATRICE);
-            this.addNeighbourFeels(this.lavatrici[i].getCell(), Feels.WASH);
+            this.addNeighbourFeels(this.lavatrici[i].getCell(), mondo_robot.Model.Feels.WASH);
             this.lavatrici[i].setPlaying(true);
         }
     }
@@ -130,7 +136,7 @@ public class House {
 
             this.fornelli[i].setCell(this.mappa[random[0]][random[1]]);
             this.fornelli[i].getCell().addItem(Items.FORNELLO);
-            this.addNeighbourFeels(this.fornelli[i].getCell(), Feels.CALDO);
+            this.addNeighbourFeels(this.fornelli[i].getCell(), mondo_robot.Model.Feels.CALDO);
             this.fornelli[i].setPlaying(true);
         }
     }
@@ -151,11 +157,11 @@ public class House {
 
     private void setNeighbours() {
         //north = 0, east = 1, south = 2, west = 3
-        Cella[] neighbours;
+        mondo_robot.Model.Cella[] neighbours;
 
-        for (Cella[] row : this.mappa) {
-            for (Cella cell : row) {
-                neighbours = new Cella[4];
+        for (mondo_robot.Model.Cella[] row : this.mappa) {
+            for (mondo_robot.Model.Cella cell : row) {
+                neighbours = new mondo_robot.Model.Cella[4];
                 if (cell.getY() - 1 >= 1) {
                     neighbours[0] = this.mappa[cell.getY() - 1][cell.getX()];    //north
                 } else {
@@ -195,8 +201,8 @@ public class House {
         return randomC;
     }
 
-    private boolean neighboursEmpty(Cella c) {
-        for (Cella r : c.getNeighbours()) {
+    private boolean neighboursEmpty(mondo_robot.Model.Cella c) {
+        for (mondo_robot.Model.Cella r : c.getNeighbours()) {
             if (r != null) {
                 if (!r.getItem().equals(Items.EMPTY)) {
                     return false;
@@ -206,15 +212,15 @@ public class House {
         return true;
     }
 
-    private void addNeighbourFeels(Cella c, Feels feel) {
-        for (Cella r : c.getNeighbours()) {
+    private void addNeighbourFeels(mondo_robot.Model.Cella c, mondo_robot.Model.Feels feel) {
+        for (mondo_robot.Model.Cella r : c.getNeighbours()) {
             if (r != null) {
                 r.addFeels(feel);
             }
         }
     }
 
-    private void removeNeighboursFeels(Cella c, Feels feel) {
+    private void removeNeighboursFeels(mondo_robot.Model.Cella c, Feels feel) {
         for (Cella r : c.getNeighbours()) {
             if (r != null) {
                 r.deleteFeels(feel);
@@ -229,3 +235,4 @@ public class House {
     public void resetGame() {
     }
 }
+

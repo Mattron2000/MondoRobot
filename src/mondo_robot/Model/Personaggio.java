@@ -1,8 +1,10 @@
-package mondo_robot.models;
+package mondo_robot.Model;
+
+import mondo_robot.Model.Cella;
 
 public abstract class Personaggio {
 
-    protected Cella c;
+    protected mondo_robot.Model.Cella c;
     protected boolean isPlaying;
 
     public Personaggio() {
@@ -10,7 +12,7 @@ public abstract class Personaggio {
         this.isPlaying = false;
     }
 
-    public Cella getCell() {
+    public mondo_robot.Model.Cella getCell() {
 
         return this.c;
     }

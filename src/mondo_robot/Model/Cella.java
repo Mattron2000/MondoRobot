@@ -1,4 +1,4 @@
-package mondo_robot.models;
+package mondo_robot.Model;
 
 import java.util.HashSet;
 
