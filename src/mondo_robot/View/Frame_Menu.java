@@ -26,24 +26,20 @@ public class Frame_Menu extends JFrame {
 	private JButton caricaPartita;
 	private JButton nuovaPartita;
 	private JButton aiuto;
-	private JRadioButton dev_mode;
+	private JRadioButton modalitaSviluppatore;
 
 	public Frame_Menu() {
 		/*
-		 * impostazioni del frame del menu' principale
+		 * impostazioni della finestra del menu' principale
 		 * 
 		 */
-		this.setIconImage(new ImageIcon(MVC_Main.FAVICON).getImage());
-		this.setTitle("Menú principale di Mondo Robot");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLayout(new GridLayout(4, 1, 0, 20));
-		this.setResizable(false);
+		this.setMenuWindow("Menú principale di Mondo Robot", new GridLayout(4, 1, 0, 20));
 
 		/*
-		 * JLabel titolo del gioco
+		 * Creo il titolo del gioco
 		 * 
 		 */
-		JLabel title = new JLabel("Mondo Robot");
+		JLabel title = new JLabel("Mondo Robot");				
 		title.setHorizontalAlignment(JLabel.CENTER);
 		title.setVerticalAlignment(JLabel.CENTER);
 		title.setForeground(Color.DARK_GRAY);
@@ -53,22 +49,22 @@ public class Frame_Menu extends JFrame {
 		 * creo il pannello-contenitore di bottoni nuova e carica partita
 		 * 
 		 */
-		JPanel panel_btn = new JPanel();
-		panel_btn.setLayout(new GridLayout(1, 2, 20, 20));
+		JPanel pannelloBottoniPartita = new JPanel();
+		pannelloBottoniPartita.setLayout(new GridLayout(1, 2, 20, 20));
 
 		nuovaPartita = instanceButton("Nuova partita");
 		caricaPartita = instanceButton("Carica partita");
 
-		panel_btn.add(nuovaPartita);
-		panel_btn.add(caricaPartita);
+		pannelloBottoniPartita.add(nuovaPartita);
+		pannelloBottoniPartita.add(caricaPartita);
 
 		/*
 		 * creo il bottone on/off per la modalita' sviluppatore
 		 * 
 		 */
-		dev_mode = new JRadioButton("Modalitá sviluppatore");
-		dev_mode.setHorizontalAlignment(JRadioButton.CENTER);
-		dev_mode.setFont(new Font(null, Font.PLAIN, 20));
+		modalitaSviluppatore = new JRadioButton("Modalitá sviluppatore");
+		modalitaSviluppatore.setHorizontalAlignment(JRadioButton.CENTER);
+		modalitaSviluppatore.setFont(new Font(null, Font.PLAIN, 20));
 
 		/*
 		 * bottone aiuto che crea un file-guida txt che spiega il gioco
@@ -77,8 +73,8 @@ public class Frame_Menu extends JFrame {
 		aiuto = instanceButton("Aiuto");
 
 		this.add(title);
-		this.add(panel_btn);
-		this.add(dev_mode);
+		this.add(pannelloBottoniPartita);
+		this.add(modalitaSviluppatore);
 		this.add(aiuto);
 
 		getRootPane().setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -89,7 +85,22 @@ public class Frame_Menu extends JFrame {
 	}
 
 	/**
-	 * Questa funzione crea bottoni con una determinata grafica e mette il parametro "title" come messaggio all'interno
+	 * Impostazioni generali della finestra
+	 * 
+	 * @param title Titolo della finestra
+	 * @param layout Layout di come verranno organizzati i JComponenti nella finestra
+	 */
+	private void setMenuWindow(String title, GridLayout layout) {
+		this.setIconImage(new ImageIcon(MVC_Main.FAVICON).getImage());
+		this.setTitle(title);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLayout(layout);
+		this.setResizable(false);
+	}
+
+	/**
+	 * Questa funzione crea bottoni con una determinata grafica e mette il parametro
+	 * "title" come messaggio all'interno
 	 * 
 	 * @param title La stringa del bottone
 	 * @return Ritorna l'istanza {@link JButton} con tutte le caratteristiche visive
@@ -113,7 +124,9 @@ public class Frame_Menu extends JFrame {
 	 * Aggiungo l'ActionListener ai bottoni per poter mandare eventi a
 	 * {@link Controller_Menu}
 	 * 
-	 * @param controller_MondoRobot è il {@link Controller_Menu} in modo che alla pressione dei bottoni, avviano {@link Controller_Menu#actionPerformed(java.awt.event.ActionEvent)}
+	 * @param controller_MondoRobot è il {@link Controller_Menu} in modo che alla
+	 *                              pressione dei bottoni, avviano
+	 *                              {@link Controller_Menu#actionPerformed(java.awt.event.ActionEvent)}
 	 * 
 	 */
 	public void addListener(Controller_Menu controller_MondoRobot) {
@@ -124,10 +137,11 @@ public class Frame_Menu extends JFrame {
 
 	/**
 	 * Metodo per ottenere la modalita' desiderata dall'utente
-	 * @return ritorna lo stato del JRadioButton {@link Frame_Menu#dev_mode}
+	 * 
+	 * @return ritorna lo stato del JRadioButton {@link Frame_Menu#modalitaSviluppatore}
 	 * 
 	 */
 	public boolean gameMode() {
-		return dev_mode.isSelected();
+		return modalitaSviluppatore.isSelected();
 	}
 }
