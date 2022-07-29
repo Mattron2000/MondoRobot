@@ -232,7 +232,18 @@ public class House {
 
     }
 
-    public void resetGame() {
+    public void resetGame(int dim) {
+        this.dimension = dim;
+        this.mappa = new mondo_robot.Model.Cella[this.dimension][this.dimension];
+        this.robot = new Robot();
+        this.fornelli = new mondo_robot.Model.Fornello[Math.round(this.dimension / 2)];
+        this.animali = new mondo_robot.Model.Animale[Math.round(this.dimension / 2)];
+        this.lavatrici = new Lavatrice[Math.round(this.dimension / 2)];
+        this.lavandini = new Lavandino[Math.round(this.dimension/2)];
+        this.messages = new HashSet<>();
+        this.gameOn = false;
+
+        this.setupHouse();
     }
 }
 
