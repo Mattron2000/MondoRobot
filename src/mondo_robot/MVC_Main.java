@@ -15,7 +15,7 @@ public class MVC_Main {
 	 * immagini
 	 * 
 	 */
-	private static final String PATH_IMAGES_DIRECTORY = "./src/mondo_robot/images/";
+	private static final String PATH_IMAGES_DIRECTORY = "./src/mondo_robot/Image/";
 
 	/**
 	 * Questo e' il percorso al favicon di "Mondo Robot".
