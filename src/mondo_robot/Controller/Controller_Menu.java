@@ -125,10 +125,8 @@ public class Controller_Menu implements ActionListener {
 				this.v.dispose();
 
 				model = new Model_Game(Integer.parseInt(optionPane.getInputValue().toString()));
-				new Controller_Game(new Frame_Game(false), model);
-
-				if (this.v.gameMode())
-					new Controller_Game(new Frame_Game(true), model);
+				
+				this.startGame(model);
 
 				break;
 			case "Carica partita":
@@ -162,10 +160,9 @@ public class Controller_Menu implements ActionListener {
 					this.v.dispose();
 
 					model = new Model_Game(f);
-					new Controller_Game(new Frame_Game(false), model);
 
-					if (this.v.gameMode())
-						new Controller_Game(new Frame_Game(true), model);
+					this.startGame(model);
+
 				}
 				break;
 			case "Aiuto":
@@ -337,5 +334,12 @@ public class Controller_Menu implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Ho create il file 'guida-MondoRobot.txt', buona lettura!",
 						"INFO: file-guida creato", JOptionPane.INFORMATION_MESSAGE);
 		}
+	}
+
+	private void startGame(Model_Game model) {
+		new Controller_Game(new Frame_Game(false, model.getDimension()), model);
+
+		if (this.v.gameMode())
+			new Controller_Game(new Frame_Game(true, model.getDimension()), model);
 	}
 }
