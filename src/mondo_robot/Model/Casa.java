@@ -4,7 +4,7 @@ import java.beans.PropertyChangeListener;
 import java.util.HashSet;
 import java.util.Random;
 
-public class House {
+public class Casa {
 	private mondo_robot.Model.Cella[][] mappa;
 	private Robot robot;
 	private Lavatrice[] lavatrici;
@@ -15,7 +15,7 @@ public class House {
 	private HashSet<String> messages;
 	private boolean gameOn;
 
-	public House(int dim) {
+	public Casa(int dim) {
 		this.dimension = dim;
 		this.mappa = new mondo_robot.Model.Cella[this.dimension][this.dimension];
 		this.robot = new Robot();
@@ -26,10 +26,10 @@ public class House {
 		this.messages = new HashSet<>();
 		this.gameOn = false;
 
-		this.setupHouse();
+		this.setupCasa();
 	}
 
-	private void setupHouse() {
+	private void setupCasa() {
 		for (int i = 0; i < this.dimension; i++) {
 			for (int j = 0; j < this.dimension; j++) {
 				this.mappa[i][j] = new mondo_robot.Model.Cella(i, j);
@@ -236,6 +236,6 @@ public class House {
 		this.messages = new HashSet<>();
 		this.gameOn = false;
 
-		this.setupHouse();
+		this.setupCasa();
 	}
 }
