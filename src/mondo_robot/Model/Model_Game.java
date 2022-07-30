@@ -14,20 +14,20 @@ public class Model_Game {
 		this.support = new PropertyChangeSupport(this);
 	}
 
-	public Model_Game(File f){
+	public Model_Game(File f) {
 		this.cont = 0;
 		this.support = new PropertyChangeSupport(this);
 	}
 
 	public void setCont(int num) {
 		this.cont += num;
-		this.support.firePropertyChange("cont", this.cont-num, this.cont);
+		this.support.firePropertyChange("cont", this.cont - num, this.cont);
 	}
 
 	public int getCont() {
 		return this.cont;
 	}
-	
+
 	public void addListener(PropertyChangeListener listener) {
 		this.support.addPropertyChangeListener(listener);
 	}

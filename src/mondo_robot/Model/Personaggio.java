@@ -1,35 +1,28 @@
 package mondo_robot.Model;
 
-import mondo_robot.Model.Cella;
-
 public abstract class Personaggio {
 
-    protected mondo_robot.Model.Cella c;
-    protected boolean isPlaying;
+	protected mondo_robot.Model.Cella c;
+	protected boolean isPlaying;
 
-    public Personaggio() {
-        this.c = null;
-        this.isPlaying = false;
-    }
+	public Personaggio() {
+		this.c = null;
+		this.isPlaying = false;
+	}
 
-    public mondo_robot.Model.Cella getCell() {
+	public mondo_robot.Model.Cella getCell() {
+		return this.c;
+	}
 
-        return this.c;
-    }
+	public void setCell(Cella cell) {
+		this.c = cell;
+	}
 
-    public void setCell(Cella cell) {
+	public boolean isPlaying() {
+		return this.isPlaying;
+	}
 
-        this.c = cell;
-    }
-
-    public boolean isPlaying() {
-
-        return this.isPlaying;
-    }
-
-    public void setPlaying(boolean playing) {
-
-        this.isPlaying = playing;
-    }
-
+	public void setPlaying(boolean playing) {
+		this.isPlaying = playing;
+	}
 }

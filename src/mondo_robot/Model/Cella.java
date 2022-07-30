@@ -4,72 +4,71 @@ import java.util.HashSet;
 
 public class Cella {
 
-    private final int x;
-    private final int y;
-    private Items item;
-    private Cella[] neighbours;
-    private HashSet<Feels> feels;
+	private final int x;
+	private final int y;
+	private Items item;
+	private Cella[] neighbours;
+	private HashSet<Feels> feels;
 
-    public Cella(int x, int y) {
-        this.x = x;
-        this.y = y;
-        this.feels = new HashSet<>();
+	public Cella(int x, int y) {
+		this.x = x;
+		this.y = y;
+		this.feels = new HashSet<>();
 
-    }
+	}
 
-    public int getX() {
+	public int getX() {
 
-        return this.x;
-    }
+		return this.x;
+	}
 
-    public int getY() {
+	public int getY() {
 
-        return this.y;
-    }
+		return this.y;
+	}
 
-    public Cella[] getNeighbours() {
+	public Cella[] getNeighbours() {
 
-        return this.neighbours;
-    }
+		return this.neighbours;
+	}
 
-    public void setNeighbours(Cella[] neighbours) {
+	public void setNeighbours(Cella[] neighbours) {
 
-        this.neighbours = neighbours;
-    }
+		this.neighbours = neighbours;
+	}
 
-    public Items getItem() {
+	public Items getItem() {
 
-        return this.item;
-    }
+		return this.item;
+	}
 
-    public void addItem(Items item){
+	public void addItem(Items item) {
 
-        this.item = item;
-    }
+		this.item = item;
+	}
 
-    public void addFeels(Feels feel) {
+	public void addFeels(Feels feel) {
 
-        this.feels.add(feel);
-    }
+		this.feels.add(feel);
+	}
 
-    public void deleteFeels(Feels feel) {
+	public void deleteFeels(Feels feel) {
 
-        this.feels.remove(feel);
-    }
+		this.feels.remove(feel);
+	}
 
-    public void resetCell(){
-        this.feels.clear();
-        this.item = Items.EMPTY;
-    }
+	public void resetCell() {
+		this.feels.clear();
+		this.item = Items.EMPTY;
+	}
 
-    public void deleteItem() {
+	public void deleteItem() {
 
-        this.item = Items.EMPTY;
-    }
+		this.item = Items.EMPTY;
+	}
 
-    public HashSet<Feels> getFeels() {
+	public HashSet<Feels> getFeels() {
 
-        return this.feels;
-    }
-
+		return this.feels;
+	}
 }
