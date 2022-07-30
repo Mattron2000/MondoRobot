@@ -1,3 +1,10 @@
+####################################################################################################
+#																								   #
+#			.gitignore della GitHub repository https://github.com/Mattron2000/MondoRobot		   #
+#																								   #
+####################################################################################################
+
+
 # 	Faccio una blacklist completa di tutta le cartelle del progetto
 *
 */
@@ -5,24 +12,43 @@
 # 	Da qui parte la lista di tutti i file e cartelle che entreranno 
 #	nella whitelist, come eccezione alla regola di prima
 #	(cambia solo il punto esclamativo all'inizio di ogni riga)
+
+#	gitignore stesso
 !.gitignore
+
+#	Documentazione della repo
 !README.md
 
+# 	Script automatici per creare il javadoc
+!makeJavadoc.sh
+!makeJavadoc.bat
+
+#	Cartella Maps dove contiene le mappe di esempio
+!Maps
+!Maps/mappa*.txt
+
+#	Cartelle di percorso dove risiede il codice sorgente
 !src
 !src/mondo_robot
-!src/mondo_robot/*.java
 
+#	Cartella dove contiene i controller
+!src/mondo_robot/Controller
+!src/mondo_robot/Controller/Controller_Game.java
+!src/mondo_robot/Controller/Controller_Menu.java
+
+#	Cartella dove contiene le immagini
 !src/mondo_robot/Image
 !src/mondo_robot/Image/*.png
 
-!Maps
-!Maps/*.txt
-
+#	Cartella dove contiene i model
 !src/mondo_robot/Model
 !src/mondo_robot/Model/*.java
-!src/mondo_robot/View
-!src/mondo_robot/View/*.java
-!src/mondo_robot/Controller
-!src/mondo_robot/Controller/*.java
 
-!makeJavadoc.*
+#	Cartella dove contiene le view
+!src/mondo_robot/View
+!src/mondo_robot/View/Frame_Game.java
+!src/mondo_robot/View/Frame_Menu.java
+
+#	File main dove avviare il gioco
+!src/mondo_robot/MVC_Main.java
+
