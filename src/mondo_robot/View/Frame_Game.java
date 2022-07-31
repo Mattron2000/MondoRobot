@@ -15,7 +15,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-public class Frame_Game extends JFrame implements PropertyChangeListener {
+public class Frame_Game extends MondoRobot_Frame implements PropertyChangeListener {
 
 	private static final long serialVersionUID = 1L;
 

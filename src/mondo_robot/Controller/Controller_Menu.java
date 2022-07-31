@@ -16,8 +16,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import mondo_robot.MVC_Main;
-import mondo_robot.Model.Casa;
 import mondo_robot.Model.Model_Game;
 import mondo_robot.View.Frame_Game;
 import mondo_robot.View.Frame_Menu;
@@ -126,7 +124,7 @@ public class Controller_Menu implements ActionListener {
 				this.v.dispose();
 
 				model = new Model_Game(Integer.parseInt(optionPane.getInputValue().toString()));
-				
+
 				this.startGame(model);
 
 				break;
@@ -168,7 +166,7 @@ public class Controller_Menu implements ActionListener {
 				break;
 			case "Aiuto":
 				/*
-				 * creo il file 'guida' o se esiste scelgo quello
+				 * creo il file 'guida-MondoRobot.txt' o se esiste scelgo quello
 				 * 
 				 */
 				File f = new File("guida-MondoRobot.txt");
@@ -338,9 +336,9 @@ public class Controller_Menu implements ActionListener {
 	}
 
 	private void startGame(Model_Game model) {
-		new Controller_Game(new Frame_Game(false, model.getDimensione()), model);
+		new Controller_Game(new Frame_Game(false), model);
 
-		if (this.v.gameMode())
-			new Controller_Game(new Frame_Game(true, model.getDimensione()), model);
+		if (this.v.gameModeSelected())
+			new Controller_Game(new Frame_Game(true), model);
 	}
 }
