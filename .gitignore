@@ -31,6 +31,10 @@
 !src
 !src/mondo_robot
 
+#	Cartella 'demo' delle funzioni utili per il PropertyChangeSupport
+!src/mondo_robot/demo
+!src/mondo_robot/demo/*.java
+
 #	Cartella dove contiene i controller
 !src/mondo_robot/Controller
 !src/mondo_robot/Controller/Controller_Game.java
