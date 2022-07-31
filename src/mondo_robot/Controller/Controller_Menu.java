@@ -18,6 +18,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import mondo_robot.MVC_Main;
 import mondo_robot.Model.Casa;
+import mondo_robot.Model.Model_Game;
 import mondo_robot.View.Frame_Game;
 import mondo_robot.View.Frame_Menu;
 
@@ -55,7 +56,7 @@ public class Controller_Menu implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 		// System.out.println(ae.getSource().toString());
 
-		Casa model;
+		Model_Game model;
 
 		switch (((JButton) ae.getSource()).getText()) {
 			case "Nuova partita":
@@ -124,7 +125,7 @@ public class Controller_Menu implements ActionListener {
 				 */
 				this.v.dispose();
 
-				model = new Casa(Integer.parseInt(optionPane.getInputValue().toString()));
+				model = new Model_Game(Integer.parseInt(optionPane.getInputValue().toString()));
 				
 				this.startGame(model);
 
@@ -159,7 +160,7 @@ public class Controller_Menu implements ActionListener {
 
 					this.v.dispose();
 
-					model = new Casa(f);
+					model = new Model_Game(f);
 
 					this.startGame(model);
 
@@ -184,7 +185,7 @@ public class Controller_Menu implements ActionListener {
 					}
 
 				/*
-				 * in entrambi i casi, se esisteva il file o è stato appena creato, per
+				 * in entrambi i casi, se esisteva il file o e' stato appena creato, per
 				 * sicurezza lo rendo scrivibile
 				 * 
 				 */
@@ -209,107 +210,107 @@ public class Controller_Menu implements ActionListener {
 									"\t\t- \"D\" sta per Drone che il giocatore ha il controllo.\n\n" +
 
 									"\tMuro\n" +
-									"Valicabilità: N\n" +
+									"Valicabilita': N\n" +
 									"Stato: null\n" +
-									"Attività:\n" +
+									"Attivita':\n" +
 									"\t\t- produce un rumore \"Bump!\" se il drone si sbatte contro.\n\n" +
 
 									"\tPavimento\n" +
-									"Valicabilità: Y\n" +
+									"Valicabilita': Y\n" +
 									"Stato:\n" +
-									"\t\t- Asciutto:  la casella Pavimento è asciutta, niente di strano\n" +
-									"\t\t- Bagnato:  sulla casella Pavimento è presente una pozza d'acqua \n" +
-									"\t\t\tcausata dalla rottura della Lavatrice o Rubinetto [guarda Lavatrice/Rubinetto->Attività], \n"
+									"\t\t- Asciutto:  la casella Pavimento e' asciutta, niente di strano\n" +
+									"\t\t- Bagnato:  sulla casella Pavimento e' presente una pozza d'acqua \n" +
+									"\t\t\tcausata dalla rottura della Lavatrice o Rubinetto [guarda Lavatrice/Rubinetto->Attivita'], \n"
 									+
-									"\t\t\tè possibile asciugarla solamente dal passaggio di un Drone [guarda Drone->Attività].\n"
+									"\t\t\te' possibile asciugarla solamente dal passaggio di un Drone [guarda Drone->Attivita'].\n"
 									+
-									"Attività: null\n\n" +
+									"Attivita': null\n\n" +
 
 									"\tFornello\n" +
-									"Valicabilità: N\n" +
+									"Valicabilita': N\n" +
 									"Stato:\n" +
-									"\t\t- Spento/Off:  la casella Fornello non è acceso.\n" +
+									"\t\t- Spento/Off:  la casella Fornello non e' acceso.\n" +
 									"\t\t- Acceso/On:  La casella Fornello ha acceso il fuoco.\n" +
-									"Attività:\n" +
+									"Attivita':\n" +
 									"\t\t- ogni 15 azioni del Drone, il Fornello accende il fuoco impostando lo stato da Off a On, \n"
 									+
-									"\t\t\tl'unico in grado di spegnerlo è il Drone [guarda Drone->Attività].\n\n" +
+									"\t\t\tl'unico in grado di spegnerlo e' il Drone [guarda Drone->Attivita'].\n\n" +
 
 									"\tLavatrice\n" +
-									"Valicabilità: N\n" +
+									"Valicabilita': N\n" +
 									"Stato:\n" +
-									"\t\t- Spento/Off:  la casella Lavatrice non è acceso.\n" +
-									"\t\t- Acceso/On:  La casella Lavatrice si è rotto e perde acqua.\n" +
-									"Attività:\n" +
+									"\t\t- Spento/Off:  la casella Lavatrice non e' acceso.\n" +
+									"\t\t- Acceso/On:  La casella Lavatrice si e' rotto e perde acqua.\n" +
+									"Attivita':\n" +
 									"\t\t- ogni 5 secondi la Lavatrice inizia a perdere acqua creando in una casella Pavimento adiacente \n"
 									+
-									"\t\t\tuna pozza d'acqua e sempre ogni 5 secondi la pozza d'acqua si ingrandirà di una casella;\n"
+									"\t\t\tuna pozza d'acqua e sempre ogni 5 secondi la pozza d'acqua si ingrandira' di una casella;\n"
 									+
-									"\t\t\tquesta espansione non fermerà finchè il Drone, stando in una casella adiacente e davanti \n"
+									"\t\t\tquesta espansione non fermera' finche' il Drone, stando in una casella adiacente e davanti \n"
 									+
-									"\t\t\talla Lavatrice, riparerà il danno.\n\n" +
+									"\t\t\talla Lavatrice, riparera' il danno.\n\n" +
 
 									"\tRubinetto\n" +
-									"Valicabilità: N\n" +
+									"Valicabilita': N\n" +
 									"Stato:\n" +
-									"\t\t- Spento/Off:  la casella Rubinetto non è acceso.\n" +
-									"\t\t- Acceso/On:  La casella Rubinetto si è rotto e perde acqua.\n" +
-									"Attività: \n" +
+									"\t\t- Spento/Off:  la casella Rubinetto non e' acceso.\n" +
+									"\t\t- Acceso/On:  La casella Rubinetto si e' rotto e perde acqua.\n" +
+									"Attivita': \n" +
 									"\t\t- ogni 10 secondi la Rubinetto inizia a perdere acqua creando in una casella Pavimento adiacente \n"
 									+
-									"\t\t\tuna pozza d'acqua e sempre ogni 10 secondi la pozza d'acqua si ingrandirà di una casella;\n"
+									"\t\t\tuna pozza d'acqua e sempre ogni 10 secondi la pozza d'acqua si ingrandira' di una casella;\n"
 									+
-									"\t\t\tquesta espansione non fermerà finchè il Drone, stando in una casella adiacente e davanti \n"
+									"\t\t\tquesta espansione non fermera' finche' il Drone, stando in una casella adiacente e davanti \n"
 									+
-									"\t\t\talla Rubinetto, riparerà il danno.\n\n" +
+									"\t\t\talla Rubinetto, riparera' il danno.\n\n" +
 
 									"\tAnimale domestico\n" +
-									"Valicabilità: N\n" +
+									"Valicabilita': N\n" +
 									"Stato:\n" +
-									"\t\t- Nord:  l’Animale domestico è rivolto verso l'alto.\n" +
-									"\t\t- Est:  l’Animale domestico è rivolto verso destra.\n" +
-									"\t\t- Sud:  l’Animale domestico è rivolto verso il basso.\n" +
-									"\t\t- Ovest:  l’Animale domestico è rivolto verso sinistra.\n" +
-									"Attività:\n" +
+									"\t\t- Nord:  l'Animale domestico e' rivolto verso l'alto.\n" +
+									"\t\t- Est:  l'Animale domestico e' rivolto verso destra.\n" +
+									"\t\t- Sud:  l'Animale domestico e' rivolto verso il basso.\n" +
+									"\t\t- Ovest:  l'Animale domestico e' rivolto verso sinistra.\n" +
+									"Attivita':\n" +
 									"\t\t- produce un rumore \"Bump!\" se il drone si sbatte contro.\n" +
-									"\t\t- dopo ogni turno del robot, l’Animale domestico si può muovere casualmente in una casella \n"
+									"\t\t- dopo ogni turno del robot, l'Animale domestico si puo' muovere casualmente in una casella \n"
 									+
 									"\t\t\tPavimento adiacente o restare in quella corrente.\n\n" +
 
 									"\tDrone\n" +
-									"Valicabilità: ?\n" +
+									"Valicabilita': ?\n" +
 									"Stato:\n" +
-									"\t\t- Nord:  il Drone è rivolto verso l'alto.\n" +
-									"\t\t- Est:  il Drone è rivolto verso destra.\n" +
-									"\t\t- Sud:  il Drone è rivolto verso il basso.\n" +
-									"\t\t- Ovest:  il Drone è rivolto verso sinistra.\n" +
-									"Attività:\n" +
-									"\t\t- può ruotare su se stesso di 90° a destra o a sinistra, passando da uno stato all'altro \n"
+									"\t\t- Nord:  il Drone e' rivolto verso l'alto.\n" +
+									"\t\t- Est:  il Drone e' rivolto verso destra.\n" +
+									"\t\t- Sud:  il Drone e' rivolto verso il basso.\n" +
+									"\t\t- Ovest:  il Drone e' rivolto verso sinistra.\n" +
+									"Attivita':\n" +
+									"\t\t- puo' ruotare su se stesso di 90 gradi a destra o a sinistra, passando da uno stato all'altro \n"
 									+
 									"\t\t\t(es. da Nord giro a Est oppure ad Ovest).\n" +
-									"\t\t- può avanzare sulla casella adiacente davanti a sè.\n" +
-									"\t\t- può riparare Fornelli, Lavatrici e Rubinetti presenti sulla casella adiacente davanti a sè.\n"
+									"\t\t- puo' avanzare sulla casella adiacente davanti a se'.\n" +
+									"\t\t- puo' riparare Fornelli, Lavatrici e Rubinetti presenti sulla casella adiacente davanti a se'.\n"
 									+
 									"\t\t- automaticamente raccoglie informazioni dalle caselle adiacenti (tipo di casella e il loro stato).\n\n\n"
 									+
 
 									"Il gioco all'avvio mostra varie scelte:\n" +
-									"\t\t- Nuova Partita:  il gioco creerà una mappa generata casualmente e le sue dimensioni sono a scelta dell'utente.\n"
+									"\t\t- Nuova Partita:  il gioco creera' una mappa generata casualmente e le sue dimensioni sono a scelta dell'utente.\n"
 									+
-									"\t\t- Carica Partita:  il gioco creerà una mappa scritta a mano dall'utente in un file '.txt' in chiaro.\n"
+									"\t\t- Carica Partita:  il gioco creera' una mappa scritta a mano dall'utente in un file '.txt' in chiaro.\n"
 									+
-									"\t\t- Modalità Sviluppatore:  \n" +
-									"\t\t\t\t- Off:  il gioco si avvierà solo con la finestra di gioco.\n" +
-									"\t\t\t\t\tla mappa della finestra di gioco all'inizio è piena di nebbia, perchè il Drone non conosce la mappa, \n"
+									"\t\t- Modalita' Sviluppatore:  \n" +
+									"\t\t\t\t- Off:  il gioco si avviera' solo con la finestra di gioco.\n" +
+									"\t\t\t\t\tla mappa della finestra di gioco all'inizio e' piena di nebbia, perche' il Drone non conosce la mappa, \n"
 									+
-									"\t\t\t\t\tbasta esplorarla per diradare la nebbia [guarda Drone->Attività].\n" +
-									"\t\t\t\t- On:  il gioco si avvierà sia con la finestra di gioco, sia la finestra di controllo.\n"
+									"\t\t\t\t\tbasta esplorarla per diradare la nebbia [guarda Drone->Attivita'].\n" +
+									"\t\t\t\t- On:  il gioco si avviera' sia con la finestra di gioco, sia la finestra di controllo.\n"
 									+
 									"\t\t\t\t\tla finestra di controllo si differisce da quella di gioco solamente dall'assenza di nebbia.	\n"
 									+
 									"\t\t\t\t- Aiuto:  quel bottone ha generato questa guida.\n\n\n" +
 
-									"Per creare una mappa a mano, basta creare un file di test con estensione \".txt\" (è l'unica estenzione che il gioco accetta) \n"
+									"Per creare una mappa a mano, basta creare un file di test con estensione \".txt\" (e' l'unica estenzione che il gioco accetta) \n"
 									+
 									"e scrivere al suo interno solamente la mappa utilizzando unicamente le lettere presenti a inizio guida separate tra loro con uno spazio.\n"
 									+
@@ -336,10 +337,10 @@ public class Controller_Menu implements ActionListener {
 		}
 	}
 
-	private void startGame(Casa model) {
-		new Controller_Game(new Frame_Game(false, model.getDimension()), model);
+	private void startGame(Model_Game model) {
+		new Controller_Game(new Frame_Game(false, model.getDimensione()), model);
 
 		if (this.v.gameMode())
-			new Controller_Game(new Frame_Game(true, model.getDimension()), model);
+			new Controller_Game(new Frame_Game(true, model.getDimensione()), model);
 	}
 }
