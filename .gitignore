@@ -50,8 +50,9 @@
 
 #	Cartella dove contiene le view
 !src/mondo_robot/View
-!src/mondo_robot/View/Frame_Game.java
+!src/mondo_robot/View/*.java
 !src/mondo_robot/View/Frame_Menu.java
+!src/mondo_robot/View/MondoRobot_Frame.java
 
 #	File main dove avviare il gioco
 !src/mondo_robot/MVC_Main.java
