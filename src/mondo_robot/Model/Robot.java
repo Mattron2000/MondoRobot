@@ -77,6 +77,8 @@ public class Robot extends Personaggio {
 						break;
 				}
 				break;
+			default:
+				break;
 		}
 
 		this.moves++;
