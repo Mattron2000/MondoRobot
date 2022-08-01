@@ -9,9 +9,11 @@
 *
 */
 
-# 	Da qui parte la lista di tutti i file e cartelle che entreranno 
-#	nella whitelist, come eccezione alla regola di prima
-#	(cambia solo il punto esclamativo all'inizio di ogni riga)
+
+###		Da qui parte la lista di tutti i file e cartelle che entreranno 
+###		nella whitelist, come eccezione alla regola di prima
+###		(cambia solo il punto esclamativo all'inizio di ogni riga)
+
 
 #	gitignore stesso
 !.gitignore
@@ -23,9 +25,9 @@
 !makeJavadoc.sh
 !makeJavadoc.bat
 
-#	Cartella Maps dove contiene le mappe di esempio
-!Maps
-!Maps/mappa*.txt
+#	Cartella Map dove contiene esempi di mappe
+!Map
+!Map/mappa*.txt
 
 #	Cartelle di percorso dove risiede il codice sorgente
 !src
@@ -37,8 +39,7 @@
 
 #	Cartella dove contiene i controller
 !src/mondo_robot/Controller
-!src/mondo_robot/Controller/Controller_Game.java
-!src/mondo_robot/Controller/Controller_Menu.java
+!src/mondo_robot/Controller/*.java
 
 #	Cartella dove contiene le immagini
 !src/mondo_robot/Image
@@ -51,9 +52,6 @@
 #	Cartella dove contiene le view
 !src/mondo_robot/View
 !src/mondo_robot/View/*.java
-!src/mondo_robot/View/Frame_Menu.java
-!src/mondo_robot/View/MondoRobot_Frame.java
 
 #	File main dove avviare il gioco
 !src/mondo_robot/MVC_Main.java
-

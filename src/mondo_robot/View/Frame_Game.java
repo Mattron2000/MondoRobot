@@ -36,7 +36,7 @@ public class Frame_Game extends MondoRobot_Frame implements PropertyChangeListen
 			this.setTitle("Contatore - Developer");
 		else
 			this.setTitle("Contatore - Game");
-			
+
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(200, 250);
 

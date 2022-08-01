@@ -29,7 +29,7 @@ class Controller_Game implements ActionListener {
 			case "class javax.swing.JMenuItem":
 				JSourceText = ((JMenuItem) e.getSource()).getText();
 		}
-		System.out.println(e.getSource().getClass().toString());
+		// System.out.println(e.getSource().getClass().toString());
 
 		switch (JSourceText) {
 			case "+":

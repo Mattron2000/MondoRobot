@@ -9,7 +9,7 @@ import mondo_robot.View.Frame_Menu;
  * 
  */
 public class MVC_Main {
-	
+
 	/**
 	 * Questa funzione main farà solamente avviare
 	 * {@code new Controller_Menu(new Frame_Menu());}

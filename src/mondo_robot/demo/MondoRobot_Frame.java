@@ -1,4 +1,4 @@
-package mondo_robot.View;
+package mondo_robot.demo;
 
 import java.awt.Color;
 import java.awt.Font;

@@ -35,7 +35,7 @@ public class Frame_Menu extends MondoRobot_Frame {
 		 * Creo il titolo del gioco
 		 * 
 		 */
-		JLabel title = new JLabel("Mondo Robot");				
+		JLabel title = new JLabel("Mondo Robot");
 		title.setHorizontalAlignment(JLabel.CENTER);
 		title.setVerticalAlignment(JLabel.CENTER);
 		title.setForeground(Color.DARK_GRAY);
