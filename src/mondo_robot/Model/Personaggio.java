@@ -1,10 +1,8 @@
 package mondo_robot.Model;
 
-import mondo_robot.Model.Cella;
-
 public abstract class Personaggio {
 
-    protected mondo_robot.Model.Cella c;
+    protected Cella c;
     protected boolean isPlaying;
 
     public Personaggio() {
@@ -12,24 +10,19 @@ public abstract class Personaggio {
         this.isPlaying = false;
     }
 
-    public mondo_robot.Model.Cella getCell() {
-
+    public Cella getCell() {
         return this.c;
     }
 
     public void setCell(Cella cell) {
-
         this.c = cell;
     }
 
     public boolean isPlaying() {
-
         return this.isPlaying;
     }
 
     public void setPlaying(boolean playing) {
-
         this.isPlaying = playing;
     }
-
 }

@@ -7,4 +7,3 @@ public enum Feels {
     MURO,       //Muro
     WASH;       //Lavatrice
 }
-

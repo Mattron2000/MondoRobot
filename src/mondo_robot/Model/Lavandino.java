@@ -1,7 +1,5 @@
 package mondo_robot.Model;
 
-import mondo_robot.Model.Personaggio;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 

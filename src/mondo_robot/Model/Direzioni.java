@@ -12,4 +12,3 @@ public enum Direzioni {
     SUD,
     OVEST;
 }
-
