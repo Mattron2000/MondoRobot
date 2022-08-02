@@ -1,6 +1,7 @@
 package mondo_robot.Model;
 
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.util.HashSet;
 import java.util.Random;
 
@@ -15,18 +16,24 @@ public class House {
 	private HashSet<String> messages;
 	private boolean gameOn;
 
+
 	public House(int dim) {
 		this.dimension = dim;
+		int tmp = (int)(Math.pow(this.dimension, 2) * 50)/100;
 		this.mappa = new Cella[this.dimension][this.dimension];
 		this.robot = new Robot();
-		this.fornelli = new Fornello[Math.round(this.dimension / 2)];
-		this.animali = new Animale[Math.round(this.dimension / 2)];
-		this.lavatrici = new Lavatrice[Math.round(this.dimension / 2)];
-		this.lavandini = new Lavandino[Math.round(this.dimension / 2)];
+		this.fornelli = new Fornello[Math.round(tmp / 4)];
+		this.animali = new Animale[Math.round(tmp / 4)];
+		this.lavatrici = new Lavatrice[Math.round(tmp / 4)];
+		this.lavandini = new Lavandino[Math.round(tmp / 4)];
 		this.messages = new HashSet<>();
 		this.gameOn = false;
 
 		this.setupHouse();
+	}
+
+	public House(File f){
+		
 	}
 
 	private void setupHouse() {

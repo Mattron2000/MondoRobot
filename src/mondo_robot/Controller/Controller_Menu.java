@@ -60,18 +60,19 @@ public class Controller_Menu implements ActionListener {
 			case "Nuova partita":
 				/*
 				 * creo un JDialog con JOptionPane, una finestra a comparsa in modo da chiedere
-				 * un valore intero positivo tramite JSlider con un intervallo tra 5 e
-				 * 20, di default la freccia va a 12, molto piú comodo e controllabile evitando
+				 * un valore intero positivo tramite JSlider con un intervallo tra 10 e
+				 * 20, di default la freccia va a 15, molto piú comodo e controllabile evitando
 				 * tutti i veri try-catch
 				 * 
 				 */
 				JOptionPane optionPane = new JOptionPane();
-				JSlider slider = new JSlider(5, 20);
+				JSlider slider = new JSlider(10, 20);
 
 				slider.setPaintTicks(true);
 				slider.setMajorTickSpacing(5);
 				slider.setMinorTickSpacing(1);
 				slider.setPaintLabels(true);
+				
 
 				/*
 				 * serve un listener capace di gestire lo scorrimento dello slider e
