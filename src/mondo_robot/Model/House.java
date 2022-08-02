@@ -33,7 +33,6 @@ public class House {
 	}
 
 	public House(File f){
-		
 	}
 
 	private void setupHouse() {
