@@ -3,7 +3,7 @@ package mondo_robot.Model;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class Animale extends Personaggio {
+public class Animale extends Element {
     private PropertyChangeSupport support;
 
     public Animale() {

@@ -3,7 +3,7 @@ package mondo_robot.Model;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class Robot extends Personaggio {
+public class Robot extends Element {
 	private static final Direzioni DEFAULTFACING = Direzioni.EST;
 	private Direzioni facing;
 	private int moves;

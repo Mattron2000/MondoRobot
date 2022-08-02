@@ -1,17 +1,18 @@
 package mondo_robot.Model;
 
-public abstract class Personaggio {
+public abstract class Element {
 
     protected Cella c;
     //protected boolean isPlaying;
 
-    public Personaggio() {
+    public Element() {
         this.c = null;
         //this.isPlaying = false;
     }
 
     public Cella getCell() {
         return this.c;
+
     }
 
     public void setCell(Cella cell) {
@@ -26,3 +27,5 @@ public abstract class Personaggio {
 //        this.isPlaying = playing;
 //    }
 }
+
+
