@@ -6,20 +6,21 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 
+import mondo_robot.Model.House;
 import mondo_robot.Model.Model_Game;
 import mondo_robot.View.Frame_Game;
 
 class Controller_Game implements ActionListener {
 
-	private Model_Game m;
+	private House m;
 	private Frame_Game v;
 
-	public Controller_Game(Frame_Game frame_Game, Model_Game model) {
+	public Controller_Game(Frame_Game frame_Game, House model) {
 		this.v = frame_Game;
 		this.m = model;
 
 		this.v.addListener(this);
-		this.m.addListener(v);
+		// this.m.addListener(v);
 	}
 
 	@Override
@@ -34,16 +35,16 @@ class Controller_Game implements ActionListener {
 		}
 		// System.out.println(e.getSource().getClass().toString());
 
-		switch (JSourceText) {
-			case "+":
-			case "Salva Partita":
-				m.setCont(1);
-				break;
-			case "-":
-			case "Esci":
-				m.setCont(-1);
-		}
+		// switch (JSourceText) {
+		// 	case "+":
+		// 	case "Salva Partita":
+		// 		m.setCont(1);
+		// 		break;
+		// 	case "-":
+		// 	case "Esci":
+		// 		m.setCont(-1);
+		// }
 
-		v.setCont(m.getCont());
+		// v.setCont(m.getCont());
 	}
 }
