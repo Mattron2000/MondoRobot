@@ -27,7 +27,7 @@
 
 #	Cartella Map dove contiene esempi di mappe
 !Map
-!Map/mappa*.txt
+!Map/*.txt
 
 #	Cartelle di percorso dove risiede il codice sorgente
 !src

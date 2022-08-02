@@ -12,17 +12,10 @@ import javax.swing.JFrame;
 abstract class MondoRobot_Frame extends JFrame {
 
 	/**
-	 * Questo e' il percorso alla cartella "Image", dove contiene tutte le
-	 * immagini
-	 * 
-	 */
-	private static final String PATH_IMAGES_DIRECTORY = "./src/mondo_robot/Image/";
-
-	/**
 	 * Questo e' il percorso al favicon di "Mondo Robot".
 	 * 
 	 */
-	private static final String FAVICON = PATH_IMAGES_DIRECTORY + "favicon.png";
+	private static final String FAVICON = "./src/mondo_robot/Image/favicon.png";
 
 	/**
 	 * Impostazioni generali della finestra
