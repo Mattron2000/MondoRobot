@@ -3,11 +3,11 @@ package mondo_robot.Model;
 public abstract class Personaggio {
 
     protected Cella c;
-    protected boolean isPlaying;
+    //protected boolean isPlaying;
 
     public Personaggio() {
         this.c = null;
-        this.isPlaying = false;
+        //this.isPlaying = false;
     }
 
     public Cella getCell() {
@@ -18,11 +18,11 @@ public abstract class Personaggio {
         this.c = cell;
     }
 
-    public boolean isPlaying() {
-        return this.isPlaying;
-    }
+//    public boolean isPlaying() {
+//        return this.isPlaying;
+//    }
 
-    public void setPlaying(boolean playing) {
-        this.isPlaying = playing;
-    }
+//    public void setPlaying(boolean playing) {
+//        this.isPlaying = playing;
+//    }
 }

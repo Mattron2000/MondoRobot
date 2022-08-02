@@ -22,10 +22,10 @@ public class House {
 		int tmp = (int)(Math.pow(this.dimension, 2) * 50)/100;
 		this.mappa = new Cella[this.dimension][this.dimension];
 		this.robot = new Robot();
-		this.fornelli = new Fornello[Math.round(tmp / 4)];
-		this.animali = new Animale[Math.round(tmp / 4)];
-		this.lavatrici = new Lavatrice[Math.round(tmp / 4)];
-		this.lavandini = new Lavandino[Math.round(tmp / 4)];
+		this.fornelli = new Fornello[(int)(Math.round(Math.random()*(tmp / 4)+1))];
+		this.animali = new Animale[(int)(Math.round(Math.random()*(tmp / 4)+1))];
+		this.lavatrici = new Lavatrice[(int)(Math.round(Math.random()*(tmp / 4)+1))];
+		this.lavandini = new Lavandino[(int)(Math.round(Math.random()*(tmp / 4)+1))];
 		this.messages = new HashSet<>();
 		this.gameOn = false;
 
@@ -40,11 +40,17 @@ public class House {
 			for (int j = 0; j < this.dimension; j++)
 				this.mappa[i][j] = new Cella(i, j);
 
-		for (int i = 0; i < this.animali.length; i++) {
+		for (int i = 0; i < this.lavatrici.length; i++) {
 			this.lavatrici[i] = new Lavatrice();
+		}
+		for (int i = 0; i < this.fornelli.length; i++) {
 			this.fornelli[i] = new Fornello();
-			this.animali[i] = new Animale();
+		}
+		for (int i = 0; i < this.lavandini.length; i++) {
 			this.lavandini[i] = new Lavandino();
+		}
+		for (int i = 0; i < this.animali.length; i++) {
+			this.animali[i] = new Animale();
 		}
 	}
 
@@ -97,7 +103,7 @@ public class House {
 			this.animali[i].setCell(this.mappa[random[0]][random[1]]);
 			this.animali[i].getCell().addItem(Items.ANIMALE);
 			this.addNeighbourFeels(this.animali[i].getCell(), Feels.ANIMALE);
-			this.animali[i].setPlaying(true);
+//			this.animali[i].setPlaying(true);
 		}
 	}
 
@@ -112,7 +118,7 @@ public class House {
 			this.lavatrici[i].setCell(this.mappa[random[0]][random[1]]);
 			this.lavatrici[i].getCell().addItem(Items.LAVATRICE);
 			this.addNeighbourFeels(this.lavatrici[i].getCell(), Feels.WASH);
-			this.lavatrici[i].setPlaying(true);
+//			this.lavatrici[i].setPlaying(true);
 		}
 	}
 
@@ -127,7 +133,7 @@ public class House {
 			this.fornelli[i].setCell(this.mappa[random[0]][random[1]]);
 			this.fornelli[i].getCell().addItem(Items.FORNELLO);
 			this.addNeighbourFeels(this.fornelli[i].getCell(), Feels.CALDO);
-			this.fornelli[i].setPlaying(true);
+//			this.fornelli[i].setPlaying(true);
 		}
 	}
 
@@ -140,7 +146,7 @@ public class House {
 		this.robot.setCell(this.mappa[random[0]][random[1]]);
 		this.robot.getCell().addItem(Items.ROBOT);
 		// this.addNeighbourFeels(this.robot.getCell(), Feels.ROBOT);
-		this.robot.setPlaying(true);
+//		this.robot.setPlaying(true);
 
 	}
 
