@@ -25,17 +25,13 @@
 !makeJavadoc.sh
 !makeJavadoc.bat
 
-#	Cartella Map dove contiene esempi di mappe
-!Map
-!Map/*.txt
-
 #	Cartelle di percorso dove risiede il codice sorgente
 !src
 !src/mondo_robot
 
 #	Cartella 'demo' delle funzioni utili per il PropertyChangeSupport
-!src/mondo_robot/demo
-!src/mondo_robot/demo/*.java
+# !src/mondo_robot/demo
+# !src/mondo_robot/demo/*.java
 
 #	Cartella dove contiene i controller
 !src/mondo_robot/Controller
@@ -44,6 +40,10 @@
 #	Cartella dove contiene le immagini
 !src/mondo_robot/Image
 !src/mondo_robot/Image/*.png
+
+#	Cartella Map dove contiene esempi di mappe
+!src/mondo_robot/Map
+!src/mondo_robot/Map/*.txt
 
 #	Cartella dove contiene i model
 !src/mondo_robot/Model
