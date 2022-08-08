@@ -1,14 +1,8 @@
 package mondo_robot.Model;
 
-public enum Direzioni {
-    MUOVIAVANTI,
-    MUOVIDESTRA,
-    MUOVIINDIETRO,
-    MUOVISINISTRA,
-    GIRADESTRA,
-    GIRASINISTRA,
+enum Direzioni {
     NORD,
     EST,
     SUD,
-    OVEST;
+    OVEST
 }

@@ -1,14 +1,10 @@
 package mondo_robot.Model;
 
-import java.beans.PropertyChangeListener;
+class Fornello extends CasellaStato {
+	static final String FORNELLO_BROKEN = IMAGE_FOLDER + "stove-broken.png";
+	static final String FORNELLO_IDLE = IMAGE_FOLDER + "stove-idle.png";
 
-public class Fornello extends Element {
-    private boolean on;
-
-    public Fornello() {
-        super();
-    }
-
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-    }
+	protected Fornello(Integer x, Integer y) {
+		super(x, y, TipoCasella.FORNELLO);
+	}
 }

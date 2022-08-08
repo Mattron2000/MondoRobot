@@ -1,22 +1,10 @@
 package mondo_robot.Model;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
+class Lavatrice extends CasellaStato{
+	static final String LAVATRICE_BROKEN = IMAGE_FOLDER + "washer-broken.png";
+	static final String LAVATRICE_IDLE =  IMAGE_FOLDER + "washer-idle.png";
 
-public class Lavatrice extends Element {
-
-    private PropertyChangeSupport support;
-
-    public Lavatrice() {
-        super();
-    }
-
-    public void breakDown(){
-        for (Cella c: this.getCell().getNeighbours())
-            c.addFeels(Feels.BAGNATO);
-    }
-
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        this.support.addPropertyChangeListener(listener);
-    }
+	protected Lavatrice(Integer x, Integer y) {
+		super(x, y, TipoCasella.LAVATRICE);
+	}
 }

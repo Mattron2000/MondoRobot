@@ -1,208 +1,24 @@
 package mondo_robot.Model;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
+class Robot extends CasellaMobile {
+	static final String ROBOT_EST = IMAGE_FOLDER + "robot-east.png";
+	static final String ROBOT_NORD = IMAGE_FOLDER + "robot-north.png";
+	static final String ROBOT_OVEST = IMAGE_FOLDER + "robot-west.png";
+	static final String ROBOT_SUD = IMAGE_FOLDER + "robot-south.png";
 
-public class Robot extends Element {
-	private static final Direzioni DEFAULTFACING = Direzioni.EST;
-	private Direzioni facing;
-	private int moves;
-	private PropertyChangeSupport support;
+	private Direzione direzione;
 
-	public Robot() {
-		super();
-		this.facing = DEFAULTFACING;
-		this.moves = 0;
-		this.support = new PropertyChangeSupport(this);
+	protected Robot(Integer x, Integer y) {
+		super(x, y, TipoCasella.ROBOT);
+
+		this.direzione = Direzione.NORD;
 	}
 
-	public Direzioni getFacing() {
-		return this.facing;
+	Direzione getDirezione() {
+		return direzione;
 	}
 
-	public void resetFacing() {
-		this.facing = DEFAULTFACING;
-	}
-
-	public int getMoves() {
-		return this.moves;
-	}
-
-	public void resetMoves() {
-		this.moves = 0;
-	}
-
-	public void addPropertyChangeListener(PropertyChangeListener playerListener) {
-		this.support.addPropertyChangeListener(playerListener);
-	}
-
-	public void turn(Direzioni direction) {
-		Direzioni oldDirection;
-		oldDirection = this.facing;
-
-		switch (direction) {
-			case GIRASINISTRA:
-				switch (this.facing) {
-					case NORD:
-						this.facing = Direzioni.OVEST;
-						break;
-					case SUD:
-						this.facing = Direzioni.EST;
-						break;
-					case OVEST:
-						this.facing = Direzioni.SUD;
-						break;
-					case EST:
-						this.facing = Direzioni.NORD;
-						break;
-					default:
-						break;
-				}
-				break;
-			case GIRADESTRA:
-				switch (this.facing) {
-					case NORD:
-						this.facing = Direzioni.OVEST;
-						break;
-					case SUD:
-						this.facing = Direzioni.EST;
-						break;
-					case OVEST:
-						this.facing = Direzioni.SUD;
-						break;
-					case EST:
-						this.facing = Direzioni.NORD;
-						break;
-					default:
-						break;
-				}
-				break;
-			default:
-				break;
-		}
-
-		this.moves++;
-		this.support.firePropertyChange("turn", oldDirection, this.facing);
-	}
-
-	public void move() {
-		Cella oldCell = this.c;
-
-		switch (this.facing) {
-			case NORD:
-				if (this.c.getNeighbours()[0] != null)
-					if (this.c.getNeighbours()[0].getItem() != Items.EMPTY) {
-						this.changeRobotCell(this.c.getNeighbours()[0]);
-						this.moves++;
-						this.support.firePropertyChange("move", oldCell, this.c);
-					} else
-						this.support.firePropertyChange("bump", 0, 0);
-				break;
-			case EST:
-				if (this.c.getNeighbours()[1] != null)
-					if (this.c.getNeighbours()[1].getItem() != Items.EMPTY) {
-						this.changeRobotCell(this.c.getNeighbours()[1]);
-						this.moves++;
-						this.support.firePropertyChange("move", oldCell, this.c);
-					} else
-						this.support.firePropertyChange("bump", 0, 0);
-				break;
-			case SUD:
-				if (this.c.getNeighbours()[2] != null)
-					if (this.c.getNeighbours()[2].getItem() != Items.EMPTY) {
-						this.changeRobotCell(this.c.getNeighbours()[2]);
-						this.moves++;
-						this.support.firePropertyChange("move", oldCell, this.c);
-					} else
-						this.support.firePropertyChange("bump", 0, 0);
-				break;
-			case OVEST:
-				if (this.c.getNeighbours()[3] != null)
-					if (this.c.getNeighbours()[3].getItem() != Items.EMPTY) {
-						this.changeRobotCell(this.c.getNeighbours()[3]);
-						this.moves++;
-						this.support.firePropertyChange("move", oldCell, this.c);
-					} else
-						this.support.firePropertyChange("bump", 0, 0);
-				break;
-			default:
-				break;
-		}
-	}
-
-	private void changeRobotCell(Cella neighbour) {
-		this.c.deleteItem();
-		this.c = neighbour;
-		this.c.addItem(Items.ROBOT);
-	}
-
-	public void turOn() {
-		switch (this.facing) {
-			case NORD:
-				if (this.c.getNeighbours()[0] != null)
-					if (this.c.getNeighbours()[0].getItem() == Items.FORNELLO)
-						this.support.firePropertyChange("on", this.c, this.c.getNeighbours()[0]);
-					else
-						this.support.firePropertyChange("nothing", this.c, this.c.getNeighbours()[0]);
-				break;
-			case EST:
-				if (this.c.getNeighbours()[1] != null)
-					if (this.c.getNeighbours()[1].getItem() == Items.FORNELLO)
-						this.support.firePropertyChange("on", this.c, this.c.getNeighbours()[1]);
-					else
-						this.support.firePropertyChange("nothing", this.c, this.c.getNeighbours()[1]);
-				break;
-			case SUD:
-				if (this.c.getNeighbours()[2] != null)
-					if (this.c.getNeighbours()[2].getItem() == Items.FORNELLO)
-						this.support.firePropertyChange("on", this.c, this.c.getNeighbours()[2]);
-					else
-						this.support.firePropertyChange("nothing", this.c, this.c.getNeighbours()[2]);
-				break;
-			case OVEST:
-				if (this.c.getNeighbours()[3] != null)
-					if (this.c.getNeighbours()[3].getItem() == Items.FORNELLO)
-						this.support.firePropertyChange("on", this.c, this.c.getNeighbours()[3]);
-					else
-						this.support.firePropertyChange("nothing", this.c, this.c.getNeighbours()[3]);
-				break;
-			default:
-				break;
-		}
-	}
-
-	public void repair() {
-		switch (this.facing) {
-			case NORD:
-				if (this.c.getNeighbours()[0] != null) 
-					if (this.c.getNeighbours()[0].getItem() == Items.LAVANDINO) 
-						this.support.firePropertyChange("repair", this.c, this.c.getNeighbours()[0]);
-					else
-						this.support.firePropertyChange("nothing", this.c, this.c.getNeighbours()[0]);
-				break;
-			case EST:
-				if (this.c.getNeighbours()[1] != null) 
-					if (this.c.getNeighbours()[1].getItem() == Items.LAVANDINO) 
-						this.support.firePropertyChange("repair", this.c, this.c.getNeighbours()[1]);
-					else
-						this.support.firePropertyChange("nothing", this.c, this.c.getNeighbours()[1]);
-				break;
-			case SUD:
-				if (this.c.getNeighbours()[2] != null) 
-					if (this.c.getNeighbours()[2].getItem() == Items.LAVANDINO)
-						this.support.firePropertyChange("repair", this.c, this.c.getNeighbours()[2]);
-					else
-						this.support.firePropertyChange("nothing", this.c, this.c.getNeighbours()[2]);
-				break;
-			case OVEST:
-				if (this.c.getNeighbours()[3] != null) 
-					if (this.c.getNeighbours()[3].getItem() == Items.LAVANDINO) 
-						this.support.firePropertyChange("repair", this.c, this.c.getNeighbours()[3]);
-					else
-						this.support.firePropertyChange("nothing", this.c, this.c.getNeighbours()[3]);
-				break;
-			default:
-				break;
-		}
+	void setDirezione(Direzione direzione) {
+		this.direzione = direzione;
 	}
 }
