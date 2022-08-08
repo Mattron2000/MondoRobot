@@ -24,14 +24,15 @@ public class Frame_Game extends MondoRobot_Frame implements PropertyChangeListen
 	private JButton incr = new JButton("+");
 	private JButton decr = new JButton("-");
 	private boolean gamemode;
-
+	private int dimension;
 	private JMenuItem esciMenu;
 	private JMenuItem salvaMenu;
 	private JMenu guidaMenu;
 
-	public Frame_Game(boolean b) {
-		this.gamemode = b;
 
+	public Frame_Game(int dim,boolean b) {
+		this.gamemode = b;
+		this.dimension=dim;
 		if (this.gamemode)
 			this.setTitle("Contatore - Developer");
 		else
@@ -90,5 +91,7 @@ public class Frame_Game extends MondoRobot_Frame implements PropertyChangeListen
 	public void propertyChange(PropertyChangeEvent evt) {
 		setCont((int) evt.getNewValue());
 	}
+
+
 
 }

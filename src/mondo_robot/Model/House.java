@@ -122,6 +122,21 @@ public class House {
 		}
 	}
 
+	private void setupSinks() {
+		int[] random;
+
+		for (int i = 0; i < this.lavandini.length; i++) {
+			do {
+				random = getRandomCoordinates(3);
+			} while (!this.neighboursEmpty(this.mappa[random[0]][random[1]]));
+
+			this.lavandini[i].setCell(this.mappa[random[0]][random[1]]);
+			this.lavandini[i].getCell().addItem(Items.LAVANDINO);
+			this.addNeighbourFeels(this.lavandini[i].getCell(), Feels.WASH);
+//			this.lavatrici[i].setPlaying(true);
+		}
+	}
+
 	private void setupStoves() {
 		int[] random;
 

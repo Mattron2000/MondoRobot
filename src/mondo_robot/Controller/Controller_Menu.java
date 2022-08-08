@@ -16,6 +16,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import mondo_robot.MVC_Main;
 import mondo_robot.Model.House;
 import mondo_robot.View.Frame_Game;
 import mondo_robot.View.Frame_Menu;
@@ -337,9 +338,9 @@ public class Controller_Menu implements ActionListener {
 	}
 
 	private void startGame(House model) {
-		new Controller_Game(new Frame_Game(false), model);
+		new Controller_Game(new Frame_Game(model.getDimension(),false), model);
 
 		if (this.v.gameModeSelected())
-			new Controller_Game(new Frame_Game(true), model);
+			new Controller_Game(new Frame_Game(model.getDimension(),true), model);
 	}
 }
