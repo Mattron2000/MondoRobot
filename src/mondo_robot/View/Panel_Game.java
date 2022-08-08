@@ -1,6 +1,6 @@
 package mondo_robot.View;
-import mondo_robot.Model.Cella;
-import mondo_robot.Model.Robot;
+
+import mondo_robot.Model.*;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
@@ -80,7 +80,7 @@ public class Panel_Game extends JPanel {
 
 
     /*
-    public void updatePanel(Robot r, Cella oldCella){
+    public void updatePanel(Robot r, Casella oldCella){
         for(int i=0; i<this.dimension; i++){
             for(int j=0; j<this.dimension; j++){
                 if(i==0 || j==0 || i==this.dimension-1 || j==this.dimension-1){
@@ -122,7 +122,7 @@ public class Panel_Game extends JPanel {
     }
 
 
-    public void updatePanel(Robot r, Cella oldCella){
+    public void updatePanel(Robot r, Casella oldCella){
 
         if(r.isPlaying()){
 
