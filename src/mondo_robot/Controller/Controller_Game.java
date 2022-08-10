@@ -7,7 +7,6 @@ import javax.swing.JButton;
 import javax.swing.JMenuItem;
 
 import mondo_robot.Model.House;
-import mondo_robot.Model.Model_Game;
 import mondo_robot.View.Frame_Game;
 
 class Controller_Game implements ActionListener {

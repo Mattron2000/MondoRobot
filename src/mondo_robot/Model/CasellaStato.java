@@ -13,7 +13,7 @@ abstract class CasellaStato extends Casella{
 		return this.stato;
 	}
 
-	private void setStato(boolean stato) {
+	protected void setStato(boolean stato) {
 		this.stato = stato;
 	}
 }

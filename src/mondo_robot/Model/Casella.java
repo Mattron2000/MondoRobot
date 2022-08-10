@@ -13,15 +13,15 @@ public abstract class Casella {
 		this.tipo = tipo;
 	}
 
-	private int getX() {
+	int getX() {
 		return x;
 	}
 
-	private int getY() {
+	int getY() {
 		return y;
 	}
 
-	private TipoCasella getTipo() {
+	TipoCasella getTipo() {
 		return this.tipo;
 	}
 

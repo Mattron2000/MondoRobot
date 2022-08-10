@@ -6,11 +6,11 @@ abstract class CasellaMobile extends Casella {
 		super(x, y, tipo);
 	}
 
-	private void setX(Integer x) {
+	protected void setX(Integer x) {
 		this.x = x;
 	}
 
-	private void setY(Integer y) {
+	protected void setY(Integer y) {
 		this.y = y;
 	}
 }
