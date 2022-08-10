@@ -247,29 +247,33 @@ public class House {
 
 			switch (tipo) {
 				case FORNELLO:
-					this.fornelli[i][0] = coordinate[0];
-					this.fornelli[i][1] = coordinate[1];
-					this.mappa[coordinate[0]][coordinate[1]] = new Fornello(coordinate[0], coordinate[1]);
+					this.fornelli[i][0] = coordinate[1];
+					this.fornelli[i][1] = coordinate[0];
+					this.mappa[this.fornelli[i][0]][this.fornelli[i][1]] = new Fornello(this.fornelli[i][0],
+							this.fornelli[i][1]);
 					break;
 				case LAVATRICE:
-					this.lavatrici[i][0] = coordinate[0];
-					this.lavatrici[i][1] = coordinate[1];
-					this.mappa[coordinate[0]][coordinate[1]] = new Lavatrice(coordinate[0], coordinate[1]);
+					this.lavatrici[i][0] = coordinate[1];
+					this.lavatrici[i][1] = coordinate[0];
+					this.mappa[this.lavatrici[i][0]][this.lavatrici[i][1]] = new Lavatrice(this.lavatrici[i][0],
+							this.lavatrici[i][1]);
 					break;
 				case RUBINETTO:
-					this.rubinetti[i][0] = coordinate[0];
-					this.rubinetti[i][1] = coordinate[1];
-					this.mappa[coordinate[0]][coordinate[1]] = new Rubinetto(coordinate[0], coordinate[1]);
+					this.rubinetti[i][0] = coordinate[1];
+					this.rubinetti[i][1] = coordinate[0];
+					this.mappa[this.rubinetti[i][0]][this.rubinetti[i][1]] = new Rubinetto(this.rubinetti[i][0],
+							this.rubinetti[i][1]);
 					break;
 				case ANIMALE:
-					this.animali[i][0] = coordinate[0];
-					this.animali[i][1] = coordinate[1];
-					this.mappa[coordinate[0]][coordinate[1]] = new Animale(coordinate[0], coordinate[1]);
+					this.animali[i][0] = coordinate[1];
+					this.animali[i][1] = coordinate[0];
+					this.mappa[this.animali[i][0]][this.animali[i][1]] = new Animale(this.animali[i][0],
+							this.animali[i][1]);
 					break;
 				case ROBOT:
-					this.robot = new Robot(coordinate[0], coordinate[1]);
-					resetVisione(coordinate[0], coordinate[1]);
-					this.mappa[coordinate[0]][coordinate[1]] = this.robot;
+					this.robot = new Robot(coordinate[1], coordinate[0]);
+					resetVisione(coordinate[1], coordinate[0]);
+					this.mappa[this.robot.getX()][this.robot.getY()] = this.robot;
 					break;
 				default:
 					break;
@@ -329,6 +333,13 @@ public class House {
 
 		for (int x = 0; x < this.dimensione; x++) {
 			for (int y = 0; y < this.dimensione; y++)
+				System.out.format("%12s", this.visione[x][y]);
+			System.out.println();
+		}
+		System.out.println();
+
+		for (int x = 0; x < this.dimensione; x++) {
+			for (int y = 0; y < this.dimensione; y++)
 				System.out.format("%12s", this.mappa[x][y].getTipo());
 			System.out.println();
 		}
@@ -338,5 +349,6 @@ public class House {
 		House h = new House(new File("src/mondo_robot/Map/mappa_5x5.txt"));
 
 		h.stampaTutto();
+		System.out.println(h.robot.getX() + "	" + h.robot.getY());
 	}
 }
