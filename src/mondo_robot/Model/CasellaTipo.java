@@ -1,6 +1,6 @@
 package mondo_robot.Model;
 
-enum TipoCasella {
+enum CasellaTipo {
 	MURO,
 	PAVIMENTO,
 	FORNELLO,

@@ -4,6 +4,6 @@ class Animale extends CasellaMobile{
 	static final String ANIMALE = IMAGE_FOLDER + "animal.png";
 
 	protected Animale(Integer x, Integer y) {
-		super(x, y, TipoCasella.ANIMALE);
+		super(x, y, CasellaTipo.ANIMALE);
 	}
 }

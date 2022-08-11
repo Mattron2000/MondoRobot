@@ -5,6 +5,6 @@ class Fornello extends CasellaStato {
 	static final String FORNELLO_IDLE = IMAGE_FOLDER + "stove-idle.png";
 
 	protected Fornello(Integer x, Integer y) {
-		super(x, y, TipoCasella.FORNELLO);
+		super(x, y, CasellaTipo.FORNELLO);
 	}
 }

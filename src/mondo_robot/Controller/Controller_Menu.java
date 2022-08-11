@@ -20,7 +20,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import mondo_robot.MVC_Main;
-import mondo_robot.Model.House;
+import mondo_robot.Model.Casa;
 import mondo_robot.View.Frame_Game;
 import mondo_robot.View.Frame_Menu;
 
@@ -194,7 +194,7 @@ public class Controller_Menu implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 		// System.out.println(ae.getSource().toString());
 
-		House model;
+		Casa model;
 
 		switch (((JButton) ae.getSource()).getText()) {
 			case "Nuova partita":
@@ -226,7 +226,7 @@ public class Controller_Menu implements ActionListener {
 				 */
 				this.v.dispose();
 
-				model = new House(Integer.parseInt(optionPane.getInputValue().toString()));
+				model = new Casa(Integer.parseInt(optionPane.getInputValue().toString()));
 
 				this.startGame(model);
 
@@ -247,7 +247,7 @@ public class Controller_Menu implements ActionListener {
 
 				if (res == JFileChooser.APPROVE_OPTION) {
 					File f = new File(fileChooser.getSelectedFile().getAbsolutePath());
-
+					
 					if (!f.getName().endsWith(".txt")) {
 						JOptionPane.showMessageDialog(null, "Si accettano soltanto file con estensione '.txt'",
 								"ERRORE: estensione del file errato", JOptionPane.ERROR_MESSAGE);
@@ -256,7 +256,7 @@ public class Controller_Menu implements ActionListener {
 
 					this.v.dispose();
 
-					model = new House(f);
+					model = new Casa(f);
 
 					this.startGame(model);
 
@@ -274,7 +274,7 @@ public class Controller_Menu implements ActionListener {
 		}
 	}
 
-	private void startGame(House model) {
+	private void startGame(Casa model) {
 		new Controller_Game(new Frame_Game(model.getDimensione(), false), model);
 
 		if (this.v.gameModeSelected())

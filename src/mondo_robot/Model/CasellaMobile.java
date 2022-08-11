@@ -2,7 +2,7 @@ package mondo_robot.Model;
 
 abstract class CasellaMobile extends Casella {
 
-	protected CasellaMobile(Integer x, Integer y, TipoCasella tipo) {
+	protected CasellaMobile(Integer x, Integer y, CasellaTipo tipo) {
 		super(x, y, tipo);
 	}
 

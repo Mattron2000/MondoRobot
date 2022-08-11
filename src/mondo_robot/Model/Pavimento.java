@@ -5,6 +5,6 @@ class Pavimento extends CasellaStato{
 	static final String PAVIMENTO_IDLE = IMAGE_FOLDER + "floor-idle.png";;
 
 	protected Pavimento(Integer x, Integer y) {
-		super(x, y, TipoCasella.PAVIMENTO);
+		super(x, y, CasellaTipo.PAVIMENTO);
 	}
 }

@@ -5,9 +5,9 @@ public abstract class Casella {
 
 	protected int x;
 	protected int y;
-	private TipoCasella tipo;
+	private CasellaTipo tipo;
 
-	protected Casella(Integer x, Integer y, TipoCasella tipo) {
+	protected Casella(Integer x, Integer y, CasellaTipo tipo) {
 		this.x = x;
 		this.y = y;
 		this.tipo = tipo;
@@ -21,7 +21,7 @@ public abstract class Casella {
 		return y;
 	}
 
-	TipoCasella getTipo() {
+	CasellaTipo getTipo() {
 		return this.tipo;
 	}
 

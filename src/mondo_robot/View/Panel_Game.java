@@ -1,6 +1,6 @@
 package mondo_robot.View;
 
-import mondo_robot.Model.*;
+import mondo_robot.Model.Casa;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;

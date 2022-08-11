@@ -6,15 +6,15 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 
-import mondo_robot.Model.House;
+import mondo_robot.Model.Casa;
 import mondo_robot.View.Frame_Game;
 
 class Controller_Game implements ActionListener {
 
-	private House m;
+	private Casa m;
 	private Frame_Game v;
 
-	public Controller_Game(Frame_Game frame_Game, House model) {
+	public Controller_Game(Frame_Game frame_Game, Casa model) {
 		this.v = frame_Game;
 		this.m = model;
 
