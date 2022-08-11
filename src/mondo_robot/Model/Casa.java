@@ -14,7 +14,7 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 public class Casa {
-	private static final int DIFFICULTY = 50;	// valora percentile della difficoltà del gioco [0 - 100]
+	private int DIFFICULTY = 50; // valora percentile della difficoltà del gioco [0 - 100]
 
 	private PropertyChangeSupport support;
 	private Casella[][] mappa;
@@ -27,24 +27,24 @@ public class Casa {
 	public Casa(Integer n) {
 		this.support = new PropertyChangeSupport(this);
 
-		// this.dimensione = n;
-
 		this.inizializzaMappa(n);
 
-		setupCaselleCasuale((int) (Math.pow(this.mappa.length, 2) * Casa.DIFFICULTY) / 100);
-		
+		setupCaselleCasuale((int) (Math.pow(this.mappa.length, 2) * this.DIFFICULTY) / 100);
+
 		this.creaMappaCasuale();
 	}
 
-	private void setupCaselleCasuale(int tmp) {
-		this.fornelli = new Integer[(int) (Math.round(Math.random() * (tmp / 4) + 1))][2];
-		this.lavatrici = new Integer[(int) (Math.round(Math.random() * (tmp / 4) + 1))][2];
-		this.rubinetti = new Integer[(int) (Math.round(Math.random() * (tmp / 4) + 1))][2];
-		this.animali = new Integer[(int) (Math.round(Math.random() * (tmp / 4) + 1))][2];
+	private void setupCaselleCasuale(Integer tmp) {
+		do {
+			this.fornelli = new Integer[(int) (Math.round(Math.random() * (tmp / 4) + 1))][2];
+			this.lavatrici = new Integer[(int) (Math.round(Math.random() * (tmp / 4) + 1))][2];
+			this.rubinetti = new Integer[(int) (Math.round(Math.random() * (tmp / 4) + 1))][2];
+			this.animali = new Integer[(int) (Math.round(Math.random() * (tmp / 4) + 1))][2];
+		} while (this.fornelli.length + this.lavatrici.length + this.rubinetti.length + this.animali.length + 1
+				- Math.pow(this.mappa.length - 2, 2) >= 0);
 	}
 
 	private void creaMappaCasuale() {
-		this.cintaMappa();
 
 		this.creaCaselle(CasellaTipo.FORNELLO, null);
 		this.creaCaselle(CasellaTipo.LAVATRICE, null);
@@ -52,16 +52,7 @@ public class Casa {
 		this.creaCaselle(CasellaTipo.ANIMALE, null);
 		this.creaCaselle(CasellaTipo.ROBOT, null);
 
-		CasellaFontana.inizializzaPozzanghera(this.mappa);
-	}
-
-	private void cintaMappa() {
-		for (int i = 0; i < this.mappa.length; i++) {
-			this.mappa[i][0] = new Muro(i, 0);
-			this.mappa[0][i] = new Muro(0, i);
-			this.mappa[i][this.mappa.length - 1] = new Muro(i, this.mappa.length - 1);
-			this.mappa[this.mappa.length - 1][i] = new Muro(this.mappa.length - 1, i);
-		}
+		this.robot.inizializzaVisione(this.mappa.length);
 	}
 
 	public Casa(File file) {
@@ -74,7 +65,6 @@ public class Casa {
 		setupCaselle(file);
 
 		this.robot.inizializzaVisione(this.mappa.length);
-		CasellaFontana.inizializzaPozzanghera(mappa);
 	}
 
 	private int controlloFile(File f) {
@@ -106,7 +96,7 @@ public class Casa {
 									"ERRORE",
 									JOptionPane.ERROR_MESSAGE);
 							throw new IllegalArgumentException("ERRORE: La mappa di gioco dev'essere cintata di mura!");
-						}else
+						} else
 							continue;
 
 					switch (c) {
@@ -143,8 +133,12 @@ public class Casa {
 		this.mappa = new Casella[n][n];
 
 		for (int x = 0; x < this.mappa.length; x++)
-			for (int y = 0; y < this.mappa.length; y++)
-				this.mappa[x][y] = null;
+			for (int y = 0; y < this.mappa.length; y++) {
+				if (x == 0 || x == this.mappa.length - 1 || y == 0 || y == this.mappa.length - 1)
+					this.mappa[x][y] = new Muro(x, y);
+				else
+					this.mappa[x][y] = new Pavimento(x, y);
+			}
 	}
 
 	private void setupCaselle(File file) {
@@ -273,28 +267,33 @@ public class Casa {
 					this.fornelli[i][1] = coordinate[1];
 					this.mappa[this.fornelli[i][0]][this.fornelli[i][1]] = new Fornello(this.fornelli[i][0],
 							this.fornelli[i][1]);
+
 					break;
 				case LAVATRICE:
 					this.lavatrici[i][0] = coordinate[0];
 					this.lavatrici[i][1] = coordinate[1];
 					this.mappa[this.lavatrici[i][0]][this.lavatrici[i][1]] = new Lavatrice(this.lavatrici[i][0],
 							this.lavatrici[i][1]);
+
 					break;
 				case RUBINETTO:
 					this.rubinetti[i][0] = coordinate[0];
 					this.rubinetti[i][1] = coordinate[1];
 					this.mappa[this.rubinetti[i][0]][this.rubinetti[i][1]] = new Rubinetto(this.rubinetti[i][0],
 							this.rubinetti[i][1]);
+
 					break;
 				case ANIMALE:
 					this.animali[i][0] = coordinate[0];
 					this.animali[i][1] = coordinate[1];
 					this.mappa[this.animali[i][0]][this.animali[i][1]] = new Animale(this.animali[i][0],
 							this.animali[i][1]);
+
 					break;
 				case ROBOT:
 					this.robot = new Robot(coordinate[0], coordinate[1]);
 					this.mappa[coordinate[0]][coordinate[1]] = this.robot;
+
 				default:
 					break;
 			}
@@ -308,7 +307,7 @@ public class Casa {
 		do {
 			coordinate[0] = rand.nextInt(this.mappa.length - 2) + 1;
 			coordinate[1] = rand.nextInt(this.mappa.length - 2) + 1;
-		} while (!this.mappa[coordinate[0]][coordinate[1]].equals(null));
+		} while (!(this.mappa[coordinate[0]][coordinate[1]].getTipo().equals(CasellaTipo.PAVIMENTO)));
 
 		return coordinate;
 	}
@@ -324,19 +323,11 @@ public class Casa {
 
 	private void stampaTutto() {
 		System.out.println("Dimensione: " + this.mappa.length + "\n");
-		
+
 		System.out.println("Visione:");
 		for (int x = 0; x < this.mappa.length; x++) {
 			for (int y = 0; y < this.mappa.length; y++)
 				System.out.format("%12s", this.robot.getVisione()[y][x]);
-			System.out.println();
-		}
-		System.out.println();
-
-		System.out.println("Pozzanghera:");
-		for (int x = 0; x < this.mappa.length; x++) {
-			for (int y = 0; y < this.mappa.length; y++)
-				System.out.format("%12s", CasellaFontana.getPozzanghera()[y][x]);
 			System.out.println();
 		}
 		System.out.println();
@@ -348,7 +339,7 @@ public class Casa {
 			System.out.println();
 		}
 
-		System.out.println("Robot:\n\tX:  "+ this.robot.getX() + "\n\tY:  " + this.robot.getY());
+		System.out.println("Robot:\n\tX:  " + this.robot.getX() + "\n\tY:  " + this.robot.getY());
 	}
 
 	public int getDimensione() {
@@ -356,8 +347,10 @@ public class Casa {
 	}
 
 	public static void main(String[] args) {
-		Casa h = new Casa(new File("src/mondo_robot/Map/mappa_5x5.txt"));
+		Casa h1 = new Casa(new File("src/mondo_robot/Map/mappa_5x5.txt"));
+		h1.stampaTutto();
 
-		h.stampaTutto();
+		Casa h2 = new Casa(7);
+		h2.stampaTutto();
 	}
 }

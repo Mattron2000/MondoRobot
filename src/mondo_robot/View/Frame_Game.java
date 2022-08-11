@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import mondo_robot.Model.Casella;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -89,9 +91,7 @@ public class Frame_Game extends MondoRobot_Frame implements PropertyChangeListen
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		setCont((int) evt.getNewValue());
+		Panel_Game.inizializzaMappa((Casella[][]) evt.getNewValue());
+		// setCont((int) evt.getNewValue());
 	}
-
-
-
 }

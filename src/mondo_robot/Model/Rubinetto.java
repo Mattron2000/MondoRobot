@@ -1,6 +1,6 @@
 package mondo_robot.Model;
 
-class Rubinetto extends CasellaFontana {
+class Rubinetto extends CasellaStato {
 	static final String RUBINETTO_BROKEN = IMAGE_FOLDER + "sink-broken.png";
 	static final String RUBINETTO_IDLE = IMAGE_FOLDER + "sink-idle.png";
 

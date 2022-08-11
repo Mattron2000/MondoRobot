@@ -1,6 +1,8 @@
 package mondo_robot.View;
 
 import mondo_robot.Model.Casa;
+import mondo_robot.Model.Casella;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
@@ -68,6 +70,11 @@ public class Panel_Game extends JPanel {
          *
          * */
     }
+
+
+	public static void inizializzaMappa(Casella[][] modelMap) {
+		// riempire la mappa così
+	}
 
 
 
