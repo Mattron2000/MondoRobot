@@ -1,11 +1,13 @@
 package mondo_robot.Model;
 
+import javax.swing.ImageIcon;
+
 public abstract class Casella {
 	protected static final String IMAGE_FOLDER = "src/mondo_robot/Image/";
 
-	public static final String BUMP_SIG = Casella.IMAGE_FOLDER + "bump.png";
+	public static final ImageIcon BUMP_SIG = new ImageIcon(Casella.IMAGE_FOLDER + "bump.png");
 
-	private static final String NEBBIA = Casella.IMAGE_FOLDER + "fog.png";
+	public static final ImageIcon NEBBIA = new ImageIcon(Casella.IMAGE_FOLDER + "fog.png");
 
 	protected int x;
 	protected int y;
@@ -27,11 +29,11 @@ public abstract class Casella {
 		this.visible = visibile;
 	}
 
-	int getX() {
+	public int getX() {
 		return x;
 	}
 
-	int getY() {
+	public int getY() {
 		return y;
 	}
 
@@ -39,8 +41,8 @@ public abstract class Casella {
 		return this.tipo;
 	}
 
-	public String getImmagine(boolean gamemode) {
-		if (this.getVisible() || gamemode)
+	public ImageIcon getImmagine(GameMode gamemode) {
+		if (this.getVisible() || gamemode.equals(GameMode.DEBUG))
 			switch (this.tipo) {
 				case ANIMALE:
 					return Animale.ANIMALE;

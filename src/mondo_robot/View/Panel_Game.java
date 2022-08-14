@@ -1,6 +1,7 @@
 package mondo_robot.View;
 
 import mondo_robot.Model.Casella;
+import mondo_robot.Model.GameMode;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,16 +11,16 @@ public class Panel_Game extends JPanel {
 	protected JLabel[][] contenutoMappa;
 	protected int dimension;
 	protected int dimensioneCasella;
-	protected boolean gamemode;
+	protected GameMode gamemode;
 
-	public Panel_Game(int dim, boolean gamemode) {
+	public Panel_Game(int dim, GameMode gamemode) {
 		super(new GridLayout(dim, dim));
 		this.dimension = dim;
 		this.gamemode = gamemode;
 		// if(this.gamemode)
-		// 	this.setFocusable(false);
+		// this.setFocusable(false);
 		// else
-		// 	this.setFocusable(true);
+		// this.setFocusable(true);
 
 		/*
 		 * Dimensione ricevuta da Frame_Game
@@ -32,11 +33,10 @@ public class Panel_Game extends JPanel {
 
 		for (int i = 0; i < this.dimension; i++) {
 			for (int j = 0; j < this.dimension; j++) {
-				this.contenutoMappa[j][i] = new JLabel(null, this.makeImageIcon("Image\\fog.png"), JLabel.CENTER);
+				this.contenutoMappa[j][i] = new JLabel(null, null, JLabel.CENTER);
 				this.contenutoMappa[j][i].setOpaque(true);
 				this.contenutoMappa[j][i].setBorder(BorderFactory.createLineBorder(Color.white, 1));
 				this.contenutoMappa[j][i].setSize(this.dimensioneCasella, this.dimensioneCasella);
-				// this.contenutoMappa[j][i].setFocusable(this.gamemode);
 				this.add(contenutoMappa[j][i]);
 			}
 		}
@@ -57,11 +57,10 @@ public class Panel_Game extends JPanel {
 	}
 
 	protected void resetPanel() {
-		for (int i = 0; i < this.dimension; i++) {
-			for (int j = 0; j < this.dimension; j++) {
-				this.contenutoMappa[i][j].setIcon(this.makeImageIcon("Image\\fog.png"));
-			}
-		}
+		for (int i = 0; i < this.dimension; i++)
+			for (int j = 0; j < this.dimension; j++)
+				this.contenutoMappa[i][j].setIcon(this.makeImageIcon(Casella.NEBBIA));
+
 		/*
 		 * Questa funzione serve per resettare la mappa reimpostando le immagini
 		 * corrette
@@ -77,20 +76,21 @@ public class Panel_Game extends JPanel {
 		 */
 	}
 
-	protected void aggiornaMappa(Casella[][] nuovaMappa) {
+	protected void inizializzaMappa(Casella[][] nuovaMappa) {
 		for (int i = 0; i < this.dimension; i++)
-			for (int j = 0; j < this.dimension; j++) {
+			for (int j = 0; j < this.dimension; j++)
 				this.contenutoMappa[i][j].setIcon(this.makeImageIcon(nuovaMappa[i][j].getImmagine(this.gamemode)));
-			}
 	}
 
-	private ImageIcon makeImageIcon(String pathImage) {
-		ImageIcon imageIcon = new ImageIcon(pathImage);
-		Image image = imageIcon.getImage();
-		Image newimg = image.getScaledInstance(this.dimensioneCasella, this.dimensioneCasella, java.awt.Image.SCALE_SMOOTH);
-		return new ImageIcon(newimg);
+	public void aggiornaMappa(Casella[] nuoveCaselle) {
+		for (Casella c : nuoveCaselle)
+			this.contenutoMappa[c.getX()][c.getY()].setIcon(this.makeImageIcon(c.getImmagine(this.gamemode)));
 	}
-	
+
+	private ImageIcon makeImageIcon(ImageIcon imageIcon) {
+		return new ImageIcon(imageIcon.getImage().getScaledInstance(this.dimensioneCasella, this.dimensioneCasella,
+				java.awt.Image.SCALE_SMOOTH));
+	}
 
 	/*
 	 * Le due funzioni commentate sotto servono per mantenere traccia degli

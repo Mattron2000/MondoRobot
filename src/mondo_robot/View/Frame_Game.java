@@ -10,23 +10,24 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import mondo_robot.Model.Casella;
+import mondo_robot.Model.GameMode;
 
 public class Frame_Game extends MondoRobot_Frame implements PropertyChangeListener {
 
 	private static final long serialVersionUID = 1L;
 
 	private Panel_Game p;
-	private boolean gamemode;
+	private GameMode gamemode;
 	private int dimension;
 	private JMenuItem esciMenu;
 	private JMenuItem salvaMenu;
 	private JMenu guidaMenu;
 
-	public Frame_Game(int n, boolean gamemode) {
+	public Frame_Game(int n, GameMode gamemode) {
 		this.gamemode = gamemode;
 		this.dimension = n;
 
-		if (this.gamemode)
+		if (this.gamemode.equals(GameMode.DEBUG))
 			setMenuWindow("MondoRobot - Debug", new GridLayout(1, 1), false);
 		else
 			setMenuWindow("MondoRobot - Game", new GridLayout(1, 1), false);
@@ -50,10 +51,10 @@ public class Frame_Game extends MondoRobot_Frame implements PropertyChangeListen
 		p = new Panel_Game(this.dimension, this.gamemode);
 		this.add(p);
 
-		// this.pack();
+		this.pack();
 
 		this.setSize(this.p.dimension * this.p.dimensioneCasella, this.p.dimension * this.p.dimensioneCasella);
-		
+
 		this.setVisible(true);
 	}
 
@@ -65,10 +66,17 @@ public class Frame_Game extends MondoRobot_Frame implements PropertyChangeListen
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		this.p.aggiornaMappa((Casella[][]) evt.getNewValue());
+		switch (evt.getPropertyName()) {
+			case "initMap":
+				this.p.inizializzaMappa((Casella[][]) evt.getNewValue());
+
+				break;
+			case "updMap":
+				this.p.aggiornaMappa((Casella[]) evt.getNewValue());
+		}
 	}
 
-	public boolean getGameMode() {
+	public GameMode getGameMode() {
 		return this.gamemode;
 	}
 }

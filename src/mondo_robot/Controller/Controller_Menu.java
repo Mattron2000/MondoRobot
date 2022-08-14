@@ -21,6 +21,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import mondo_robot.MVC_Main;
 import mondo_robot.Model.Casa;
+import mondo_robot.Model.GameMode;
 import mondo_robot.View.Frame_Game;
 import mondo_robot.View.Frame_Menu;
 
@@ -370,9 +371,9 @@ public class Controller_Menu implements ActionListener {
 	}
 
 	private void startGame(Casa model) {
-		new Controller_Game(new Frame_Game(model.getDimensione(), false), model);
+		new Controller_Game(new Frame_Game(model.getDimensione(), GameMode.GAME), model);
 
 		if (this.v.gameModeSelected())
-			new Controller_Game(new Frame_Game(model.getDimensione(), true), model);
+			new Controller_Game(new Frame_Game(model.getDimensione(), GameMode.DEBUG), model);
 	}
 }

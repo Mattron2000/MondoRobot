@@ -1,10 +1,12 @@
 package mondo_robot.Model;
 
+import javax.swing.ImageIcon;
+
 class Robot extends CasellaMobile {
-	static final String ROBOT_EST = IMAGE_FOLDER + "robot-east.png";
-	static final String ROBOT_NORD = IMAGE_FOLDER + "robot-north.png";
-	static final String ROBOT_OVEST = IMAGE_FOLDER + "robot-west.png";
-	static final String ROBOT_SUD = IMAGE_FOLDER + "robot-south.png";
+	static final ImageIcon ROBOT_EST = new ImageIcon(IMAGE_FOLDER + "robot-east.png");
+	static final ImageIcon ROBOT_NORD = new ImageIcon(IMAGE_FOLDER + "robot-north.png");
+	static final ImageIcon ROBOT_OVEST = new ImageIcon(IMAGE_FOLDER + "robot-west.png");
+	static final ImageIcon ROBOT_SUD = new ImageIcon(IMAGE_FOLDER + "robot-south.png");
 
 	private Direzioni direzione;
 	// private Boolean[][] visione = null;
@@ -16,18 +18,6 @@ class Robot extends CasellaMobile {
 
 	}
 
-	// void inizializzaVisione(int dimensione) {
-	// 	if (this.getVisione() == null) {
-	// 		this.visione = new Boolean[dimensione][dimensione];
-
-	// 		for (int j = 0; j < dimensione; j++)
-	// 			for (int k = 0; k < dimensione; k++)
-	// 				visione[j][k] = false;
-
-	// 		// setVisione();
-	// 	}
-	// }
-
 	Direzioni getDirezione() {
 		return direzione;
 	}
@@ -36,34 +26,8 @@ class Robot extends CasellaMobile {
 		this.direzione = direzione;
 	}
 
-	// Boolean[][] getVisione() {
-	// 	return visione;
-	// }
-
-	protected void setCoordinate(Integer x, Integer y){
+	protected void setCoordinate(Integer x, Integer y) {
 		super.setX(x);
 		super.setY(y);
-
-		// setVisione();
 	}
-
-	// protected void setX(Integer x){
-	// 	super.setX(x);
-
-	// 	setVisione();
-	// }
-
-	// protected void setY(Integer y){
-	// 	super.setY(y);
-
-	// 	setVisione();
-	// }
-
-	// private void setVisione() {
-	// 	visione[getX()][getY()] = true;
-	// 	visione[getX() - 1][getY()] = true;
-	// 	visione[getX() + 1][getY()] = true;
-	// 	visione[getX()][getY() - 1] = true;
-	// 	visione[getX()][getY() + 1] = true;
-	// }
 }

@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JMenuItem;
 
 import mondo_robot.Model.Casa;
+import mondo_robot.Model.GameMode;
 import mondo_robot.Model.Svolta;
 import mondo_robot.View.Frame_Game;
 
@@ -22,11 +23,11 @@ class Controller_Game implements ActionListener, KeyListener {
 		this.m = model;
 
 		this.v.addListener(this);
-		if(! this.v.getGameMode())
+		if(this.v.getGameMode().equals(GameMode.GAME))
 			this.v.addKeyListener(this);
 		this.m.addListener(v);
 
-		this.m.mandaCasa();
+		this.m.inizializzaCasa();
 	}
 
 	@Override

@@ -1,7 +1,9 @@
 package mondo_robot.Model;
 
+import javax.swing.ImageIcon;
+
 class Animale extends CasellaMobile{
-	static final String ANIMALE = IMAGE_FOLDER + "animal.png";
+	static final ImageIcon ANIMALE = new ImageIcon(IMAGE_FOLDER + "animal.png");
 
 	protected Animale(Integer x, Integer y) {
 		super(x, y, CasellaTipo.ANIMALE);
