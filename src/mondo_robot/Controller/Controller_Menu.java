@@ -274,13 +274,6 @@ public class Controller_Menu implements ActionListener {
 		}
 	}
 
-	private void startGame(Casa model) {
-		new Controller_Game(new Frame_Game(model.getDimensione(), false), model);
-
-		if (this.v.gameModeSelected())
-			new Controller_Game(new Frame_Game(model.getDimensione(), true), model);
-	}
-
 	private JOptionPane jSliderSelectorOptionPane(int min, int max) {
 		JOptionPane optionPane = new JOptionPane();
 		JSlider slider = new JSlider(min, max);
@@ -374,5 +367,12 @@ public class Controller_Menu implements ActionListener {
 		}
 
 		f.setReadOnly();
+	}
+
+	private void startGame(Casa model) {
+		new Controller_Game(new Frame_Game(model.getDimensione(), false), model);
+
+		if (this.v.gameModeSelected())
+			new Controller_Game(new Frame_Game(model.getDimensione(), true), model);
 	}
 }

@@ -15,5 +15,13 @@ abstract class CasellaStato extends Casella{
 
 	protected void setStato(boolean stato) {
 		this.stato = stato;
+	}	
+
+	public boolean repair() {
+		if(this.stato == true){
+			this.stato = false;
+			return true;
+		}
+		return false;
 	}
 }

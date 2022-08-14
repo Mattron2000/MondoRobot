@@ -35,13 +35,14 @@ public class Frame_Game extends MondoRobot_Frame implements PropertyChangeListen
 	public Frame_Game(int dim,boolean b) {
 		this.gamemode = b;
 		this.dimension=dim;
+		
 		if (this.gamemode)
 			this.setTitle("Contatore - Developer");
 		else
 			this.setTitle("Contatore - Game");
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(200, 250);
+		// this.setSize(200, 250);
 
 		JMenuBar menuBar = new JMenuBar();
 
@@ -92,6 +93,5 @@ public class Frame_Game extends MondoRobot_Frame implements PropertyChangeListen
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		Panel_Game.inizializzaMappa((Casella[][]) evt.getNewValue());
-		// setCont((int) evt.getNewValue());
 	}
 }

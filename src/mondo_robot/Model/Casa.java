@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class Casa {
@@ -52,7 +53,15 @@ public class Casa {
 		this.creaCaselle(CasellaTipo.ANIMALE, null);
 		this.creaCaselle(CasellaTipo.ROBOT, null);
 
-		this.robot.inizializzaVisione(this.mappa.length);
+		this.inizializzaVisione();
+	}
+
+	private void inizializzaVisione() {
+		this.mappa[this.robot.getX()][this.robot.getY()].setVisible(true);
+		this.mappa[this.robot.getX() - 1][this.robot.getY()].setVisible(true);
+		this.mappa[this.robot.getX() + 1][this.robot.getY()].setVisible(true);
+		this.mappa[this.robot.getX()][this.robot.getY() - 1].setVisible(true);
+		this.mappa[this.robot.getX()][this.robot.getY() + 1].setVisible(true);
 	}
 
 	public Casa(File file) {
@@ -64,7 +73,7 @@ public class Casa {
 
 		setupCaselle(file);
 
-		this.robot.inizializzaVisione(this.mappa.length);
+		this.inizializzaVisione();
 	}
 
 	private int controlloFile(File f) {
@@ -312,34 +321,172 @@ public class Casa {
 		return coordinate;
 	}
 
-	public void addListener(PropertyChangeListener listener) {
-		this.support.addPropertyChangeListener(listener);
-		mandaCasa();
+	/*
+	 * si capisce qual'è la casella bersaglio del robot, -> t_x, t_y
+	 * se la casella 'target' è un pavimento,
+	 * - si sostituisce la x, y del robot con un pavimento asciutto,
+	 * - cambiare le x, y del robot con t_x, t_y,
+	 * - inserire nella mappa il robot con la posizione aggiornata
+	 * se era Animale o muro, -> segnale di BUMP
+	 * altrimenti niente
+	 * 
+	 */
+	public void stepRobot() {
+		int target_x = this.robot.getX();
+		int target_y = this.robot.getY();
+
+		switch (this.robot.getDirezione()) {
+			case EST:
+				target_x++;
+				break;
+			case NORD:
+				target_y--;
+				break;
+			case OVEST:
+				target_x--;
+				break;
+			case SUD:
+				target_y++;
+				break;
+			default:
+				break;
+		}
+
+		switch (this.mappa[target_x][target_y].getTipo()) {
+			case PAVIMENTO:
+				this.mappa[this.robot.getX()][this.robot.getY()] = new Pavimento(this.robot.getX(), this.robot.getY());
+				this.robot.setCoordinate(target_x, target_y);
+				this.mappa[this.robot.getX()][this.robot.getY()] = this.robot;
+
+				this.inizializzaVisione();
+				mandaCasa();
+				break;
+			case ANIMALE:
+			case MURO:
+				JOptionPane.showMessageDialog(null, "", "Ti sei sbattuto contro qualcosa!",
+						JOptionPane.INFORMATION_MESSAGE, new ImageIcon(Casella.BUMP_SIG));
+
+				break;
+			case FORNELLO:
+			case LAVATRICE:
+			case RUBINETTO:
+			default:
+				break;
+		}
 	}
 
-	private void mandaCasa() {
+	public void addListener(PropertyChangeListener listener) {
+		this.support.addPropertyChangeListener(listener);
+	}
+
+	public void mandaCasa() {
 		this.support.firePropertyChange("newMap", null, this.mappa);
 	}
 
+	public void turnRobot(Svolta svolta) {
+		for (int i = 0; i < Direzioni.values().length; i++)
+			if (this.robot.getDirezione().equals(Direzioni.values()[i])) {
+				if (svolta.equals(Svolta.DESTRA))
+					this.robot.setDirezione(Direzioni.values()[(i + 1) % Direzioni.values().length]);
+				else
+					this.robot.setDirezione(
+							Direzioni.values()[(Direzioni.values().length + i - 1) % Direzioni.values().length]);
+				break;
+			}
+
+		mandaCasa();
+	}
+
+	/*
+	 * si capisce qual'è la casella bersaglio del robot, -> t_x, t_y
+	 * se la casella 'target' è un fornello, lavatrice o rubinetto,
+	 * - se lo è, si tenta di cambiare stato,
+	 * -- se era rotto, si aggiusta
+	 * -- se era intatto, -> messaggio di avvertenza (che non era rotto...)
+	 * - se non lo è, messaggio di avvertenza (che funziona solo se sono davanti a
+	 * un fornello, lavatrice o rubinetto...)
+	 * 
+	 */
+	public void interact() {
+		int target_x = this.robot.getX();
+		int target_y = this.robot.getY();
+
+		switch (this.robot.getDirezione()) {
+			case EST:
+				target_x++;
+				break;
+			case NORD:
+				target_y--;
+				break;
+			case OVEST:
+				target_x--;
+				break;
+			case SUD:
+				target_y++;
+				break;
+			default:
+				break;
+		}
+
+		Boolean res = null;
+
+		switch (this.mappa[target_x][target_y].getTipo()) {
+			case FORNELLO:
+				Fornello fornello = (Fornello) this.mappa[target_x][target_y];
+				res = fornello.repair();
+
+				break;
+			case LAVATRICE:
+				Lavatrice lavatrice = (Lavatrice) this.mappa[target_x][target_y];
+				res = lavatrice.repair();
+
+				break;
+			case RUBINETTO:
+				Rubinetto rubinetto = (Rubinetto) this.mappa[target_x][target_y];
+				res = rubinetto.repair();
+
+				break;
+			default:
+				break;
+		}
+
+		if (res == null)
+			JOptionPane.showMessageDialog(null, "Non c'è niente da interagire!", "",
+					JOptionPane.WARNING_MESSAGE);
+		else if (res == true)
+			JOptionPane.showMessageDialog(null, "Dispositivo riparato!", "",
+					JOptionPane.PLAIN_MESSAGE);
+		else
+			JOptionPane.showMessageDialog(null, "Il dispositivo è già intatto...", "",
+					JOptionPane.QUESTION_MESSAGE);
+	}
+
+	// private Direzioni getDirezioneCasuale() {
+	// int choise = (int) (Math.random() * (Direzioni.values().length + 1));
+	// if (choise == Direzioni.values().length)
+	// return null;
+	// else
+	// return Direzioni.values()[choise];
+	// }
+
 	private void stampaTutto() {
 		System.out.println("Dimensione: " + this.mappa.length + "\n");
-
 		System.out.println("Visione:");
 		for (int x = 0; x < this.mappa.length; x++) {
 			for (int y = 0; y < this.mappa.length; y++)
-				System.out.format("%12s", this.robot.getVisione()[y][x]);
+				System.out.format("%12s", this.mappa[y][x].getVisible());
 			System.out.println();
 		}
-		System.out.println();
 
+		System.out.println();
 		System.out.println("Mappa:");
 		for (int x = 0; x < this.mappa.length; x++) {
 			for (int y = 0; y < this.mappa.length; y++)
 				System.out.format("%12s", this.mappa[y][x].getTipo());
 			System.out.println();
 		}
-
-		System.out.println("Robot:\n\tX:  " + this.robot.getX() + "\n\tY:  " + this.robot.getY());
+		System.out.println("Robot:\n\tX: " + this.robot.getX() + "\n\tY: " +
+				this.robot.getY());
 	}
 
 	public int getDimensione() {
@@ -347,10 +494,15 @@ public class Casa {
 	}
 
 	public static void main(String[] args) {
-		Casa h1 = new Casa(new File("src/mondo_robot/Map/mappa_5x5.txt"));
-		h1.stampaTutto();
 
-		Casa h2 = new Casa(7);
-		h2.stampaTutto();
+		// JOptionPane.showMessageDialog(null, "", "Ti sei sbattuto contro qualcosa!",
+		// JOptionPane.INFORMATION_MESSAGE, new ImageIcon(Casella.BUMP_SIG));
+		Casa h1 = new Casa(new File("src/mondo_robot/Map/mappa_5x5.txt"));
+		System.out.println(h1.robot.getDirezione());
+		h1.turnRobot(Svolta.DESTRA);
+		System.out.println(h1.robot.getDirezione());
+
+		h1.stepRobot();
+		h1.stampaTutto();
 	}
 }
