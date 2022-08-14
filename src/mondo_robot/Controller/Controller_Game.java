@@ -22,6 +22,8 @@ class Controller_Game implements ActionListener, KeyListener {
 		this.m = model;
 
 		this.v.addListener(this);
+		if(! this.v.getGameMode())
+			this.v.addKeyListener(this);
 		this.m.addListener(v);
 
 		this.m.mandaCasa();

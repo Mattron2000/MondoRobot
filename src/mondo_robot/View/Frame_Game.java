@@ -2,47 +2,34 @@ package mondo_robot.View;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import mondo_robot.Model.Casella;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import mondo_robot.Model.Casella;
+
 public class Frame_Game extends MondoRobot_Frame implements PropertyChangeListener {
 
 	private static final long serialVersionUID = 1L;
 
-	private JPanel p;
-	private JLabel cont = new JLabel("0");
-	private JButton incr = new JButton("+");
-	private JButton decr = new JButton("-");
+	private Panel_Game p;
 	private boolean gamemode;
 	private int dimension;
 	private JMenuItem esciMenu;
 	private JMenuItem salvaMenu;
 	private JMenu guidaMenu;
 
+	public Frame_Game(int n, boolean gamemode) {
+		this.gamemode = gamemode;
+		this.dimension = n;
 
-	public Frame_Game(int dim,boolean b) {
-		this.gamemode = b;
-		this.dimension=dim;
-		
 		if (this.gamemode)
-			this.setTitle("Contatore - Developer");
+			setMenuWindow("MondoRobot - Debug", new GridLayout(1, 1), false);
 		else
-			this.setTitle("Contatore - Game");
-
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// this.setSize(200, 250);
+			setMenuWindow("MondoRobot - Game", new GridLayout(1, 1), false);
 
 		JMenuBar menuBar = new JMenuBar();
 
@@ -60,38 +47,28 @@ public class Frame_Game extends MondoRobot_Frame implements PropertyChangeListen
 
 		this.setJMenuBar(menuBar);
 
-		p = new JPanel();
+		p = new Panel_Game(this.dimension, this.gamemode);
 		this.add(p);
 
-		p.setLayout(new GridLayout(3, 1));
+		// this.pack();
 
-		cont.setHorizontalAlignment(JLabel.CENTER);
-
-		p.add(cont);
-		p.add(incr);
-		p.add(decr);
-
+		this.setSize(this.p.dimension * this.p.dimensioneCasella, this.p.dimension * this.p.dimensioneCasella);
+		
 		this.setVisible(true);
 	}
 
-	public void setCont(int newCont) {
-		this.cont.setText(Integer.toString(newCont));
-	}
-
-	int getCont() {
-		return Integer.parseInt(this.cont.getText());
-	}
-
-	public void addListener(ActionListener calcListener) {
-		this.incr.addActionListener(calcListener);
-		this.decr.addActionListener(calcListener);
-		this.salvaMenu.addActionListener(calcListener);
-		this.esciMenu.addActionListener(calcListener);
-		this.guidaMenu.addActionListener(calcListener);
+	public void addListener(ActionListener listener) {
+		this.salvaMenu.addActionListener(listener);
+		this.esciMenu.addActionListener(listener);
+		this.guidaMenu.addActionListener(listener);
 	}
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		Panel_Game.inizializzaMappa((Casella[][]) evt.getNewValue());
+		this.p.aggiornaMappa((Casella[][]) evt.getNewValue());
+	}
+
+	public boolean getGameMode() {
+		return this.gamemode;
 	}
 }

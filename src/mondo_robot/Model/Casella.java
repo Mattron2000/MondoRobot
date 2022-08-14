@@ -39,8 +39,8 @@ public abstract class Casella {
 		return this.tipo;
 	}
 
-	public String getImmagine() {
-		if (this.getVisible())
+	public String getImmagine(boolean gamemode) {
+		if (this.getVisible() || gamemode)
 			switch (this.tipo) {
 				case ANIMALE:
 					return Animale.ANIMALE;

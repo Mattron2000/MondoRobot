@@ -29,7 +29,7 @@ public class Frame_Menu extends MondoRobot_Frame {
 		 * impostazioni della finestra del menu' principale
 		 * 
 		 */
-		setMenuWindow("Menú principale di Mondo Robot", new GridLayout(4, 1, 0, 20));
+		setMenuWindow("Menú principale di Mondo Robot", new GridLayout(4, 1, 0, 20), true);
 
 		/*
 		 * Creo il titolo del gioco

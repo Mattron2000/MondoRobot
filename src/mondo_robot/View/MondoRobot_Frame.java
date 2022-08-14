@@ -24,12 +24,13 @@ abstract class MondoRobot_Frame extends JFrame {
 	 * @param layout Layout di come verranno organizzati i JComponenti nella
 	 *               finestra
 	 */
-	protected void setMenuWindow(String title, GridLayout layout) {
+	protected void setMenuWindow(String title, GridLayout layout, boolean haveSpacing) {
 		this.setIconImage(new ImageIcon(FAVICON).getImage());
 		this.setTitle(title);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(layout);
-		getRootPane().setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+		if(haveSpacing)
+			getRootPane().setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 		this.setResizable(false);
 	}
 
