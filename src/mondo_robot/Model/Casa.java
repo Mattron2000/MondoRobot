@@ -14,7 +14,7 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 public class Casa {
-	private int DIFFICULTY = 50; // valora percentile della difficoltà del gioco [0 - 100]
+	private int DIFFICULTY = 30; // valora percentile della difficoltà del gioco [0 - 100]
 
 	private PropertyChangeSupport support;
 	private Casella[][] mappa;
@@ -40,8 +40,8 @@ public class Casa {
 			this.lavatrici = new Integer[(int) (Math.round(Math.random() * (tmp / 4) + 1))][2];
 			this.rubinetti = new Integer[(int) (Math.round(Math.random() * (tmp / 4) + 1))][2];
 			this.animali = new Integer[(int) (Math.round(Math.random() * (tmp / 4) + 1))][2];
-		} while (this.fornelli.length + this.lavatrici.length + this.rubinetti.length + this.animali.length + 1
-				- Math.pow(this.mappa.length - 2, 2) >= 0);
+		} while ((this.fornelli.length + this.lavatrici.length + this.rubinetti.length + this.animali.length + 1)
+				- (Math.pow(this.mappa.length - 2, 2) * this.DIFFICULTY / 100) >= 0);
 	}
 
 	private void creaMappaCasuale() {
@@ -353,11 +353,17 @@ public class Casa {
 		switch (this.mappa[target_x][target_y].getTipo()) {
 			case PAVIMENTO:
 				LinkedList<Casella> LL = new LinkedList<>();
-				this.mappa[this.robot.getX()][this.robot.getY()] = new Pavimento(this.robot.getX(), this.robot.getY());
-				LL.add(this.mappa[this.robot.getX()][this.robot.getY()]);
+				Pavimento pavimento = (Pavimento) this.mappa[target_x][target_y];
+				pavimento.setStato(false);
+				pavimento.setX(this.robot.getX());
+				pavimento.setY(this.robot.getY());
 				this.robot.setCoordinate(target_x, target_y);
+
+				this.mappa[pavimento.getX()][pavimento.getY()] = pavimento;
 				this.mappa[this.robot.getX()][this.robot.getY()] = this.robot;
+
 				LL.add(this.mappa[this.robot.getX()][this.robot.getY()]);
+				LL.add(this.mappa[pavimento.getX()][pavimento.getY()]);
 
 				this.inizializzaVisione();
 				LL.add(this.mappa[this.robot.getX()][this.robot.getY()]);
@@ -366,6 +372,7 @@ public class Casa {
 				LL.add(this.mappa[this.robot.getX()][this.robot.getY() - 1]);
 				LL.add(this.mappa[this.robot.getX()][this.robot.getY() + 1]);
 
+				// muoviAnimali(LL);
 				aggiornaCasa(LL);
 				break;
 			case ANIMALE:
@@ -381,6 +388,22 @@ public class Casa {
 		}
 	}
 
+	// private void muoviAnimali(LinkedList<Casella> LL) {
+
+	// 	for
+	// 	// Pavimento pavimento = (Pavimento) this.mappa[target_x][target_y];
+	// 	// pavimento.setStato(false);
+	// 	// pavimento.setX(this.robot.getX());
+	// 	// pavimento.setY(this.robot.getY());
+	// 	// this.robot.setCoordinate(target_x, target_y);
+
+	// 	// this.mappa[pavimento.getX()][pavimento.getY()] = pavimento;
+	// 	// this.mappa[this.robot.getX()][this.robot.getY()] = this.robot;
+
+	// 	// LL.add(this.mappa[this.robot.getX()][this.robot.getY()]);
+	// 	// LL.add(this.mappa[pavimento.getX()][pavimento.getY()]);
+	// }
+
 	public void addListener(PropertyChangeListener listener) {
 		this.support.addPropertyChangeListener(listener);
 	}
@@ -391,7 +414,7 @@ public class Casa {
 
 	public void aggiornaCasa(LinkedList<Casella> ll) {
 		Casella[] caselle = new Casella[ll.size()];
-		
+
 		this.support.firePropertyChange("updMap", null, ll.toArray(caselle));
 	}
 
@@ -467,7 +490,7 @@ public class Casa {
 		if (res == null)
 			JOptionPane.showMessageDialog(null, "Non c'è niente da interagire!", "",
 					JOptionPane.WARNING_MESSAGE);
-		else if (res == true){
+		else if (res == true) {
 			LinkedList<Casella> LL = new LinkedList<>();
 			LL.add(this.mappa[target_x][target_y]);
 

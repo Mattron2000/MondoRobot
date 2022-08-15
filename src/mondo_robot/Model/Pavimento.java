@@ -9,4 +9,12 @@ class Pavimento extends CasellaStato{
 	protected Pavimento(Integer x, Integer y) {
 		super(x, y, CasellaTipo.PAVIMENTO);
 	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
 }
