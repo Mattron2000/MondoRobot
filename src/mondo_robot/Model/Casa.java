@@ -372,7 +372,7 @@ public class Casa {
 				LL.add(this.mappa[this.robot.getX()][this.robot.getY() - 1]);
 				LL.add(this.mappa[this.robot.getX()][this.robot.getY() + 1]);
 
-				// muoviAnimali(LL);
+				muoviAnimali(LL);
 				aggiornaCasa(LL);
 				break;
 			case ANIMALE:
@@ -388,21 +388,79 @@ public class Casa {
 		}
 	}
 
-	// private void muoviAnimali(LinkedList<Casella> LL) {
+	private void muoviAnimali(LinkedList<Casella> LL) {
+		Integer[] pavimentoTarget = null;
+		for (int i = 0; i < this.animali.length; i++) {
+			pavimentoTarget = animaleDecide(this.animali[i]);
 
-	// 	for
-	// 	// Pavimento pavimento = (Pavimento) this.mappa[target_x][target_y];
-	// 	// pavimento.setStato(false);
-	// 	// pavimento.setX(this.robot.getX());
-	// 	// pavimento.setY(this.robot.getY());
-	// 	// this.robot.setCoordinate(target_x, target_y);
+			if (pavimentoTarget != null) {
+				Pavimento pavimento = (Pavimento) this.mappa[pavimentoTarget[0]][pavimentoTarget[1]];
+				Animale animale = (Animale) this.mappa[this.animali[i][0]][this.animali[i][1]];
 
-	// 	// this.mappa[pavimento.getX()][pavimento.getY()] = pavimento;
-	// 	// this.mappa[this.robot.getX()][this.robot.getY()] = this.robot;
+				pavimento.setX(this.animali[i][0]);
+				pavimento.setY(this.animali[i][1]);
+				boolean visible = pavimento.getVisible();
 
-	// 	// LL.add(this.mappa[this.robot.getX()][this.robot.getY()]);
-	// 	// LL.add(this.mappa[pavimento.getX()][pavimento.getY()]);
-	// }
+				pavimento.setVisible(this.mappa[this.animali[i][0]][this.animali[i][1]].getVisible());
+				this.mappa[this.animali[i][0]][this.animali[i][1]].setVisible(visible);
+
+				this.animali[i][0] = pavimentoTarget[0];
+				this.animali[i][1] = pavimentoTarget[1];
+				animale.setX(pavimentoTarget[0]);
+				animale.setY(pavimentoTarget[1]);
+
+				this.mappa[pavimento.getX()][pavimento.getY()] = pavimento;
+				this.mappa[animale.getX()][animale.getY()] = animale;
+
+				LL.add(this.mappa[animale.getX()][animale.getY()]);
+				LL.add(this.mappa[pavimento.getX()][pavimento.getY()]);
+			}
+			pavimentoTarget = null;
+		}
+	}
+
+	private Integer[] animaleDecide(Integer[] animale) {
+		LinkedList<Integer[]> scelte = new LinkedList<>();
+		Integer[] coordinate;
+
+		if (this.mappa[animale[0] - 1][animale[1]].getTipo().equals(CasellaTipo.PAVIMENTO)) {
+			coordinate = new Integer[2];
+			coordinate[0] = animale[0] - 1;
+			coordinate[1] = animale[1];
+			scelte.add(coordinate);
+		}
+		if (this.mappa[animale[0] + 1][animale[1]].getTipo().equals(CasellaTipo.PAVIMENTO)) {
+			coordinate = new Integer[2];
+			coordinate[0] = animale[0] + 1;
+			coordinate[1] = animale[1];
+			scelte.add(coordinate);
+		}
+		if (this.mappa[animale[0]][animale[1] - 1].getTipo().equals(CasellaTipo.PAVIMENTO)) {
+			coordinate = new Integer[2];
+			coordinate[0] = animale[0];
+			coordinate[1] = animale[1] - 1;
+			scelte.add(coordinate);
+		}
+		if (this.mappa[animale[0]][animale[1] + 1].getTipo().equals(CasellaTipo.PAVIMENTO)) {
+			coordinate = new Integer[2];
+			coordinate[0] = animale[0];
+			coordinate[1] = animale[1] + 1;
+			scelte.add(coordinate);
+		}
+		scelte.add(null);
+		
+		// Integer[][] prova = new Integer[scelte.size()][2];
+		// for(Integer[] foreach : scelte.toArray(prova)){
+		// 	if(foreach != null)
+		// 		System.out.println(foreach[0] + " " + foreach[1]);
+		// 	else
+		// 		System.out.println("null");
+		// }
+		// int scelto = (int) (Math.random()*scelte.size());
+		// System.out.println("Indice scelto: " + (scelto + 1) + " su " + scelte.size());
+
+		return scelte.get((int) (Math.random() * scelte.size()));
+	}
 
 	public void addListener(PropertyChangeListener listener) {
 		this.support.addPropertyChangeListener(listener);
@@ -430,7 +488,8 @@ public class Casa {
 			}
 		LinkedList<Casella> LL = new LinkedList<>();
 		LL.add(this.mappa[this.robot.getX()][this.robot.getY()]);
-
+		
+		muoviAnimali(LL);
 		aggiornaCasa(LL);
 	}
 
