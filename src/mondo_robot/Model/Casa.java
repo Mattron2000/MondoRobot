@@ -388,6 +388,43 @@ public class Casa {
 		}
 	}
 
+	private void rompiElementi() throws InterruptedException {
+		Thread.sleep(5000);
+		for(int i=0; i<this.lavatrici.length; i++){
+			Lavatrice lavatrice=(Lavatrice)this.mappa[this.lavatrici[i][0]][this.lavatrici[i][1]];
+			lavatrice.setStato(true);
+			this.mappa[lavatrice.getX()][lavatrice.getY()] = lavatrice;
+		}
+		while(true){
+
+			Thread.sleep(5000);
+
+			for(int i=0; i<this.lavatrici.length; i++){
+				Lavatrice lavatrice=(Lavatrice)this.mappa[this.lavatrici[i][0]][this.lavatrici[i][1]];
+				lavatrice.setStato(true);
+				this.mappa[lavatrice.getX()][lavatrice.getY()] = lavatrice;
+			}
+			for(int i=0; i<this.rubinetti.length; i++){
+				Rubinetto rubinetto=(Rubinetto) this.mappa[this.rubinetti[i][0]][this.rubinetti[i][1]];
+				rubinetto.setStato(true);
+				this.mappa[rubinetto.getX()][rubinetto.getY()] = rubinetto;
+			}
+			for(int i=0; i<this.fornelli.length; i++){
+				Fornello fornello=(Fornello) this.mappa[this.fornelli[i][0]][this.fornelli[i][1]];
+				fornello.setStato(true);
+				this.mappa[fornello.getX()][fornello.getY()] = fornello;
+			}
+
+			Thread.sleep(5000);
+
+			for(int i=0; i<this.lavatrici.length; i++){
+				Lavatrice lavatrice=(Lavatrice)this.mappa[this.lavatrici[i][0]][this.lavatrici[i][1]];
+				lavatrice.setStato(true);
+				this.mappa[lavatrice.getX()][lavatrice.getY()] = lavatrice;
+			}
+		}
+	}
+
 	private void muoviAnimali(LinkedList<Casella> LL) {
 		Integer[] pavimentoTarget = null;
 		for (int i = 0; i < this.animali.length; i++) {
@@ -594,12 +631,13 @@ public class Casa {
 				this.robot.getY());
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		Casa h1 = new Casa(new File("src/mondo_robot/Map/mappa_5x5.txt"));
 		System.out.println(h1.robot.getDirezione());
 		h1.turnRobot(Svolta.DESTRA);
 		System.out.println(h1.robot.getDirezione());
 
+		h1.rompiElementi();
 		h1.stepRobot();
 		h1.stampaTutto();
 	}
