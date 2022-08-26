@@ -336,11 +336,16 @@ public class Casa {
 		switch (this.mappa[target_x][target_y].getTipo()) {
 			case PAVIMENTO:
 				LinkedList<Casella> LL = new LinkedList<>();
+
 				Pavimento pavimento = (Pavimento) this.mappa[target_x][target_y];
-				pavimento.setStato(false);
+
 				pavimento.setX(this.robot.getX());
 				pavimento.setY(this.robot.getY());
-				this.robot.setCoordinate(target_x, target_y);
+
+				pavimento.setStato(false);
+
+				this.robot.setX(target_x);
+				this.robot.setY(target_y);
 
 				this.mappa[pavimento.getX()][pavimento.getY()] = pavimento;
 				this.mappa[this.robot.getX()][this.robot.getY()] = this.robot;
@@ -390,8 +395,6 @@ public class Casa {
 				this.mappa[this.animali[i].getX()][this.animali[i].getY()].setVisible(visible);
 				((Animale) this.mappa[this.animali[i].getX()][this.animali[i].getY()]).setStato(stato);
 
-				this.animali[i].setX(pavimentoTarget[0]);
-				this.animali[i].setY(pavimentoTarget[1]);
 				animale.setX(pavimentoTarget[0]);
 				animale.setY(pavimentoTarget[1]);
 
@@ -434,17 +437,6 @@ public class Casa {
 			scelte.add(coordinate);
 		}
 		scelte.add(null);
-
-		// Integer[][] prova = new Integer[scelte.size()][2];
-		// for(Integer[] foreach : scelte.toArray(prova)){
-		// if(foreach != null)
-		// System.out.println(foreach[0] + " " + foreach[1]);
-		// else
-		// System.out.println("null");
-		// }
-		// int scelto = (int) (Math.random()*scelte.size());
-		// System.out.println("Indice scelto: " + (scelto + 1) + " su " +
-		// scelte.size());
 
 		return scelte.get((int) (Math.random() * scelte.size()));
 	}
@@ -590,6 +582,7 @@ public class Casa {
 	private class RompiElementiThread implements Runnable {
 		@Override
 		public void run() {
+			LinkedList<Casella> LL = new LinkedList<>();
 
 			try {
 				Thread.sleep(5000);
@@ -597,11 +590,11 @@ public class Casa {
 				e.printStackTrace();
 			}
 
-			for (int i = 0; i < lavatrici.length; i++) {
-				Lavatrice lavatrice = (Lavatrice) mappa[lavatrici[i].getX()][lavatrici[i].getY()];
+			for (Lavatrice lavatrice : lavatrici) {
 				lavatrice.setStato(true);
-				mappa[lavatrice.getX()][lavatrice.getY()] = lavatrice;
+				LL.add(lavatrice);
 			}
+			
 			while (true) {
 
 				try {
@@ -610,20 +603,19 @@ public class Casa {
 					e.printStackTrace();
 				}
 
-				for (int i = 0; i < lavatrici.length; i++) {
-					Lavatrice lavatrice = (Lavatrice) mappa[lavatrici[i].getX()][lavatrici[i].getY()];
+				for (Lavatrice lavatrice : lavatrici) {
 					lavatrice.setStato(true);
-					mappa[lavatrice.getX()][lavatrice.getY()] = lavatrice;
+					LL.add(lavatrice);
 				}
-				for (int i = 0; i < rubinetti.length; i++) {
-					Rubinetto rubinetto = (Rubinetto) mappa[rubinetti[i].getX()][rubinetti[i].getY()];
+
+				for (Rubinetto rubinetto : rubinetti) {
 					rubinetto.setStato(true);
-					mappa[rubinetto.getX()][rubinetto.getY()] = rubinetto;
+					LL.add(rubinetto);
 				}
-				for (int i = 0; i < fornelli.length; i++) {
-					Fornello fornello = (Fornello) mappa[fornelli[i].getX()][fornelli[i].getY()];
+
+				for (Fornello fornello : fornelli) {
 					fornello.setStato(true);
-					mappa[fornello.getX()][fornello.getY()] = fornello;
+					LL.add(fornello);
 				}
 
 				try {
@@ -632,10 +624,9 @@ public class Casa {
 					e.printStackTrace();
 				}
 
-				for (int i = 0; i < lavatrici.length; i++) {
-					Lavatrice lavatrice = (Lavatrice) mappa[lavatrici[i].getX()][lavatrici[i].getY()];
+				for (Lavatrice lavatrice : lavatrici) {
 					lavatrice.setStato(true);
-					mappa[lavatrice.getX()][lavatrice.getY()] = lavatrice;
+					LL.add(lavatrice);
 				}
 			}
 		}
