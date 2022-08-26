@@ -195,8 +195,6 @@ public class Controller_Menu implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 		// System.out.println(ae.getSource().toString());
 
-		Casa model;
-
 		switch (((JButton) ae.getSource()).getText()) {
 			case "Nuova partita":
 				/*
@@ -227,9 +225,7 @@ public class Controller_Menu implements ActionListener {
 				 */
 				this.v.dispose();
 
-				model = new Casa(Integer.parseInt(optionPane.getInputValue().toString()));
-
-				this.startGame(model);
+				this.startGame(new Casa(Integer.parseInt(optionPane.getInputValue().toString())));
 
 				break;
 			case "Carica partita":
@@ -248,7 +244,7 @@ public class Controller_Menu implements ActionListener {
 
 				if (res == JFileChooser.APPROVE_OPTION) {
 					File f = new File(fileChooser.getSelectedFile().getAbsolutePath());
-					
+
 					if (!f.getName().endsWith(".txt")) {
 						JOptionPane.showMessageDialog(null, "Si accettano soltanto file con estensione '.txt'",
 								"ERRORE: estensione del file errato", JOptionPane.ERROR_MESSAGE);
@@ -257,10 +253,7 @@ public class Controller_Menu implements ActionListener {
 
 					this.v.dispose();
 
-					model = new Casa(f);
-
-					this.startGame(model);
-
+					this.startGame(new Casa(f));
 				}
 				break;
 			case "Aiuto":
@@ -274,6 +267,12 @@ public class Controller_Menu implements ActionListener {
 						"INFO: file-guida creato", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
+
+//
+//
+//
+//
+//
 
 	private JOptionPane jSliderSelectorOptionPane(int min, int max) {
 		JOptionPane optionPane = new JOptionPane();
@@ -353,8 +352,6 @@ public class Controller_Menu implements ActionListener {
 		 * 
 		 */
 		f.setWritable(true);
-
-		// Scanner wr = new Scanner(source)
 
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(f))) {
 			writer.write(guidaText);

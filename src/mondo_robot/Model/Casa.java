@@ -18,220 +18,82 @@ public class Casa {
 
 	private PropertyChangeSupport support;
 	private Casella[][] mappa;
-	private Integer[][] fornelli;
-	private Integer[][] lavatrici;
-	private Integer[][] rubinetti;
-	private Integer[][] animali;
+	private Fornello[] fornelli;
+	private Lavatrice[] lavatrici;
+	private Rubinetto[] rubinetti;
+	private Animale[] animali;
 	private Robot robot;
 
 	public Casa(Integer n) {
 		this.support = new PropertyChangeSupport(this);
 
-		this.inizializzaMappa(n);
+		this.istanziaMappa(n);
 
-		setupCaselleCasuale((int) (Math.pow(this.mappa.length, 2) * this.DIFFICULTY) / 100);
+		this.inizializzaMappa();
 
-		this.creaMappaCasuale();
-	}
+		this.istanziaCaselle((int) (Math.pow(this.mappa.length, 2) * this.DIFFICULTY) / 100);
 
-	private void setupCaselleCasuale(Integer tmp) {
-		do {
-			this.fornelli = new Integer[(int) (Math.round(Math.random() * (tmp / 4) + 1))][2];
-			this.lavatrici = new Integer[(int) (Math.round(Math.random() * (tmp / 4) + 1))][2];
-			this.rubinetti = new Integer[(int) (Math.round(Math.random() * (tmp / 4) + 1))][2];
-			this.animali = new Integer[(int) (Math.round(Math.random() * (tmp / 4) + 1))][2];
-		} while ((this.fornelli.length + this.lavatrici.length + this.rubinetti.length + this.animali.length + 1)
-				- (Math.pow(this.mappa.length - 2, 2) * this.DIFFICULTY / 100) >= 0);
-	}
+		this.creaCaselle(CasellaTipo.FORNELLO);
+		this.creaCaselle(CasellaTipo.LAVATRICE);
+		this.creaCaselle(CasellaTipo.RUBINETTO);
+		this.creaCaselle(CasellaTipo.ANIMALE);
+		this.creaCaselle(CasellaTipo.ROBOT);
 
-	private void creaMappaCasuale() {
-		this.creaCaselle(CasellaTipo.FORNELLO, null);
-		this.creaCaselle(CasellaTipo.LAVATRICE, null);
-		this.creaCaselle(CasellaTipo.RUBINETTO, null);
-		this.creaCaselle(CasellaTipo.ANIMALE, null);
-		this.creaCaselle(CasellaTipo.ROBOT, null);
+		this.riempiPavimento();
 
-		this.inizializzaVisione();
-	}
+		this.aggiornaVisione();
 
-	private void inizializzaVisione() {
-		this.mappa[this.robot.getX()][this.robot.getY()].setVisible(true);
-		this.mappa[this.robot.getX() - 1][this.robot.getY()].setVisible(true);
-		this.mappa[this.robot.getX() + 1][this.robot.getY()].setVisible(true);
-		this.mappa[this.robot.getX()][this.robot.getY() - 1].setVisible(true);
-		this.mappa[this.robot.getX()][this.robot.getY() + 1].setVisible(true);
+		this.avviaRompiElementi();
 	}
 
 	public Casa(File file) {
 		this.support = new PropertyChangeSupport(this);
 
-		int n = controlloFile(file);
+		controlloFile(file);
 
-		this.inizializzaMappa(n);
+		this.riempiPavimento();
 
-		setupCaselle(file);
+		this.aggiornaVisione();
+
+		this.avviaRompiElementi();
 	}
 
-	private int controlloFile(File f) {
-		int l_x = 0;
-		int l_y = 0;
-		char c;
-		String line;
-
-		try (Scanner reader = new Scanner(new FileReader(f))) {
-			while (reader.hasNextLine()) {
-				line = reader.nextLine().replace(" ", "");
-
-				if (l_y == 0)
-					l_x = line.length();
-				else if (l_x != line.length()) {
-					JOptionPane.showMessageDialog(null, "La mappa che devi disegnare dev'essere quadrata!",
-							"ERRORE",
-							JOptionPane.ERROR_MESSAGE);
-					throw new IllegalArgumentException("ERRORE: La mappa che devi disegnare dev'essere quadrata!");
-				}
-				l_y++;
-
-				for (int x = 0; x < l_x; x++) {
-					c = line.charAt(x);
-					if (l_y - 1 == 0 || l_y - 1 == l_x - 1 || x == 0
-							|| x == l_x - 1)
-						if (c != 'M') {
-							JOptionPane.showMessageDialog(null, "La mappa di gioco dev'essere cintata di mura!",
-									"ERRORE",
-									JOptionPane.ERROR_MESSAGE);
-							throw new IllegalArgumentException("ERRORE: La mappa di gioco dev'essere cintata di mura!");
-						} else
-							continue;
-
-					switch (c) {
-						case 'A':
-						case 'D':
-						case 'F':
-						case 'L':
-						case 'M':
-						case 'P':
-						case 'R':
-							break;
-						default:
-							JOptionPane.showMessageDialog(null, "Cos'è questa lettera? " + c, "ERRORE",
-									JOptionPane.ERROR_MESSAGE);
-							throw new IllegalArgumentException("ERRORE: Cos'è questa lettera? " + c);
-					}
-				}
-			}
-
-			reader.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		if (l_x == l_y)
-			return l_x;
-		else {
-			JOptionPane.showMessageDialog(null, "La mappa dev'essere quadrata!", "ERRORE", JOptionPane.ERROR_MESSAGE);
-			throw new IllegalArgumentException("ERRORE: La mappa dev'essere quadrata!");
-		}
-	}
-
-	private void inizializzaMappa(Integer n) {
+	private void istanziaMappa(Integer n) {
 		this.mappa = new Casella[n][n];
+	}
 
+	private void inizializzaMappa() {
 		for (int x = 0; x < this.mappa.length; x++)
 			for (int y = 0; y < this.mappa.length; y++) {
 				if (x == 0 || x == this.mappa.length - 1 || y == 0 || y == this.mappa.length - 1)
 					this.mappa[x][y] = new Muro(x, y);
 				else
-					this.mappa[x][y] = new Pavimento(x, y);
+					this.mappa[x][y] = null;
 			}
 	}
 
-	private void setupCaselle(File file) {
-		char[] line;
-		int[] coordinate;
-		LinkedList<int[]> LL_a = new LinkedList<>();
-		LinkedList<int[]> LL_f = new LinkedList<>();
-		LinkedList<int[]> LL_l = new LinkedList<>();
-		LinkedList<int[]> LL_r = new LinkedList<>();
-		LinkedList<int[]> LL_d = new LinkedList<>();
+	private void istanziaCaselle(Integer occupazionePerc) {
+		int fornelli;
+		int lavatrici;
+		int rubinetti;
+		int animali;
 
-		try (Scanner reader = new Scanner(new FileReader(file))) {
-			for (int y = 0; y < this.mappa.length; y++) {
-				line = reader.nextLine().replace(" ", "").toCharArray();
-				for (int x = 0; x < this.mappa.length; x++) {
-					coordinate = new int[2];
-					coordinate[0] = x;
-					coordinate[1] = y;
-					switch (line[x]) {
-						case 'D':
-							if (LL_d.size() == 0)
-								LL_d.add(coordinate);
-							else {
-								JOptionPane.showMessageDialog(null,
-										"Non puoi controllare più robot contemporaneamente!", "ERRORE",
-										JOptionPane.ERROR_MESSAGE);
-								throw new IllegalArgumentException(
-										"ERRORE: Non puoi controllare più robot contemporaneamente!");
-							}
-							break;
-						case 'A':
-							LL_a.add(coordinate);
-							break;
-						case 'F':
-							LL_f.add(coordinate);
-							break;
-						case 'L':
-							LL_l.add(coordinate);
-							break;
-						case 'M':
-							this.mappa[x][y] = new Muro(x, y);
-							break;
-						case 'P':
-							this.mappa[x][y] = new Pavimento(x, y);
-							break;
-						case 'R':
-							LL_r.add(coordinate);
-							break;
-						default:
-							JOptionPane.showMessageDialog(null, "Cos'è questa lettera? " + line[x], "ERRORE",
-									JOptionPane.ERROR_MESSAGE);
-							throw new IllegalArgumentException("ERRORE: Cos'è questa lettera? " + line[x]);
-					}
-				}
-			}
+		do {
+			fornelli = (int) (Math.round(Math.random() * (occupazionePerc / 4) + 1));
+			lavatrici = (int) (Math.round(Math.random() * (occupazionePerc / 4) + 1));
+			rubinetti = (int) (Math.round(Math.random() * (occupazionePerc / 4) + 1));
+			animali = (int) (Math.round(Math.random() * (occupazionePerc / 4) + 1));
+		} while ((fornelli + lavatrici + rubinetti + animali + 1)
+				- (Math.pow(this.mappa.length - 2, 2) * this.DIFFICULTY / 100) >= 0);
 
-			reader.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		if (LL_f.size() == 0 || LL_l.size() == 0 || LL_r.size() == 0 || LL_a.size() == 0) {
-			JOptionPane.showMessageDialog(null,
-					"Non sono presenti alcuni tipi di caselle! "
-							+ "Aggiungi nella mappa almeno una per tipo di casella di questa lista:"
-							+ "\n\t- Fornello\n\t- Lavatrice\n\t- Rubinetto\n\t- Animale\n\t- Robot",
-					"ERRORE",
-					JOptionPane.ERROR_MESSAGE);
-			throw new IllegalArgumentException(
-					"ERRORE: Non puoi controllare più robot contemporaneamente!");
-		}
-
-		this.fornelli = new Integer[LL_f.size()][2];
-		this.lavatrici = new Integer[LL_l.size()][2];
-		this.rubinetti = new Integer[LL_r.size()][2];
-		this.animali = new Integer[LL_a.size()][2];
-
-		creaCaselle(CasellaTipo.FORNELLO, LL_f);
-		creaCaselle(CasellaTipo.LAVATRICE, LL_l);
-		creaCaselle(CasellaTipo.RUBINETTO, LL_r);
-		creaCaselle(CasellaTipo.ANIMALE, LL_a);
-		creaCaselle(CasellaTipo.ROBOT, LL_d);
-
-		this.inizializzaVisione();
+		this.fornelli = new Fornello[fornelli];
+		this.lavatrici = new Lavatrice[lavatrici];
+		this.rubinetti = new Rubinetto[rubinetti];
+		this.animali = new Animale[animali];
 	}
 
-	private void creaCaselle(CasellaTipo tipo, LinkedList<int[]> LL) {
-		int length = -1;
+	private void creaCaselle(CasellaTipo tipo) {
+		Integer length = null;
 		int[] coordinate = new int[2];
 
 		switch (tipo) {
@@ -253,58 +115,52 @@ public class Casa {
 				break;
 		}
 
-		if (length == -1) {
-			JOptionPane.showMessageDialog(null,
-					"Questa funzione è ammessa solo le caselle:"
-							+ "\n\t- Fornello\n\t- Lavatrice\n\t- Rubinetto\n\t- Animale\n\t- Robot",
-					"ERRORE", JOptionPane.ERROR_MESSAGE);
-			throw new IllegalArgumentException(
-					"ERRORE: Questa funzione è ammessa solo le caselle: Fornello, Lavatrice, Rubinetto, Animale e Robot!");
-		}
+		if (length == null)
+			messaggioErrore("Questa funzione è ammessa solo alle caselle:"
+					+ "\n\t- Fornello"
+					+ "\n\t- Lavatrice"
+					+ "\n\t- Rubinetto"
+					+ "\n\t- Animale"
+					+ "\n\t- Robot");
 
 		for (int i = 0; i < length; i++) {
-			if (LL != null)
-				coordinate = LL.element();
-			else
-				coordinate = getCoordinateCasuali();
+			coordinate = getCoordinateCasuali();
 
 			switch (tipo) {
 				case FORNELLO:
-					this.fornelli[i][0] = coordinate[0];
-					this.fornelli[i][1] = coordinate[1];
-					this.mappa[this.fornelli[i][0]][this.fornelli[i][1]] = new Fornello(this.fornelli[i][0],
-							this.fornelli[i][1]);
+					this.fornelli[i] = new Fornello(coordinate[0], coordinate[1]);
+					aggiungiCasella(this.fornelli[i]);
 
 					break;
 				case LAVATRICE:
-					this.lavatrici[i][0] = coordinate[0];
-					this.lavatrici[i][1] = coordinate[1];
-					this.mappa[this.lavatrici[i][0]][this.lavatrici[i][1]] = new Lavatrice(this.lavatrici[i][0],
-							this.lavatrici[i][1]);
+					this.lavatrici[i] = new Lavatrice(coordinate[0], coordinate[1]);
+					aggiungiCasella(this.lavatrici[i]);
 
 					break;
 				case RUBINETTO:
-					this.rubinetti[i][0] = coordinate[0];
-					this.rubinetti[i][1] = coordinate[1];
-					this.mappa[this.rubinetti[i][0]][this.rubinetti[i][1]] = new Rubinetto(this.rubinetti[i][0],
-							this.rubinetti[i][1]);
+					this.rubinetti[i] = new Rubinetto(coordinate[0], coordinate[1]);
+					aggiungiCasella(this.rubinetti[i]);
 
 					break;
 				case ANIMALE:
-					this.animali[i][0] = coordinate[0];
-					this.animali[i][1] = coordinate[1];
-					this.mappa[this.animali[i][0]][this.animali[i][1]] = new Animale(this.animali[i][0],
-							this.animali[i][1]);
+					this.animali[i] = new Animale(coordinate[0], coordinate[1]);
+					aggiungiCasella(this.animali[i]);
 
 					break;
 				case ROBOT:
 					this.robot = new Robot(coordinate[0], coordinate[1]);
-					this.mappa[coordinate[0]][coordinate[1]] = this.robot;
+					aggiungiCasella(this.robot);
 
+					break;
 				default:
 					break;
 			}
 		}
+	}
+
+	private void messaggioErrore(String messaggio) {
+		JOptionPane.showMessageDialog(null, messaggio, "ERRORE", JOptionPane.ERROR_MESSAGE);
+		throw new IllegalArgumentException(messaggio);
 	}
 
 	private int[] getCoordinateCasuali() {
@@ -314,9 +170,136 @@ public class Casa {
 		do {
 			coordinate[0] = rand.nextInt(this.mappa.length - 2) + 1;
 			coordinate[1] = rand.nextInt(this.mappa.length - 2) + 1;
-		} while (!(this.mappa[coordinate[0]][coordinate[1]].getTipo().equals(CasellaTipo.PAVIMENTO)));
+		} while (!(this.mappa[coordinate[0]][coordinate[1]] == null));
 
 		return coordinate;
+	}
+
+	private void aggiungiCasella(Casella casella) {
+		this.mappa[casella.getX()][casella.getY()] = casella;
+	}
+
+	private void riempiPavimento() {
+		for (int x = 1; x < this.mappa.length - 1; x++)
+			for (int y = 1; y < this.mappa.length - 1; y++)
+				if (this.mappa[x][y] == null)
+					this.mappa[x][y] = new Pavimento(x, y);
+	}
+
+	private void aggiornaVisione() {
+		this.mappa[this.robot.getX()][this.robot.getY()].setVisible(true);
+		this.mappa[this.robot.getX() - 1][this.robot.getY()].setVisible(true);
+		this.mappa[this.robot.getX() + 1][this.robot.getY()].setVisible(true);
+		this.mappa[this.robot.getX()][this.robot.getY() - 1].setVisible(true);
+		this.mappa[this.robot.getX()][this.robot.getY() + 1].setVisible(true);
+	}
+
+	private void controlloFile(File f) {
+		int l_x = 0;
+		int l_y = 0;
+		LinkedList<Fornello> fornelli = new LinkedList<>();
+		LinkedList<Lavatrice> lavatrici = new LinkedList<>();
+		LinkedList<Rubinetto> rubinetti = new LinkedList<>();
+		LinkedList<Animale> animali = new LinkedList<>();
+		LinkedList<Muro> muri = new LinkedList<>();
+		LinkedList<Pavimento> pavimenti = new LinkedList<>();
+		char c;
+		String line;
+
+		try (Scanner reader = new Scanner(new FileReader(f))) {
+			while (reader.hasNextLine()) {
+				line = reader.nextLine().replace(" ", "");
+
+				if (l_y == 0)
+					l_x = line.length();
+				else if (l_x != line.length()) 
+					this.messaggioErrore("La mappa che devi disegnare dev'essere quadrata!");
+				l_y++;
+
+				for (int x = 0; x < l_x; x++) {
+					c = line.charAt(x);
+					if ((l_y - 1 == 0 || l_y - 1 == l_x - 1 || x == 0 || x == l_x - 1) && c != 'M')
+						messaggioErrore("La mappa di gioco dev'essere cintata di mura!");
+
+					switch (c) {
+						case 'A':
+							animali.add(new Animale(x, l_y - 1));
+
+							break;
+						case 'D':
+							if (this.robot == null)
+								this.robot = new Robot(x, l_y - 1);
+							else
+								messaggioErrore("Non puoi controllare più robot contemporaneamente!");
+
+							break;
+						case 'F':
+							fornelli.add(new Fornello(x, l_y - 1));
+
+							break;
+						case 'L':
+							lavatrici.add(new Lavatrice(x, l_y - 1));
+
+							break;
+						case 'M':
+							muri.add(new Muro(x, l_y - 1));
+
+							break;
+						case 'P':
+							pavimenti.add(new Pavimento(x, l_y - 1));
+
+							break;
+						case 'R':
+							rubinetti.add(new Rubinetto(x, l_y - 1));
+
+							break;
+						default:
+							messaggioErrore("Cos'è questa lettera? " + c);
+					}
+				}
+			}
+
+			reader.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		if (l_x != l_y)
+			messaggioErrore("La mappa dev'essere quadrata!");
+
+		this.mappa = new Casella[l_x][l_y];
+
+		this.fornelli = new Fornello[fornelli.size()];
+		for (int i = 0; i < fornelli.size(); i++) {
+			this.fornelli[i] = fornelli.get(i);
+			aggiungiCasella(this.fornelli[i]);
+		}
+
+		this.lavatrici = new Lavatrice[lavatrici.size()];
+		for (int i = 0; i < lavatrici.size(); i++) {
+			this.lavatrici[i] = lavatrici.get(i);
+			aggiungiCasella(this.lavatrici[i]);
+		}
+
+		this.rubinetti = new Rubinetto[rubinetti.size()];
+		for (int i = 0; i < rubinetti.size(); i++) {
+			this.rubinetti[i] = rubinetti.get(i);
+			aggiungiCasella(this.rubinetti[i]);
+		}
+
+		this.animali = new Animale[animali.size()];
+		for (int i = 0; i < animali.size(); i++) {
+			this.animali[i] = animali.get(i);
+			aggiungiCasella(this.animali[i]);
+		}
+
+		for (Pavimento pavimento : pavimenti)
+			aggiungiCasella(pavimento);
+
+		for (Muro muro : muri)
+			aggiungiCasella(muro);
+
+		aggiungiCasella(robot);
 	}
 
 	/**
@@ -365,7 +348,7 @@ public class Casa {
 				LL.add(this.mappa[this.robot.getX()][this.robot.getY()]);
 				LL.add(this.mappa[pavimento.getX()][pavimento.getY()]);
 
-				this.inizializzaVisione();
+				this.aggiornaVisione();
 				LL.add(this.mappa[this.robot.getX()][this.robot.getY()]);
 				LL.add(this.mappa[this.robot.getX() - 1][this.robot.getY()]);
 				LL.add(this.mappa[this.robot.getX() + 1][this.robot.getY()]);
@@ -395,17 +378,20 @@ public class Casa {
 
 			if (pavimentoTarget != null) {
 				Pavimento pavimento = (Pavimento) this.mappa[pavimentoTarget[0]][pavimentoTarget[1]];
-				Animale animale = (Animale) this.mappa[this.animali[i][0]][this.animali[i][1]];
+				Animale animale = (Animale) this.mappa[this.animali[i].getX()][this.animali[i].getY()];
 
-				pavimento.setX(this.animali[i][0]);
-				pavimento.setY(this.animali[i][1]);
+				pavimento.setX(this.animali[i].getX());
+				pavimento.setY(this.animali[i].getY());
 				boolean visible = pavimento.getVisible();
+				boolean stato = pavimento.getStato();
 
-				pavimento.setVisible(this.mappa[this.animali[i][0]][this.animali[i][1]].getVisible());
-				this.mappa[this.animali[i][0]][this.animali[i][1]].setVisible(visible);
+				pavimento.setVisible(this.mappa[this.animali[i].getX()][this.animali[i].getY()].getVisible());
+				pavimento.setStato(((Animale) this.mappa[this.animali[i].getX()][this.animali[i].getY()]).getStato());
+				this.mappa[this.animali[i].getX()][this.animali[i].getY()].setVisible(visible);
+				((Animale) this.mappa[this.animali[i].getX()][this.animali[i].getY()]).setStato(stato);
 
-				this.animali[i][0] = pavimentoTarget[0];
-				this.animali[i][1] = pavimentoTarget[1];
+				this.animali[i].setX(pavimentoTarget[0]);
+				this.animali[i].setY(pavimentoTarget[1]);
 				animale.setX(pavimentoTarget[0]);
 				animale.setY(pavimentoTarget[1]);
 
@@ -419,45 +405,46 @@ public class Casa {
 		}
 	}
 
-	private Integer[] animaleDecide(Integer[] animale) {
+	private Integer[] animaleDecide(Animale animale) {
 		LinkedList<Integer[]> scelte = new LinkedList<>();
 		Integer[] coordinate;
 
-		if (this.mappa[animale[0] - 1][animale[1]].getTipo().equals(CasellaTipo.PAVIMENTO)) {
+		if (this.mappa[animale.getX() - 1][animale.getY()].getTipo().equals(CasellaTipo.PAVIMENTO)) {
 			coordinate = new Integer[2];
-			coordinate[0] = animale[0] - 1;
-			coordinate[1] = animale[1];
+			coordinate[0] = animale.getX() - 1;
+			coordinate[1] = animale.getY();
 			scelte.add(coordinate);
 		}
-		if (this.mappa[animale[0] + 1][animale[1]].getTipo().equals(CasellaTipo.PAVIMENTO)) {
+		if (this.mappa[animale.getX() + 1][animale.getY()].getTipo().equals(CasellaTipo.PAVIMENTO)) {
 			coordinate = new Integer[2];
-			coordinate[0] = animale[0] + 1;
-			coordinate[1] = animale[1];
+			coordinate[0] = animale.getX() + 1;
+			coordinate[1] = animale.getY();
 			scelte.add(coordinate);
 		}
-		if (this.mappa[animale[0]][animale[1] - 1].getTipo().equals(CasellaTipo.PAVIMENTO)) {
+		if (this.mappa[animale.getX()][animale.getY() - 1].getTipo().equals(CasellaTipo.PAVIMENTO)) {
 			coordinate = new Integer[2];
-			coordinate[0] = animale[0];
-			coordinate[1] = animale[1] - 1;
+			coordinate[0] = animale.getX();
+			coordinate[1] = animale.getY() - 1;
 			scelte.add(coordinate);
 		}
-		if (this.mappa[animale[0]][animale[1] + 1].getTipo().equals(CasellaTipo.PAVIMENTO)) {
+		if (this.mappa[animale.getX()][animale.getY() + 1].getTipo().equals(CasellaTipo.PAVIMENTO)) {
 			coordinate = new Integer[2];
-			coordinate[0] = animale[0];
-			coordinate[1] = animale[1] + 1;
+			coordinate[0] = animale.getX();
+			coordinate[1] = animale.getY() + 1;
 			scelte.add(coordinate);
 		}
 		scelte.add(null);
-		
+
 		// Integer[][] prova = new Integer[scelte.size()][2];
 		// for(Integer[] foreach : scelte.toArray(prova)){
-		// 	if(foreach != null)
-		// 		System.out.println(foreach[0] + " " + foreach[1]);
-		// 	else
-		// 		System.out.println("null");
+		// if(foreach != null)
+		// System.out.println(foreach[0] + " " + foreach[1]);
+		// else
+		// System.out.println("null");
 		// }
 		// int scelto = (int) (Math.random()*scelte.size());
-		// System.out.println("Indice scelto: " + (scelto + 1) + " su " + scelte.size());
+		// System.out.println("Indice scelto: " + (scelto + 1) + " su " +
+		// scelte.size());
 
 		return scelte.get((int) (Math.random() * scelte.size()));
 	}
@@ -488,7 +475,7 @@ public class Casa {
 			}
 		LinkedList<Casella> LL = new LinkedList<>();
 		LL.add(this.mappa[this.robot.getX()][this.robot.getY()]);
-		
+
 		muoviAnimali(LL);
 		aggiornaCasa(LL);
 	}
@@ -594,13 +581,73 @@ public class Casa {
 				this.robot.getY());
 	}
 
+	private void avviaRompiElementi() {
+		RompiElementiThread r = new RompiElementiThread();
+		Thread t = new Thread(r);
+		t.start();
+	}
+
+	private class RompiElementiThread implements Runnable {
+		@Override
+		public void run() {
+
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
+			for (int i = 0; i < lavatrici.length; i++) {
+				Lavatrice lavatrice = (Lavatrice) mappa[lavatrici[i].getX()][lavatrici[i].getY()];
+				lavatrice.setStato(true);
+				mappa[lavatrice.getX()][lavatrice.getY()] = lavatrice;
+			}
+			while (true) {
+
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
+				for (int i = 0; i < lavatrici.length; i++) {
+					Lavatrice lavatrice = (Lavatrice) mappa[lavatrici[i].getX()][lavatrici[i].getY()];
+					lavatrice.setStato(true);
+					mappa[lavatrice.getX()][lavatrice.getY()] = lavatrice;
+				}
+				for (int i = 0; i < rubinetti.length; i++) {
+					Rubinetto rubinetto = (Rubinetto) mappa[rubinetti[i].getX()][rubinetti[i].getY()];
+					rubinetto.setStato(true);
+					mappa[rubinetto.getX()][rubinetto.getY()] = rubinetto;
+				}
+				for (int i = 0; i < fornelli.length; i++) {
+					Fornello fornello = (Fornello) mappa[fornelli[i].getX()][fornelli[i].getY()];
+					fornello.setStato(true);
+					mappa[fornello.getX()][fornello.getY()] = fornello;
+				}
+
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
+				for (int i = 0; i < lavatrici.length; i++) {
+					Lavatrice lavatrice = (Lavatrice) mappa[lavatrici[i].getX()][lavatrici[i].getY()];
+					lavatrice.setStato(true);
+					mappa[lavatrice.getX()][lavatrice.getY()] = lavatrice;
+				}
+			}
+		}
+	}
+
 	public static void main(String[] args) {
 		Casa h1 = new Casa(new File("src/mondo_robot/Map/mappa_5x5.txt"));
-		System.out.println(h1.robot.getDirezione());
-		h1.turnRobot(Svolta.DESTRA);
-		System.out.println(h1.robot.getDirezione());
+		// System.out.println(h1.robot.getDirezione());
+		// h1.turnRobot(Svolta.DESTRA);
+		// System.out.println(h1.robot.getDirezione());
 
-		h1.stepRobot();
+		// h1.stepRobot();
 		h1.stampaTutto();
 	}
 }
