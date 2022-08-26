@@ -580,63 +580,153 @@ public class Casa {
 	}
 
 	private class RompiElementiThread implements Runnable {
+		LinkedList<Nodo> stack = new LinkedList<>();
+		Integer timeMillis = 1000;
+
 		@Override
 		public void run() {
 			LinkedList<Casella> LL = new LinkedList<>();
 
-			try {
-				Thread.sleep(10000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			aspettando();
 
-			for (Lavatrice lavatrice : lavatrici) {
-				lavatrice.setStato(true);
-				LL.add(lavatrice);
-			}
+			rompiElementi(LL, CasellaTipo.LAVATRICE);
 
 			aggiornaCasa(LL);
 			LL.clear();
 
 			while (true) {
 
-				try {
-					Thread.sleep(10000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				aspettando();
 
-				for (Lavatrice lavatrice : lavatrici) {
-					lavatrice.setStato(true);
-					LL.add(lavatrice);
-				}
-
-				for (Rubinetto rubinetto : rubinetti) {
-					rubinetto.setStato(true);
-					LL.add(rubinetto);
-				}
-
-				for (Fornello fornello : fornelli) {
-					fornello.setStato(true);
-					LL.add(fornello);
-				}
+				rompiElementi(LL, CasellaTipo.LAVATRICE);
+				rompiElementi(LL, CasellaTipo.RUBINETTO);
+				rompiElementi(LL, CasellaTipo.FORNELLO);
 
 				aggiornaCasa(LL);
 				LL.clear();
 
-				try {
-					Thread.sleep(10000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				aspettando();
 
-				for (Lavatrice lavatrice : lavatrici) {
-					lavatrice.setStato(true);
-					LL.add(lavatrice);
-				}
+				rompiElementi(LL, CasellaTipo.LAVATRICE);
 
 				aggiornaCasa(LL);
 				LL.clear();
+			}
+		}
+
+		private void rompiElementi(LinkedList<Casella> LL, CasellaTipo tipo) {
+			Casella temp = null;
+			CasellaStato[] lista = null;
+
+			switch (tipo) {
+				case FORNELLO:
+					lista = fornelli;
+
+					break;
+				case LAVATRICE:
+					lista = lavatrici;
+
+					break;
+				case RUBINETTO:
+					lista = rubinetti;
+
+					break;
+				default:
+					messaggioErrore(
+							"In questa funzione e' permesso solamente alle caselle di tipo Fornello, Lavatrice e Rubinetto.");
+					break;
+			}
+
+			for (CasellaStato casella : lista) {
+				if (casella.getStato() == false) {
+					casella.setStato(true);
+					LL.add(casella);
+				}
+				if (!tipo.equals(CasellaTipo.FORNELLO)) {
+					temp = allagaPavimenti(casella);
+					if (temp != null)
+						LL.add(temp);
+				}
+			}
+		}
+
+		private void aspettando() {
+			try {
+				Thread.sleep(timeMillis);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+
+		private Casella allagaPavimenti(CasellaStato casella) {
+			LinkedList<Nodo> pavimentiAdiacenti = new LinkedList<>();
+			pavimentiAdiacenti = pavimentiAdiacenti(casella);
+			Casella res = null;
+
+			for (Nodo nodo : pavimentiAdiacenti)
+				nodo.setColore(ColoreNodo.GRIGIO);
+			stack.addAll(pavimentiAdiacenti);
+
+			Integer cont = 0;
+			while (cont < stack.size()) {
+				res = allagaPavimentiRic(stack.get(cont));
+				if (res != null){
+					stack.clear();
+					return res;
+				}
+				cont++;
+			}
+
+			return null;
+		}
+
+		private Casella allagaPavimentiRic(Nodo casellaSorgente) {
+			if (casellaSorgente.getColore().equals(ColoreNodo.GRIGIO)) {
+				if (mappa[casellaSorgente.getX()][casellaSorgente.getY()].getTipo().equals(CasellaTipo.PAVIMENTO)) {
+					Pavimento p = (Pavimento) mappa[casellaSorgente.getX()][casellaSorgente.getY()];
+					if (p.getStato() == false) {
+						p.setStato(true);
+						return p;
+					}
+				} 
+				if (mappa[casellaSorgente.getX()][casellaSorgente.getY()].getTipo().equals(CasellaTipo.ANIMALE)) {
+					Animale a = (Animale) mappa[casellaSorgente.getX()][casellaSorgente.getY()];
+					if (a.getStato() == false) {
+						a.setStato(true);
+						return a;
+					}
+				}
+
+				LinkedList<Nodo> pavimentiAdiacenti = new LinkedList<>();
+				pavimentiAdiacenti = pavimentiAdiacenti(mappa[casellaSorgente.getX()][casellaSorgente.getY()]);
+
+				for (Nodo nodo : pavimentiAdiacenti)
+					nodo.setColore(ColoreNodo.GRIGIO);
+				stack.addAll(pavimentiAdiacenti);
+
+				casellaSorgente.setColore(ColoreNodo.NERO);
+			}
+			return null;
+		}
+
+		private LinkedList<Nodo> pavimentiAdiacenti(Casella casella) {
+			LinkedList<Nodo> pavimentiAdiacenti = new LinkedList<>();
+
+			aggiungiNodo(casella.getX(), casella.getY() - 1, pavimentiAdiacenti);
+			aggiungiNodo(casella.getX() + 1, casella.getY(), pavimentiAdiacenti);
+			aggiungiNodo(casella.getX(), casella.getY() + 1, pavimentiAdiacenti);
+			aggiungiNodo(casella.getX() - 1, casella.getY(), pavimentiAdiacenti);
+
+			return pavimentiAdiacenti;
+		}
+
+		private void aggiungiNodo(Integer t_x, Integer t_y, LinkedList<Nodo> pavimentiAdiacenti) {
+			if (mappa[t_x][t_y].getTipo().equals(CasellaTipo.PAVIMENTO)
+					|| mappa[t_x][t_y].getTipo().equals(CasellaTipo.ANIMALE)) {
+				for (Nodo nodo : pavimentiAdiacenti)
+					if (t_x == nodo.getX() && t_y == nodo.getY())
+						return;
+				pavimentiAdiacenti.add(new Nodo((Casella) mappa[t_x][t_y]));
 			}
 		}
 	}
