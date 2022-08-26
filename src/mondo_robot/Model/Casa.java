@@ -212,7 +212,7 @@ public class Casa {
 
 				if (l_y == 0)
 					l_x = line.length();
-				else if (l_x != line.length()) 
+				else if (l_x != line.length())
 					this.messaggioErrore("La mappa che devi disegnare dev'essere quadrata!");
 				l_y++;
 
@@ -585,7 +585,7 @@ public class Casa {
 			LinkedList<Casella> LL = new LinkedList<>();
 
 			try {
-				Thread.sleep(5000);
+				Thread.sleep(10000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -594,11 +594,14 @@ public class Casa {
 				lavatrice.setStato(true);
 				LL.add(lavatrice);
 			}
-			
+
+			aggiornaCasa(LL);
+			LL.clear();
+
 			while (true) {
 
 				try {
-					Thread.sleep(5000);
+					Thread.sleep(10000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -618,8 +621,11 @@ public class Casa {
 					LL.add(fornello);
 				}
 
+				aggiornaCasa(LL);
+				LL.clear();
+
 				try {
-					Thread.sleep(5000);
+					Thread.sleep(10000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -628,6 +634,9 @@ public class Casa {
 					lavatrice.setStato(true);
 					LL.add(lavatrice);
 				}
+
+				aggiornaCasa(LL);
+				LL.clear();
 			}
 		}
 	}
