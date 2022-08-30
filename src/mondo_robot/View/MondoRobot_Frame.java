@@ -25,6 +25,9 @@ abstract class MondoRobot_Frame extends JFrame {
 	 *               finestra
 	 */
 	protected void setMenuWindow(String title, GridLayout layout, boolean haveSpacing) {
+		if( title == null || layout == null)
+			throw new IllegalArgumentException("I parametri 'title' e 'layout' non devono essere null");
+
 		this.setIconImage(new ImageIcon(FAVICON).getImage());
 		this.setTitle(title);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,6 +47,9 @@ abstract class MondoRobot_Frame extends JFrame {
 	 * 
 	 */
 	protected JButton menuButton(String title) {
+		if(title == null)
+			throw new IllegalArgumentException("Il parametro 'title' non dev'essere null");
+		
 		JButton tmp = new JButton(title); // questo bottone crea una nuova partita creando una mappa generata dal PC
 		tmp.setFont(new Font(null, Font.BOLD, 25)); // faccio ingrandire il testo
 		tmp.setHorizontalTextPosition(JButton.CENTER); // posiziono il testo al centro

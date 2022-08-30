@@ -28,6 +28,9 @@ class Controller_Game implements ActionListener, KeyListener {
 	private Frame_Game v;
 
 	public Controller_Game(Frame_Game frame, Casa model) {
+		if( frame == null || model == null)
+			throw new IllegalArgumentException("I parametri non devono mai essere null");
+			
 		this.v = frame;
 		this.m = model;
 

@@ -26,6 +26,12 @@ public class Frame_Game extends MondoRobot_Frame implements PropertyChangeListen
 	private boolean isVisible;
 
 	public Frame_Game(int n, GameMode gamemode, boolean isVisible) {
+		if(n < 5)
+			throw new IllegalArgumentException("Il parametro 'n' non dev'essere minore di 5, in quanto la dimensione della mappa minima consentita è di 5");
+
+		if(gamemode == null)
+			throw new IllegalArgumentException("Il parametro 'gamemode' non dev'essere null");
+
 		this.gamemode = gamemode;
 		this.dimension = n;
 		this.isVisible = isVisible;
@@ -102,7 +108,6 @@ public class Frame_Game extends MondoRobot_Frame implements PropertyChangeListen
 	public void updVisible() {
 		if (this.gamemode.equals(GameMode.DEBUG)) {
 			this.isVisible = !this.isVisible;
-
 			this.setVisible(this.isVisible);
 		}
 	}

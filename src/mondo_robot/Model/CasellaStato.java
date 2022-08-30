@@ -18,10 +18,9 @@ abstract class CasellaStato extends Casella{
 	}	
 
 	public boolean repair() {
-		if(this.stato == true){
+		if(this.stato == true)
 			this.stato = false;
-			return true;
-		}
-		return false;
+		
+		return !this.stato;
 	}
 }

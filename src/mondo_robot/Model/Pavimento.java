@@ -11,6 +11,9 @@ class Pavimento extends CasellaStato{
 	}
 
 	public void setX(int x) {
+		if (x < 1)
+			throw new IllegalArgumentException("Il parametro 'x' dev'essere all'interno della mappa");
+
 		this.x = x;
 	}
 

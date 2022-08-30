@@ -25,6 +25,12 @@ public class Casa {
 	private Drone drone;
 
 	public Casa(Integer n) {
+		if (n == null)
+			throw new IllegalArgumentException("Il parametro 'n' non dev'essere null");
+
+		if (n < 5)
+			throw new IllegalArgumentException("La dimensione minima della mappa è 5");
+
 		this.support = new PropertyChangeSupport(this);
 
 		this.istanziaMappa(n);
@@ -47,6 +53,9 @@ public class Casa {
 	}
 
 	public Casa(File file) {
+		if (file == null)
+			throw new IllegalArgumentException("Il parametro 'file' non dev'essere null");
+
 		this.support = new PropertyChangeSupport(this);
 
 		controlloFile(file);
@@ -59,6 +68,7 @@ public class Casa {
 	}
 
 	private void istanziaMappa(Integer n) {
+
 		this.mappa = new Casella[n][n];
 	}
 
@@ -176,6 +186,9 @@ public class Casa {
 	}
 
 	private void aggiungiCasella(Casella casella) {
+		if (casella == null)
+			throw new IllegalArgumentException("Il parametro 'casella' non dev'essere null");
+
 		this.mappa[casella.getX()][casella.getY()] = casella;
 	}
 
@@ -377,6 +390,9 @@ public class Casa {
 	}
 
 	private void muoviAnimali(LinkedList<Casella> LL) {
+		if (LL == null)
+			throw new IllegalArgumentException("Il parametro 'LL' non dev'essere null");
+
 		Integer[] pavimentoTarget = null;
 		for (int i = 0; i < this.animali.length; i++) {
 			pavimentoTarget = animaleDecide(this.animali[i]);
@@ -409,36 +425,27 @@ public class Casa {
 	}
 
 	private Integer[] animaleDecide(Animale animale) {
-		LinkedList<Integer[]> scelte = new LinkedList<>();
-		Integer[] coordinate;
+		if (animale == null)
+			throw new IllegalArgumentException("Il parametro 'animale' non dev'essere null");
 
-		if (this.mappa[animale.getX() - 1][animale.getY()].getTipo().equals(CasellaTipo.PAVIMENTO)) {
-			coordinate = new Integer[2];
-			coordinate[0] = animale.getX() - 1;
-			coordinate[1] = animale.getY();
-			scelte.add(coordinate);
-		}
-		if (this.mappa[animale.getX() + 1][animale.getY()].getTipo().equals(CasellaTipo.PAVIMENTO)) {
-			coordinate = new Integer[2];
-			coordinate[0] = animale.getX() + 1;
-			coordinate[1] = animale.getY();
-			scelte.add(coordinate);
-		}
-		if (this.mappa[animale.getX()][animale.getY() - 1].getTipo().equals(CasellaTipo.PAVIMENTO)) {
-			coordinate = new Integer[2];
-			coordinate[0] = animale.getX();
-			coordinate[1] = animale.getY() - 1;
-			scelte.add(coordinate);
-		}
-		if (this.mappa[animale.getX()][animale.getY() + 1].getTipo().equals(CasellaTipo.PAVIMENTO)) {
-			coordinate = new Integer[2];
-			coordinate[0] = animale.getX();
-			coordinate[1] = animale.getY() + 1;
-			scelte.add(coordinate);
-		}
+		LinkedList<Integer[]> scelte = new LinkedList<>();
+
+		controllaPavimento(animale.getX() - 1, animale.getY(), scelte);
+		controllaPavimento(animale.getX() + 1, animale.getY(), scelte);
+		controllaPavimento(animale.getX(), animale.getY() - 1, scelte);
+		controllaPavimento(animale.getX(), animale.getY() + 1, scelte);
 		scelte.add(null);
 
 		return scelte.get((int) (Math.random() * scelte.size()));
+	}
+
+	private void controllaPavimento(Integer t_x, Integer t_y, LinkedList<Integer[]> scelte) {
+		Integer[] coordinate = new Integer[2];
+		if (this.mappa[t_x][t_y].getTipo().equals(CasellaTipo.PAVIMENTO)) {
+			coordinate[0] = t_x;
+			coordinate[1] = t_y;
+			scelte.add(coordinate);
+		}
 	}
 
 	public void addListener(PropertyChangeListener listener) {
@@ -456,6 +463,9 @@ public class Casa {
 	}
 
 	public void turnRobot(Svolta svolta) {
+		if (svolta == null)
+			throw new IllegalArgumentException("Il parametro 'svolta' non dev'essere null");
+
 		for (int i = 0; i < Direzioni.values().length; i++)
 			if (this.drone.getDirezione().equals(Direzioni.values()[i])) {
 				if (svolta.equals(Svolta.DESTRA))
@@ -541,14 +551,6 @@ public class Casa {
 					JOptionPane.QUESTION_MESSAGE);
 	}
 
-	// private Direzioni getDirezioneCasuale() {
-	// int choise = (int) (Math.random() * (Direzioni.values().length + 1));
-	// if (choise == Direzioni.values().length)
-	// return null;
-	// else
-	// return Direzioni.values()[choise];
-	// }
-
 	public int getDimensione() {
 		return this.mappa.length;
 	}
@@ -621,12 +623,12 @@ public class Casa {
 				if (casella.getStato() == false) {
 					casella.setStato(true);
 					LL.add(casella);
-				}
-				if (!tipo.equals(CasellaTipo.FORNELLO)) {
-					temp = allagaPavimenti(casella);
-					if (temp != null)
-						LL.add(temp);
-				}
+				} else 
+					if (!tipo.equals(CasellaTipo.FORNELLO)) {
+						temp = allagaPavimenti(casella);
+						if (temp != null)
+							LL.add(temp);
+					}
 			}
 		}
 
@@ -650,7 +652,7 @@ public class Casa {
 			Integer cont = 0;
 			while (cont < stack.size()) {
 				res = allagaPavimentiRic(stack.get(cont));
-				if (res != null){
+				if (res != null) {
 					stack.clear();
 					return res;
 				}
@@ -668,7 +670,7 @@ public class Casa {
 						p.setStato(true);
 						return p;
 					}
-				} 
+				}
 				if (mappa[casellaSorgente.getX()][casellaSorgente.getY()].getTipo().equals(CasellaTipo.ANIMALE)) {
 					Animale a = (Animale) mappa[casellaSorgente.getX()][casellaSorgente.getY()];
 					if (a.getStato() == false) {
@@ -729,24 +731,4 @@ public class Casa {
 	public void disposeAll() {
 		this.support.firePropertyChange("dispose", null, null);
 	}
-	
-	// private void stampaTutto() {
-	// 	System.out.println("Dimensione: " + this.mappa.length + "\n");
-	// 	System.out.println("Visione:");
-	// 	for (int x = 0; x < this.mappa.length; x++) {
-	// 		for (int y = 0; y < this.mappa.length; y++)
-	// 			System.out.format("%12s", this.mappa[y][x].getVisible());
-	// 		System.out.println();
-	// 	}
-
-	// 	System.out.println();
-	// 	System.out.println("Mappa:");
-	// 	for (int x = 0; x < this.mappa.length; x++) {
-	// 		for (int y = 0; y < this.mappa.length; y++)
-	// 			System.out.format("%2s", this.mappa[y][x].getTipo().toString().charAt(0));
-	// 		System.out.println();
-	// 	}
-	// 	System.out.println("Robot:\n\tX: " + this.robot.getX() + "\n\tY: " +
-	// 			this.robot.getY());
-	// }
 }

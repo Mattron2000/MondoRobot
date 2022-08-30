@@ -15,6 +15,9 @@ public abstract class Casella {
 	protected boolean visible;
 
 	protected Casella(Integer x, Integer y, CasellaTipo tipo) {
+		if (x == null || y == null || tipo == null)
+			throw new IllegalArgumentException("I parametri 'x', 'y' e 'tipo' non devono essere null");
+
 		this.x = x;
 		this.y = y;
 		this.tipo = tipo;
@@ -42,6 +45,9 @@ public abstract class Casella {
 	}
 
 	public ImageIcon getImmagine(GameMode gamemode) {
+		if (gamemode == null)
+			throw new IllegalArgumentException("Il parametro 'gamemode' non dev'essere null");
+		
 		if (this.getVisible() || gamemode.equals(GameMode.DEBUG))
 			switch (this.tipo) {
 				case ANIMALE:

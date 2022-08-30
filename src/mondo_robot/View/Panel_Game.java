@@ -15,12 +15,15 @@ public class Panel_Game extends JPanel {
 
 	public Panel_Game(int dim, GameMode gamemode) {
 		super(new GridLayout(dim, dim));
+
+		if (dim < 5)
+			throw new IllegalArgumentException(
+					"Il parametro 'dim' non dev'essere minore della dimensione della mappa minima consentita (minimo: 5)");
+		if (gamemode == null)
+			throw new IllegalArgumentException("Il parametro 'gamemode' non dev'essere null");
+
 		this.dimension = dim;
 		this.gamemode = gamemode;
-		// if(this.gamemode)
-		// this.setFocusable(false);
-		// else
-		// this.setFocusable(true);
 
 		/*
 		 * Dimensione ricevuta da Frame_Game
@@ -30,16 +33,6 @@ public class Panel_Game extends JPanel {
 
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		this.dimensioneCasella = ((int) (gd.getDisplayMode().getWidth() / 2.5) - 20) / this.dimension;
-
-		for (int i = 0; i < this.dimension; i++) {
-			for (int j = 0; j < this.dimension; j++) {
-				this.contenutoMappa[j][i] = new JLabel(null, null, JLabel.CENTER);
-				this.contenutoMappa[j][i].setOpaque(true);
-				this.contenutoMappa[j][i].setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
-				this.contenutoMappa[j][i].setSize(this.dimensioneCasella, this.dimensioneCasella);
-				this.add(contenutoMappa[j][i]);
-			}
-		}
 
 		/*
 		 * Utilizzando due cicli for, usando la dimensione passata a posteriori, vado a
@@ -52,136 +45,41 @@ public class Panel_Game extends JPanel {
 		 * "contenutoMappa"
 		 * Fuori dai cicli rendo visibile la griglia
 		 */
+		for (int i = 0; i < this.dimension; i++) {
+			for (int j = 0; j < this.dimension; j++) {
+				this.contenutoMappa[j][i] = new JLabel(null, null, JLabel.CENTER);
+				this.contenutoMappa[j][i].setOpaque(true);
+				this.contenutoMappa[j][i].setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
+				this.contenutoMappa[j][i].setSize(this.dimensioneCasella, this.dimensioneCasella);
+				this.add(contenutoMappa[j][i]);
+			}
+		}
 
 		this.setVisible(true);
 	}
 
-	protected void resetPanel() {
-		for (int i = 0; i < this.dimension; i++)
-			for (int j = 0; j < this.dimension; j++)
-				this.contenutoMappa[i][j].setIcon(this.makeImageIcon(Casella.NEBBIA));
-
-		/*
-		 * Questa funzione serve per resettare la mappa reimpostando le immagini
-		 * corrette
-		 * Esempio:
-		 * Durante la partita il robot si muove e con le funzioni commentate sotto
-		 * "evidenzio" il percorso che fa
-		 * cambiando lo sfondo della singola label
-		 * Utilizzando resetPanel() reimposto lo sfondo delle label all'immagine di
-		 * partenza come se il robot non avesse
-		 * fatto nessun tipo di movimento, quindi i muri si resettano con
-		 * "wall-idle.png" e i pavimenti con "floor-idle.png"
-		 *
-		 */
-	}
-
 	protected void inizializzaMappa(Casella[][] nuovaMappa) {
+		if(nuovaMappa == null)
+			throw new IllegalArgumentException("Il parametro 'nuovaMappa' non dev'essere null, ma piena di caselle per impostare le immagini");
+
 		for (int i = 0; i < this.dimension; i++)
 			for (int j = 0; j < this.dimension; j++)
 				this.contenutoMappa[i][j].setIcon(this.makeImageIcon(nuovaMappa[i][j].getImmagine(this.gamemode)));
 	}
 
 	public void aggiornaMappa(Casella[] nuoveCaselle) {
+		if(nuoveCaselle == null)
+			throw new IllegalArgumentException("Il parametro 'nuoveCaselle' non dev'essere null, ma una lista di caselle modificate");
+
 		for (Casella c : nuoveCaselle)
 			this.contenutoMappa[c.getX()][c.getY()].setIcon(this.makeImageIcon(c.getImmagine(this.gamemode)));
 	}
 
 	private ImageIcon makeImageIcon(ImageIcon imageIcon) {
+		if(imageIcon == null)
+			throw new IllegalArgumentException("Il parametro 'imageIcon' non dev'essere null, ma l'immagine di partenza della casella");
+
 		return new ImageIcon(imageIcon.getImage().getScaledInstance(this.dimensioneCasella, this.dimensioneCasella,
 				java.awt.Image.SCALE_SMOOTH));
 	}
-
-	/*
-	 * Le due funzioni commentate sotto servono per mantenere traccia degli
-	 * spostamenti del robot:
-	 * La prima per tenere traccia anche della cella/posizione precedente
-	 * La seconda per tenere traccia solo della cella/posizione corrente
-	 * impostando lo sfondo/background a un determinato colore (per creare il
-	 * percorso)
-	 */
-
-	/*
-	 * public void updatePanel(Robot r, Casella oldCella){
-	 * for(int i=0; i<this.dimension; i++){
-	 * for(int j=0; j<this.dimension; j++){
-	 * if(i==0 || j==0 || i==this.dimension-1 || j==this.dimension-1){
-	 * this.contenutoMappa[i][j].setIcon(new
-	 * ImageIcon(Objects.requireNonNull(getClass().getResource(
-	 * "/icons/wall-idle.png"))));
-	 * }
-	 * }
-	 * }
-	 * if(r.isPlaying()){
-	 * this.contenutoMappa[oldCella.getY()][oldCella.getX()].setBackground(Color.
-	 * white);
-	 * this.contenutoMappa[r.getCell().getY()][r.getCell().getX()].setBackground(
-	 * Color.white);
-	 * 
-	 * switch (r.getFacing()) {
-	 * case NORD:
-	 * this.contenutoMappa[r.getCell().getY()][r.getCell().getX()]
-	 * .setIcon(new ImageIcon(
-	 * Objects.requireNonNull(getClass().getResource("/image/robot-north.png"))));
-	 * break;
-	 * case EST:
-	 * this.contenutoMappa[r.getCell().getY()][r.getCell().getX()]
-	 * .setIcon(
-	 * new ImageIcon(
-	 * Objects.requireNonNull(getClass().getResource("/image/robot-est.png"))));
-	 * break;
-	 * case SUD:
-	 * this.contenutoMappa[r.getCell().getY()][r.getCell().getX()]
-	 * .setIcon(new ImageIcon(
-	 * Objects.requireNonNull(getClass().getResource("/image/robot-south.png"))));
-	 * break;
-	 * case OVEST:
-	 * this.contenutoMappa[r.getCell().getY()][r.getCell().getX()]
-	 * .setIcon(
-	 * new ImageIcon(
-	 * Objects.requireNonNull(getClass().getResource("/icons/robot-west.png"))));
-	 * break;
-	 * default:
-	 * break;
-	 * }
-	 * }
-	 * }
-	 * 
-	 * 
-	 * public void updatePanel(Robot r, Casella oldCella){
-	 * 
-	 * if(r.isPlaying()){
-	 * 
-	 * this.contenutoMappa[r.getCell().getY()][r.getCell().getX()].setBackground(
-	 * Color.white);
-	 * 
-	 * switch (r.getFacing()) {
-	 * case NORD:
-	 * this.contenutoMappa[r.getCell().getY()][r.getCell().getX()]
-	 * .setIcon(new ImageIcon(
-	 * Objects.requireNonNull(getClass().getResource("/image/robot-north.png"))));
-	 * break;
-	 * case EST:
-	 * this.contenutoMappa[r.getCell().getY()][r.getCell().getX()]
-	 * .setIcon(
-	 * new ImageIcon(
-	 * Objects.requireNonNull(getClass().getResource("/image/robot-est.png"))));
-	 * break;
-	 * case SUD:
-	 * this.contenutoMappa[r.getCell().getY()][r.getCell().getX()]
-	 * .setIcon(new ImageIcon(
-	 * Objects.requireNonNull(getClass().getResource("/image/robot-south.png"))));
-	 * break;
-	 * case OVEST:
-	 * this.contenutoMappa[r.getCell().getY()][r.getCell().getX()]
-	 * .setIcon(
-	 * new ImageIcon(
-	 * Objects.requireNonNull(getClass().getResource("/icons/robot-west.png"))));
-	 * break;
-	 * default:
-	 * break;
-	 * }
-	 * }
-	 * }
-	 */
 }

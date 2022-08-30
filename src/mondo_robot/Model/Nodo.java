@@ -7,6 +7,9 @@ public class Nodo {
 	private Integer y;
 
 	public Nodo(Casella casella) {
+		if (casella == null)
+			throw new IllegalArgumentException("Il parametro 'casella' non dev'essere null");
+		
 		this.colore = ColoreNodo.BIANCO;
 		this.x = casella.getX();
 		this.y = casella.getY();
@@ -18,6 +21,9 @@ public class Nodo {
 	}
 
 	public void setColore(ColoreNodo colore) {
+		if (colore == null)
+			throw new IllegalArgumentException("Il parametro 'colore' non dev'essere null");
+		
 		this.colore = colore;
 	}
 

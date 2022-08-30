@@ -4,5 +4,4 @@ public enum ColoreNodo {
 	BIANCO, 
 	GRIGIO,
 	NERO
-
 }

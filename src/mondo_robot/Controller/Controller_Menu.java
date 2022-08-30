@@ -167,13 +167,13 @@ public class Controller_Menu implements ActionListener {
 			"\t\t- \"R\" (Rubinetto):  ci dev'essere almeno uno.\n" +
 			"\t\t- \"A\" (Animale domestico):  ci dev'essere almeno uno.\n" +
 			"\t\t- \"D\" (Drone):  ci dev'essere solo e solamente uno per mappa (non puoi controllare due droni contemporaneamente...).\n";
-	
+
 	/**
 	 * Campo usato per poter collegarmi all'istanza {@link Frame_Menu}
 	 * 
 	 */
 	private Frame_Menu v;
-	
+
 	/**
 	 * Il costruttore memorizza l'istanza di {@link Frame_Menu} creata nel
 	 * {@link MVC_Main#main(String[])}
@@ -182,6 +182,9 @@ public class Controller_Menu implements ActionListener {
 	 *          degli input provenienti da esso
 	 */
 	public Controller_Menu(Frame_Menu v) {
+		if (v == null)
+			throw new IllegalArgumentException("Il parametro non dev'essere mai null");
+
 		this.v = v;
 
 		this.v.addListener(this);
@@ -268,13 +271,12 @@ public class Controller_Menu implements ActionListener {
 		}
 	}
 
-//
-//
-//
-//
-//
-
 	private JOptionPane jSliderSelectorOptionPane(int min, int max) {
+		if (min >= max)
+			throw new IllegalArgumentException("Il parametro 'min' non dev'essere uguale o maggiore di 'max'");
+		if (min < 0)
+			throw new IllegalArgumentException("Il parametro 'min' non dev'essere minore di zero");
+
 		JOptionPane optionPane = new JOptionPane();
 		JSlider slider = new JSlider(min, max);
 
@@ -369,7 +371,7 @@ public class Controller_Menu implements ActionListener {
 
 	private void startGame(Casa model) {
 		new Controller_Game(new Frame_Game(model.getDimensione(), GameMode.GAME, true), model);
-		
+
 		new Controller_Game(new Frame_Game(model.getDimensione(), GameMode.DEBUG, this.v.gameModeSelected()), model);
 	}
 }
