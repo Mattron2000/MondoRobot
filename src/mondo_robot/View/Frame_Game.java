@@ -20,33 +20,42 @@ public class Frame_Game extends MondoRobot_Frame implements PropertyChangeListen
 	private GameMode gamemode;
 	private int dimension;
 	private JMenuItem esciMenu;
-	private JMenuItem salvaMenu;
-	private JMenu guidaMenu;
+	private JMenuItem salvaInFile;
+	private JMenuItem guidaMenu;
+	private JMenuItem comandiGioco;
+	private boolean isVisible;
 
-	public Frame_Game(int n, GameMode gamemode) {
+	public Frame_Game(int n, GameMode gamemode, boolean isVisible) {
 		this.gamemode = gamemode;
 		this.dimension = n;
+		this.isVisible = isVisible;
 
 		if (this.gamemode.equals(GameMode.DEBUG))
 			setMenuWindow("MondoRobot - Debug", new GridLayout(1, 1), false);
-		else
+		else {
 			setMenuWindow("MondoRobot - Game", new GridLayout(1, 1), false);
 
-		JMenuBar menuBar = new JMenuBar();
+			JMenuBar menuBar = new JMenuBar();
+			JMenu fileMenu = new JMenu("File");
+			JMenu aiutoMenu = new JMenu("Aiuto");
 
-		JMenu fileMenu = new JMenu("File");
-		guidaMenu = new JMenu("Comandi");
+			salvaInFile = new JMenuItem("Salva Partita");
+			esciMenu = new JMenuItem("Esci");
 
-		salvaMenu = new JMenuItem("Salva Partita");
-		esciMenu = new JMenuItem("Esci");
+			fileMenu.add(salvaInFile);
+			fileMenu.add(esciMenu);
 
-		fileMenu.add(salvaMenu);
-		fileMenu.add(esciMenu);
+			guidaMenu = new JMenuItem("Guida");
+			comandiGioco = new JMenuItem("Comandi");
 
-		menuBar.add(fileMenu);
-		menuBar.add(guidaMenu);
+			aiutoMenu.add(guidaMenu);
+			aiutoMenu.add(comandiGioco);
 
-		this.setJMenuBar(menuBar);
+			menuBar.add(fileMenu);
+			menuBar.add(aiutoMenu);
+
+			this.setJMenuBar(menuBar);
+		}
 
 		p = new Panel_Game(this.dimension, this.gamemode);
 		this.add(p);
@@ -55,13 +64,16 @@ public class Frame_Game extends MondoRobot_Frame implements PropertyChangeListen
 
 		this.setSize(this.p.dimension * this.p.dimensioneCasella, this.p.dimension * this.p.dimensioneCasella);
 
-		this.setVisible(true);
+		this.setVisible(this.isVisible);
 	}
 
 	public void addListener(ActionListener listener) {
-		this.salvaMenu.addActionListener(listener);
-		this.esciMenu.addActionListener(listener);
-		this.guidaMenu.addActionListener(listener);
+		if (this.gamemode.equals(GameMode.GAME)) {
+			this.salvaInFile.addActionListener(listener);
+			this.esciMenu.addActionListener(listener);
+			this.guidaMenu.addActionListener(listener);
+			this.comandiGioco.addActionListener(listener);
+		}
 	}
 
 	@Override
@@ -73,10 +85,25 @@ public class Frame_Game extends MondoRobot_Frame implements PropertyChangeListen
 				break;
 			case "updMap":
 				this.p.aggiornaMappa((Casella[]) evt.getNewValue());
+			break;
+			case "setVisible":
+				this.updVisible();
+
+				break;
+			case "dispose":
+				this.dispose();
 		}
 	}
 
 	public GameMode getGameMode() {
 		return this.gamemode;
+	}
+
+	public void updVisible() {
+		if (this.gamemode.equals(GameMode.DEBUG)) {
+			this.isVisible = !this.isVisible;
+
+			this.setVisible(this.isVisible);
+		}
 	}
 }

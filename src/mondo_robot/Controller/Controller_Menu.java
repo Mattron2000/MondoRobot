@@ -35,7 +35,7 @@ public class Controller_Menu implements ActionListener {
 	 * Campo contenente la guida testuale del gioco MondoRobot.
 	 * 
 	 */
-	private final String guidaText = "Benvenuto nella guida per la creazione di mappe per il gioco MondoRobot.\n\n\n"
+	private final static String guidaText = "Benvenuto nella guida per la creazione di mappe per il gioco MondoRobot.\n\n\n"
 			+
 
 			"Il gioco consiste nel controllare un drone lavapavimenti e cercare di tenere pulita la casa, ovvero la mappa.\n\n\n"
@@ -328,7 +328,7 @@ public class Controller_Menu implements ActionListener {
 		return fileChooser;
 	}
 
-	private void makeGuideTextFile() {
+	static void makeGuideTextFile() {
 		/*
 		 * creo il file 'guida-MondoRobot.txt' o se esiste scelgo quello
 		 * 
@@ -368,9 +368,8 @@ public class Controller_Menu implements ActionListener {
 	}
 
 	private void startGame(Casa model) {
-		new Controller_Game(new Frame_Game(model.getDimensione(), GameMode.GAME), model);
-
-		if (this.v.gameModeSelected())
-			new Controller_Game(new Frame_Game(model.getDimensione(), GameMode.DEBUG), model);
+		new Controller_Game(new Frame_Game(model.getDimensione(), GameMode.GAME, true), model);
+		
+		new Controller_Game(new Frame_Game(model.getDimensione(), GameMode.DEBUG, this.v.gameModeSelected()), model);
 	}
 }

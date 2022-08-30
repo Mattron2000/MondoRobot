@@ -14,7 +14,7 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 public class Casa {
-	private int DIFFICULTY = 30; // valora percentile della difficoltà del gioco [0 - 100]
+	private int DIFFICULTY = 20; // valora percentile della difficoltà del gioco [0 - 100]
 
 	private PropertyChangeSupport support;
 	private Casella[][] mappa;
@@ -553,26 +553,6 @@ public class Casa {
 		return this.mappa.length;
 	}
 
-	private void stampaTutto() {
-		System.out.println("Dimensione: " + this.mappa.length + "\n");
-		System.out.println("Visione:");
-		for (int x = 0; x < this.mappa.length; x++) {
-			for (int y = 0; y < this.mappa.length; y++)
-				System.out.format("%12s", this.mappa[y][x].getVisible());
-			System.out.println();
-		}
-
-		System.out.println();
-		System.out.println("Mappa:");
-		for (int x = 0; x < this.mappa.length; x++) {
-			for (int y = 0; y < this.mappa.length; y++)
-				System.out.format("%12s", this.mappa[y][x].getTipo());
-			System.out.println();
-		}
-		System.out.println("Robot:\n\tX: " + this.robot.getX() + "\n\tY: " +
-				this.robot.getY());
-	}
-
 	private void avviaRompiElementi() {
 		RompiElementiThread r = new RompiElementiThread();
 		Thread t = new Thread(r);
@@ -581,7 +561,7 @@ public class Casa {
 
 	private class RompiElementiThread implements Runnable {
 		LinkedList<Nodo> stack = new LinkedList<>();
-		Integer timeMillis = 1000;
+		Integer timeMillis = 20000;
 
 		@Override
 		public void run() {
@@ -731,13 +711,42 @@ public class Casa {
 		}
 	}
 
-	public static void main(String[] args) {
-		Casa h1 = new Casa(new File("src/mondo_robot/Map/mappa_5x5.txt"));
-		// System.out.println(h1.robot.getDirezione());
-		// h1.turnRobot(Svolta.DESTRA);
-		// System.out.println(h1.robot.getDirezione());
-
-		// h1.stepRobot();
-		h1.stampaTutto();
+	public void updVisible() {
+		this.support.firePropertyChange("setVisible", null, null);
 	}
+
+	public char[][] stampaMappa() {
+		char[][] res = new char[this.getDimensione()][this.getDimensione()];
+
+		for (int x = 0; x < this.mappa.length; x++) {
+			for (int y = 0; y < this.mappa.length; y++)
+				res[x][y] = this.mappa[x][y].getTipo().toString().charAt(0);
+		}
+
+		return res;
+	}
+
+	public void disposeAll() {
+		this.support.firePropertyChange("dispose", null, null);
+	}
+	
+	// private void stampaTutto() {
+	// 	System.out.println("Dimensione: " + this.mappa.length + "\n");
+	// 	System.out.println("Visione:");
+	// 	for (int x = 0; x < this.mappa.length; x++) {
+	// 		for (int y = 0; y < this.mappa.length; y++)
+	// 			System.out.format("%12s", this.mappa[y][x].getVisible());
+	// 		System.out.println();
+	// 	}
+
+	// 	System.out.println();
+	// 	System.out.println("Mappa:");
+	// 	for (int x = 0; x < this.mappa.length; x++) {
+	// 		for (int y = 0; y < this.mappa.length; y++)
+	// 			System.out.format("%2s", this.mappa[y][x].getTipo().toString().charAt(0));
+	// 		System.out.println();
+	// 	}
+	// 	System.out.println("Robot:\n\tX: " + this.robot.getX() + "\n\tY: " +
+	// 			this.robot.getY());
+	// }
 }

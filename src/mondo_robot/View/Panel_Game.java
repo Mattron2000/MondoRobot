@@ -35,7 +35,7 @@ public class Panel_Game extends JPanel {
 			for (int j = 0; j < this.dimension; j++) {
 				this.contenutoMappa[j][i] = new JLabel(null, null, JLabel.CENTER);
 				this.contenutoMappa[j][i].setOpaque(true);
-				this.contenutoMappa[j][i].setBorder(BorderFactory.createLineBorder(Color.white, 1));
+				this.contenutoMappa[j][i].setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
 				this.contenutoMappa[j][i].setSize(this.dimensioneCasella, this.dimensioneCasella);
 				this.add(contenutoMappa[j][i]);
 			}
