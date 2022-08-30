@@ -7,6 +7,5 @@ enum CasellaTipo {
 	LAVATRICE,
 	RUBINETTO,
 	ANIMALE,
-	DRONE,
-	ROBOT
+	DRONE
 }

@@ -22,7 +22,7 @@ public class Casa {
 	private Lavatrice[] lavatrici;
 	private Rubinetto[] rubinetti;
 	private Animale[] animali;
-	private Robot robot;
+	private Drone drone;
 
 	public Casa(Integer n) {
 		this.support = new PropertyChangeSupport(this);
@@ -37,7 +37,7 @@ public class Casa {
 		this.creaCaselle(CasellaTipo.LAVATRICE);
 		this.creaCaselle(CasellaTipo.RUBINETTO);
 		this.creaCaselle(CasellaTipo.ANIMALE);
-		this.creaCaselle(CasellaTipo.ROBOT);
+		this.creaCaselle(CasellaTipo.DRONE);
 
 		this.riempiPavimento();
 
@@ -109,7 +109,7 @@ public class Casa {
 			case ANIMALE:
 				length = this.animali.length;
 				break;
-			case ROBOT:
+			case DRONE:
 				length = 1;
 			default:
 				break;
@@ -147,9 +147,9 @@ public class Casa {
 					aggiungiCasella(this.animali[i]);
 
 					break;
-				case ROBOT:
-					this.robot = new Robot(coordinate[0], coordinate[1]);
-					aggiungiCasella(this.robot);
+				case DRONE:
+					this.drone = new Drone(coordinate[0], coordinate[1]);
+					aggiungiCasella(this.drone);
 
 					break;
 				default:
@@ -187,11 +187,11 @@ public class Casa {
 	}
 
 	private void aggiornaVisione() {
-		this.mappa[this.robot.getX()][this.robot.getY()].setVisible(true);
-		this.mappa[this.robot.getX() - 1][this.robot.getY()].setVisible(true);
-		this.mappa[this.robot.getX() + 1][this.robot.getY()].setVisible(true);
-		this.mappa[this.robot.getX()][this.robot.getY() - 1].setVisible(true);
-		this.mappa[this.robot.getX()][this.robot.getY() + 1].setVisible(true);
+		this.mappa[this.drone.getX()][this.drone.getY()].setVisible(true);
+		this.mappa[this.drone.getX() - 1][this.drone.getY()].setVisible(true);
+		this.mappa[this.drone.getX() + 1][this.drone.getY()].setVisible(true);
+		this.mappa[this.drone.getX()][this.drone.getY() - 1].setVisible(true);
+		this.mappa[this.drone.getX()][this.drone.getY() + 1].setVisible(true);
 	}
 
 	private void controlloFile(File f) {
@@ -227,8 +227,8 @@ public class Casa {
 
 							break;
 						case 'D':
-							if (this.robot == null)
-								this.robot = new Robot(x, l_y - 1);
+							if (this.drone == null)
+								this.drone = new Drone(x, l_y - 1);
 							else
 								messaggioErrore("Non puoi controllare più robot contemporaneamente!");
 
@@ -299,7 +299,7 @@ public class Casa {
 		for (Muro muro : muri)
 			aggiungiCasella(muro);
 
-		aggiungiCasella(robot);
+		aggiungiCasella(drone);
 	}
 
 	/**
@@ -313,10 +313,10 @@ public class Casa {
 	 * 
 	 */
 	public void stepRobot() {
-		int target_x = this.robot.getX();
-		int target_y = this.robot.getY();
+		int target_x = this.drone.getX();
+		int target_y = this.drone.getY();
 
-		switch (this.robot.getDirezione()) {
+		switch (this.drone.getDirezione()) {
 			case EST:
 				target_x++;
 				break;
@@ -339,26 +339,26 @@ public class Casa {
 
 				Pavimento pavimento = (Pavimento) this.mappa[target_x][target_y];
 
-				pavimento.setX(this.robot.getX());
-				pavimento.setY(this.robot.getY());
+				pavimento.setX(this.drone.getX());
+				pavimento.setY(this.drone.getY());
 
 				pavimento.setStato(false);
 
-				this.robot.setX(target_x);
-				this.robot.setY(target_y);
+				this.drone.setX(target_x);
+				this.drone.setY(target_y);
 
 				this.mappa[pavimento.getX()][pavimento.getY()] = pavimento;
-				this.mappa[this.robot.getX()][this.robot.getY()] = this.robot;
+				this.mappa[this.drone.getX()][this.drone.getY()] = this.drone;
 
-				LL.add(this.mappa[this.robot.getX()][this.robot.getY()]);
+				LL.add(this.mappa[this.drone.getX()][this.drone.getY()]);
 				LL.add(this.mappa[pavimento.getX()][pavimento.getY()]);
 
 				this.aggiornaVisione();
-				LL.add(this.mappa[this.robot.getX()][this.robot.getY()]);
-				LL.add(this.mappa[this.robot.getX() - 1][this.robot.getY()]);
-				LL.add(this.mappa[this.robot.getX() + 1][this.robot.getY()]);
-				LL.add(this.mappa[this.robot.getX()][this.robot.getY() - 1]);
-				LL.add(this.mappa[this.robot.getX()][this.robot.getY() + 1]);
+				LL.add(this.mappa[this.drone.getX()][this.drone.getY()]);
+				LL.add(this.mappa[this.drone.getX() - 1][this.drone.getY()]);
+				LL.add(this.mappa[this.drone.getX() + 1][this.drone.getY()]);
+				LL.add(this.mappa[this.drone.getX()][this.drone.getY() - 1]);
+				LL.add(this.mappa[this.drone.getX()][this.drone.getY() + 1]);
 
 				muoviAnimali(LL);
 				aggiornaCasa(LL);
@@ -457,16 +457,16 @@ public class Casa {
 
 	public void turnRobot(Svolta svolta) {
 		for (int i = 0; i < Direzioni.values().length; i++)
-			if (this.robot.getDirezione().equals(Direzioni.values()[i])) {
+			if (this.drone.getDirezione().equals(Direzioni.values()[i])) {
 				if (svolta.equals(Svolta.DESTRA))
-					this.robot.setDirezione(Direzioni.values()[(i + 1) % Direzioni.values().length]);
+					this.drone.setDirezione(Direzioni.values()[(i + 1) % Direzioni.values().length]);
 				else
-					this.robot.setDirezione(
+					this.drone.setDirezione(
 							Direzioni.values()[(Direzioni.values().length + i - 1) % Direzioni.values().length]);
 				break;
 			}
 		LinkedList<Casella> LL = new LinkedList<>();
-		LL.add(this.mappa[this.robot.getX()][this.robot.getY()]);
+		LL.add(this.mappa[this.drone.getX()][this.drone.getY()]);
 
 		muoviAnimali(LL);
 		aggiornaCasa(LL);
@@ -483,10 +483,10 @@ public class Casa {
 	 * 
 	 */
 	public void interact() {
-		int target_x = this.robot.getX();
-		int target_y = this.robot.getY();
+		int target_x = this.drone.getX();
+		int target_y = this.drone.getY();
 
-		switch (this.robot.getDirezione()) {
+		switch (this.drone.getDirezione()) {
 			case EST:
 				target_x++;
 				break;

@@ -71,17 +71,17 @@ public abstract class Casella {
 					else
 						return Pavimento.PAVIMENTO_IDLE;
 
-				case ROBOT:
-					Robot robot = (Robot) this;
+				case DRONE:
+					Drone robot = (Drone) this;
 					switch (robot.getDirezione()) {
 						case EST:
-							return Robot.ROBOT_EST;
+							return Drone.DRONE_EST;
 						case NORD:
-							return Robot.ROBOT_NORD;
+							return Drone.DRONE_NORD;
 						case OVEST:
-							return Robot.ROBOT_OVEST;
+							return Drone.DRONE_OVEST;
 						case SUD:
-							return Robot.ROBOT_SUD;
+							return Drone.DRONE_SUD;
 					}
 
 				case RUBINETTO:
