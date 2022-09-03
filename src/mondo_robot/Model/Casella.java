@@ -6,9 +6,9 @@ import javax.swing.ImageIcon;
  * Superclasse di tutte e caselle de gioco 'MondoRobot'
  * 
  */
-public class Casella {
+public abstract class Casella {
 	/**
-	 * Percorso della cartella 'Image' contenenti ttte le immagini del gioco
+	 * Percorso della cartella 'Image' contenenti tutte le immagini del gioco
 	 * 
 	 */
 	protected static final String IMAGE_FOLDER = "src/mondo_robot/Image/";
@@ -53,8 +53,8 @@ public class Casella {
 	/**
 	 * Costruttore di casella
 	 * 
-	 * @param x coordinata x
-	 * @param y coordinata y
+	 * @param x    coordinata x
+	 * @param y    coordinata y
 	 * @param tipo tipo di casella
 	 */
 	protected Casella(Integer x, Integer y, CasellaTipo tipo) {
@@ -69,6 +69,7 @@ public class Casella {
 
 	/**
 	 * ottieni il valore di {@link visible}
+	 * 
 	 * @return se la casella è stata visitata dal robot
 	 */
 	boolean getVisible() {
@@ -115,7 +116,7 @@ public class Casella {
 	 * Ottieni il riferimento all'immagine della casella in base allo stato attuale
 	 * 
 	 * @param gamemode la modalità di gioco della finestra chiamante
-	 * @return	il riferimento all'immagine di gioco
+	 * @return il riferimento all'immagine di gioco
 	 * 
 	 */
 	public ImageIcon getImmagine(GameMode gamemode) {

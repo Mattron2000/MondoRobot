@@ -15,24 +15,24 @@ import javax.swing.JOptionPane;
 
 /**
  * Questa classe è il Model, dov'è presente l'intera struttura dati del gioco
- * 'MondoRobot'.
+ * 'MondoRobot'
  * 
  */
 public class Casa {
 	/**
-	 * valore percentile della difficoltà del gioco[0-100].
+	 * valore percentile della difficoltà del gioco[0-100]
 	 * 
 	 */
-	private int DIFFICULTY = 20;
+	private int DIFFICULTY = 25;
 
 	/**
-	 * Variabile fondamentale per la gestione della View ai due Frames.
+	 * Variabile fondamentale per la gestione delle View multiple
 	 * 
 	 */
 	private PropertyChangeSupport support;
 
 	/**
-	 * La struttura della mappa è una mappa quadrata composta solamente da caselle.
+	 * La struttura della mappa composta da caselle
 	 * 
 	 */
 	private Casella[][] mappa;
@@ -62,16 +62,18 @@ public class Casa {
 	private Animale[] animali;
 
 	/**
-	 * Variabile contenente l'unico drone della casa.
+	 * L'unico drone della casa.
 	 * 
 	 */
 	private Drone drone;
 
 	/**
 	 * Il costruttore creerà la mappa del gioco generata casualmente nella variabile
-	 * {@link Casa#mappa} partendo dal valore intero positivo
+	 * {@link mondo_robot.Model.Casa#mappa Casa.mappa} partendo dal valore intero
+	 * positivo
 	 * 
 	 * @param n valore della dimensione della mappa
+	 * 
 	 */
 	public Casa(Integer n) {
 		if (n == null)
@@ -102,10 +104,13 @@ public class Casa {
 	}
 
 	/**
-	 * Il costruttore creerà la mappa del gioco nella variabile
-	 * {@link Casa#mappa} partendo da un file
+	 * Il costruttore creerà la mappa del gioco generata casualmente nella variabile
+	 * {@link mondo_robot.Model.Casa#mappa Casa.mappa} partendo dal valore intero
+	 * positivo
 	 * 
-	 * @param file è il riferimento al file '.txt' contenente la mappa
+	 * @param file è il file '.txt' contenente la mappa
+	 * 
+	 * @see File
 	 */
 	public Casa(File file) {
 		if (file == null)
@@ -123,7 +128,7 @@ public class Casa {
 	}
 
 	/**
-	 * Crea una nuova mappa
+	 * Istanzia una matrice vuota
 	 * 
 	 * @param n il numero di righe e colonne dela matrice
 	 */
@@ -132,9 +137,9 @@ public class Casa {
 	}
 
 	/**
-	 * imposta ai valori di default gli elementi all'interno della matrice
-	 * {@link Casa#mappa}, circondando di mura e impostando a null gli elementi al
-	 * suo interno.
+	 * Imposta ai valori di default gli elementi all'interno della matrice
+	 * {@link mondo_robot.Model.Casa#mappa Casa.mappa}, ovvero contarla di mura e
+	 * impostare a null gli elementi al suo interno.
 	 * 
 	 */
 	private void inizializzaMappa() {
@@ -148,11 +153,14 @@ public class Casa {
 	}
 
 	/**
-	 * Istanzia gli array {@link Casa#fornelli}, {@link Casa#lavatrici},
-	 * {@link Casa#rubinetti} e {@link Casa#animali} con numeri randomici,
-	 * rispettando il livello di difficoltà.
+	 * Istanzia gli array {@link mondo_robot.Model.Casa#fornelli Casa.fornelli},
+	 * {@link mondo_robot.Model.Casa#lavatrici Casa.lavatrici},
+	 * {@link mondo_robot.Model.Casa#rubinetti Casa.rubinetti} e
+	 * {@link mondo_robot.Model.Casa#animali Casa.animali} di lunghezza casuali,
+	 * rispettando il livello di {@link mondo_robot.Model.Casa#DIFFICULTY
+	 * Casa.DIFFICULTY}.
 	 * 
-	 * @param occupazionePerc è la parcentuale che la mappa sia occupata dagli array
+	 * @param occupazionePerc è la percentuale che la mappa sia occupata dagli array
 	 */
 	private void istanziaCaselle(Integer occupazionePerc) {
 		int fornelli;
@@ -175,7 +183,8 @@ public class Casa {
 	}
 
 	/**
-	 * Questo metodo crea una Casella di un certo tipo e lo si aggiunge alla mappa.
+	 * Questo metodo generale crea {@link mondo_robot.Model.Casella caselle}
+	 * partendo da un array specificato dal parametro e li aggiunge alla mappa
 	 * 
 	 * @param tipo è il tipo della {@link Casella} da creare
 	 */
@@ -246,9 +255,11 @@ public class Casa {
 	}
 
 	/**
-	 * Mostra un JDialog per poi lanciare un exception
+	 * Mostra un JDialog di errore e poi lancia un exception
 	 * 
 	 * @param messaggio il messaggio da visualizzare
+	 * 
+	 * @see IllegalArgumentException
 	 */
 	private void messaggioErrore(String messaggio) {
 		JOptionPane.showMessageDialog(null, messaggio, "ERRORE", JOptionPane.ERROR_MESSAGE);
@@ -258,7 +269,7 @@ public class Casa {
 	/**
 	 * Questa funzione genera coordinate casuali per la mappa e lo rimanda indietro
 	 * 
-	 * @return La funzione ritorna un array di interi lungo 2 [x, y].
+	 * @return La funzione ritorna un array di int [x, y]
 	 */
 	private int[] getCoordinateCasuali() {
 		int[] coordinate = new int[2];
@@ -276,10 +287,12 @@ public class Casa {
 	 * Aggiungo la casella nella mappa
 	 * 
 	 * @param casella la casella da aggiungere
+	 * 
+	 * @see IllegalArgumentException
 	 */
 	private void aggiungiCasella(Casella casella) {
 		if (casella == null)
-			throw new IllegalArgumentException("Il parametro 'casella' non dev'essere null");
+			messaggioErrore("Il parametro 'casella' non dev'essere null");
 
 		this.mappa[casella.getX()][casella.getY()] = casella;
 	}
@@ -287,6 +300,7 @@ public class Casa {
 	/**
 	 * Riempie la mappa sostituendo gli elementi nulli con una casella Pavimento
 	 * 
+	 * @see mondo_robot.Model.Pavimento
 	 */
 	private void riempiPavimento() {
 		for (int x = 1; x < this.mappa.length - 1; x++)
@@ -296,7 +310,8 @@ public class Casa {
 	}
 
 	/**
-	 * Questo metodo rende le caselle intorno al {@link Casa#drone} visibili
+	 * Questo metodo rende le caselle intorno al {@link mondo_robot.Model.Casa#drone
+	 * drone} visibili
 	 * 
 	 */
 	private void aggiornaVisione() {
@@ -308,9 +323,13 @@ public class Casa {
 	}
 
 	/**
-	 * Questo metodo crea la mappa leggendo il file
+	 * Questo metodo crea la {@link mondo_robot.Model.Casa#mappa mappa} leggendo il
+	 * file
 	 * 
 	 * @param f il file '.txt' che contiene la mappa
+	 * 
+	 * @see File
+	 * @see Scanner
 	 */
 	private void controlloFile(File f) {
 		int l_x = 0;
@@ -421,10 +440,18 @@ public class Casa {
 	}
 
 	/**
-	 * Questo metodo gestisce il passo in avanti del {@link Casa#drone}, se la
-	 * casella che andrà è un Pavimento, ci andrà lasciando la posizione precendente
-	 * un Pavimento asciutto, se il drone si scontra con una casella Animale o Muro,
-	 * lancerà un messaggio di BUMP altrimenti niente.
+	 * Questo metodo gestisce il passo in avanti del
+	 * {@link mondo_robot.Model.Casa#drone drone},
+	 * se la casella che andrà è un Pavimento, ci andrà lasciando la posizione
+	 * precendente una casella Pavimento asciutta, se il drone si scontra con una
+	 * casella Animale o Muro,
+	 * lancerà un messaggio di BUMP,
+	 * altrimenti niente.
+	 * 
+	 * @see Animale
+	 * @see Muro
+	 * @see Pavimento
+	 * @see Casella
 	 * 
 	 */
 	public void stepRobot() {
@@ -505,7 +532,7 @@ public class Casa {
 	 * Questo metodo fa compiere azioni di movimento o di fermo di tutti gli animali
 	 * presenti nella mappa.
 	 * 
-	 * @param LL è lista degli aggiornamenti da notificare alle Views
+	 * @param LL è lista di modifiche da aggiornare alle Views
 	 */
 	private void muoviAnimali(LinkedList<Casella> LL) {
 		if (LL == null)
@@ -543,8 +570,8 @@ public class Casa {
 	}
 
 	/**
-	 * Questo metodo fa si che uno specifico animale faccia una scelta di andare
-	 * nelle caselle adiacenti possibili o di stare fermo
+	 * Questo metodo fa sí che un animale faccia una scelta di andare
+	 * nelle caselle Pavimento adiacenti possibili o di stare fermo
 	 * 
 	 * @param animale è l'animale che sta decidendo
 	 * @return le coordinate scelte dall'animale
@@ -582,8 +609,8 @@ public class Casa {
 	}
 
 	/**
-	 * Aggiungo il listener alla lista di listener da notificare quando una
-	 * proprietà viene modificata
+	 * Aggiungo il listener alla lista di listener da notificare (sono le due
+	 * finestre)
 	 * 
 	 * @param listener Il PropertyChangeListener da aggiungere
 	 */
@@ -592,7 +619,9 @@ public class Casa {
 	}
 
 	/**
-	 * Spara un PropertyChangeEvent chiamato "InitMap" e la variabile mappa
+	 * Spara un PropertyChangeEvent chiamato "InitMap" con la
+	 * {@link mondo_robot.Model.Casa#mappa mappa} ai
+	 * {@link mondo_robot.View.Frame_Game listener}
 	 * 
 	 */
 	public void inizializzaCasa() {
@@ -600,20 +629,25 @@ public class Casa {
 	}
 
 	/**
-	 * Spara un PropertyChangeEvent chiamato "updMap" e la lista delle modifiche
-	 * della variabile mappa da aggiornare
+	 * Spara un PropertyChangeEvent chiamato "updMap" con la lista delle modifiche
+	 * della {@link mondo_robot.Model.Casa#mappa mappa} da aggiornare ai
+	 * {@link mondo_robot.View.Frame_Game listener}
 	 * 
 	 * @param ll lista di modifiche da aggiornare
+	 * 
+	 * @see mondo_robot.View.Frame_Game
 	 */
 	public void aggiornaCasa(LinkedList<Casella> ll) {
 		this.support.firePropertyChange("updMap", null, ll.toArray(new Casella[ll.size()]));
 	}
 
-
 	/**
-	 * Questo metodo fa svoltare il drone alla nuova direzione specificata dal parametro 'svolta'
+	 * Questo metodo fa svoltare il drone alla nuova direzione specificata dal
+	 * parametro 'svolta'
 	 * 
-	 * @param svolta è il parametro che può essere LEFT o RIGHT
+	 * @param svolta Svolta.DESTRA, Svolta.SINISTRA
+	 * 
+	 * @see mondo_robot.Model.Svolta
 	 */
 	public void turnRobot(Svolta svolta) {
 		if (svolta == null)
@@ -636,8 +670,10 @@ public class Casa {
 	}
 
 	/**
-	 * Controlla che tipo ch casella ha davanti il drone e tenta di ripararlo
+	 * Il {@link mondo_robot.Model.Casa#drone Casa.drone} tenta di riparare la
+	 * casella davanti a sè, il risultato viene inviato tramite JOptionPane
 	 * 
+	 * @see JOptionPane
 	 */
 	public void interact() {
 		/*
@@ -728,8 +764,8 @@ public class Casa {
 	}
 
 	/**
-	 * Questa classe è un Thread che rompe le Caselle Fornello, Lavatrice e
-	 * Rubinetto e fa allagare la casa.
+	 * Questa classe è un Runnable che ciclicamente rompe le Caselle Fornello, Lavatrice e
+	 * Rubinetto e fa allagare la casa ad ogni intervallo dettato da {@link mondo_robot.Model.Casa.RompiElementiThread#aspettando() RompiElementiThread.aspettando()}
 	 * 
 	 */
 	private class RompiElementiThread implements Runnable {
@@ -744,10 +780,10 @@ public class Casa {
 		 * tempo di sleep
 		 * 
 		 */
-		Integer timeMillis = 20000;
+		Integer timeMillis = 10000;
 
 		/**
-		 * Questo metodo conpierà fino alla chiusura del gioco un ciclo di attesa e di
+		 * Questo metodo compierà fino alla chiusura del gioco un ciclo di attesa e di
 		 * rottura di determinati tipi di caselle nella mappa.
 		 * 
 		 */
@@ -827,7 +863,7 @@ public class Casa {
 
 		/**
 		 * Questo metodo compie l'attesa per un certo periodo di tempo dettato da
-		 * {@link timeMillis}
+		 * {@link mondo_robot.Model.Casa.RompiElementiThread#timeMillis RompiElementiThread.timeMillis}
 		 * 
 		 */
 		private void aspettando() {
@@ -839,8 +875,8 @@ public class Casa {
 		}
 
 		/**
-		 * Questo metodo compie la ricerca in BFS partendo dall'oggetto CasellaStato e
-		 * successivamente itera fino a che non trova una casella Pavimento asciutto.
+		 * Questo metodo compie la ricerca in BFS partendo dall'oggetto {@link mondo_robot.Model.CasellaStato CasellaStato} e
+		 * successivamente itera fino a che non trova una casella {@link mondo_robot.Model.Pavimento Pavimento} asciutto.
 		 * 
 		 * @param casella La casella che si è rotta e si allaga
 		 * @return La casella Pavimento che si è bagnata
@@ -870,12 +906,15 @@ public class Casa {
 		/**
 		 * Prende un nodo come input, controlla se è grigio, se lo è, controlla se si
 		 * tratta di un pavimento o di un animale, se non è bagnato, lo
-		 * inonda e lo restituisce,
+		 * inonda e restituisce,
 		 * se non è un pavimento o un animale, ottiene i nodi adiacenti, li mette in
 		 * grigio, li aggiunge allo stack e imposta il nodo di input sul nero
 		 * 
 		 * @param casellaSorgente Il nodo che stiamo controllando
 		 * @return La casella che si è bagnata
+		 * 
+		 * @see mondo_robot.Model.Nodo
+		 * @see mondo_robot.Model.ColoreNodo
 		 */
 		private Casella allagaPavimentiRic(Nodo casellaSorgente) {
 			if (casellaSorgente.getColore().equals(ColoreNodo.GRIGIO)) {
@@ -907,10 +946,12 @@ public class Casa {
 		}
 
 		/**
-		 * ritorna una lista di nodi adiacenti rispetto al parametro
+		 * ritorna una lista di nodi adiacenti rispetto al nodo corrente
 		 * 
 		 * @param casella Il nodo corrente
 		 * @return lista concatenata di tipo Nodo composta di nodi adiacenti
+		 * 
+		 * @see mondo_robot.Model.Nodo
 		 */
 		private LinkedList<Nodo> pavimentiAdiacenti(Casella casella) {
 			LinkedList<Nodo> pavimentiAdiacenti = new LinkedList<>();
@@ -944,6 +985,8 @@ public class Casa {
 	/**
 	 * Quando questo PropertyChangeEvent viene sparato, il listener aggiornerà la
 	 * visibilità della finestra di debug.
+	 * 
+	 * @see mondo_robot.View.Frame_Game
 	 */
 	public void updVisible() {
 		this.support.firePropertyChange("setVisible", null, null);
@@ -967,8 +1010,8 @@ public class Casa {
 	}
 
 	/**
-	 * Spara un PropertyChangeEvent ai listener che dovranno liberare tutte le
-	 * risorse HW per la grafica.
+	 * Spara un PropertyChangeEvent ai listener che dovranno liberare le
+	 * risorse HW disattivando la grafica.
 	 * 
 	 */
 	public void disposeAll() {

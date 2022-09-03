@@ -33,27 +33,32 @@ class Controller_Game implements ActionListener, KeyListener {
 	private static final ImageIcon COMMANDS_IMG = new ImageIcon("src/mondo_robot/Image/commands.png");
 
 	/**
-	 * Una variabile che sará usata per memorizzare il {@link Casa Model}
+	 * Una variabile che sará usata per memorizzare il {@link mondo_robot.Model.Casa
+	 * Model}
 	 * 
-	 * @see Casa
+	 * @see mondo_robot.Model.Casa Casa
 	 */
 	private Casa m;
 
 	/**
-	 * Una variabile che sará usata per memorizzare la {@link Frame_Game View}.
+	 * Una variabile che sará usata per memorizzare la
+	 * {@link mondo_robot.View.Frame_Game View}.
 	 * 
 	 */
 	private Frame_Game v;
 
 	/**
-	 * Il costruttore imposta i ponti comunicativi MVC tra {@link Frame_Game},
-	 * {@link Controller_Game} e {@link Casa}.
-	 * In più applica gli Observer/Observable al {@link Frame_Game} e {@link Casa}.
-	 * In fine, {@link Casa} invierà a {@link Frame_Game} la mappa da visualizzare.
+	 * Il costruttore imposta i ponti comunicativi MVC tra
+	 * {@link mondo_robot.View.Frame_Game},
+	 * {@link mondo_robot.Controller.Controller_Game} e
+	 * {@link mondo_robot.Model.Casa}.
+	 * In più applica gli Observer/Observable al {@link mondo_robot.View.Frame_Game}
+	 * e {@link mondo_robot.Model.Casa}. In fine, {@link mondo_robot.Model.Casa}
+	 * invierà a {@link mondo_robot.View.Frame_Game} la mappa da visualizzare.
 	 * 
-	  * @param frame è la {@link Frame_Game View}
-	  * @param model è il {@link Casa Model}
-	  */
+	 * @param frame è la {@link mondo_robot.View.Frame_Game View}
+	 * @param model è il {@link mondo_robot.Model.Casa Model}
+	 */
 	public Controller_Game(Frame_Game frame, Casa model) {
 		if (frame == null || model == null)
 			throw new IllegalArgumentException("I parametri non devono mai essere null");
@@ -69,9 +74,11 @@ class Controller_Game implements ActionListener, KeyListener {
 	}
 
 	/**
-	 * Questo metodo gestisce l'input dei bottoni del JMenuBar: {@link Frame_Game#esciMenu},
-	 * {@link Frame_Game#salvaInFile}, {@link Frame_Game#guidaMenu} e
-	 * {@link Frame_Game#comandiGioco}
+	 * Questo metodo gestisce l'input dei JMenuItems nel JMenuBar:
+	 * {@link mondo_robot.View.Frame_Game#esciMenu},
+	 * {@link mondo_robot.View.Frame_Game#salvaInFile},
+	 * {@link mondo_robot.View.Frame_Game#guidaMenu} e
+	 * {@link mondo_robot.View.Frame_Game#comandiGioco}
 	 * 
 	 * @param e l'evento che ha attivato questo metodo
 	 * 
@@ -162,6 +169,7 @@ class Controller_Game implements ActionListener, KeyListener {
 	/**
 	 * Questo metodo gestisce i seguenti tasti [W], [A], [D], [SPACE] e [V]
 	 * 
+	 * @see KeyEvent
 	 */
 	@Override
 	public void keyReleased(KeyEvent e) {

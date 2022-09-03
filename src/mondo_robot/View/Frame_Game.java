@@ -14,24 +14,16 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-
 import mondo_robot.Model.Casella;
 import mondo_robot.Model.GameMode;
 
 /**
- * Questa classe e' la View del gioco 'MondoRobot'
+ * Questa classe é la View del gioco 'MondoRobot'
  * 
  */
 public class Frame_Game extends MondoRobot_Frame implements PropertyChangeListener {
-
 	/**
-	 * Identificatore di serializzazione.
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * Un riferimneto alla classe {@link Panel_Game}
+	 * Un riferimneto alla classe {@link mondo_robot.View.Panel_Game Panel_Game}
 	 * 
 	 */
 	private Panel_Game p;
@@ -80,7 +72,7 @@ public class Frame_Game extends MondoRobot_Frame implements PropertyChangeListen
 	private boolean isVisible;
 
 	/**
-	 * Questo metodo crea una finestra di gioco seguendo i valori dei tre parametri.
+	 * Questo metodo crea una finestra di gioco seguendo i valori dei parametri.
 	 * 
 	 * @param n         è la dimensione della mappa
 	 * @param gamemode  indica la modalità di gioco di questa finestra
@@ -143,6 +135,7 @@ public class Frame_Game extends MondoRobot_Frame implements PropertyChangeListen
 	/**
 	 * mette la finestra con modalità di gioco DEBUG in alto a destra
 	 * 
+	 * @see mondo_robot.Model.GameMode
 	 */
 	public void setLocationToTopRight() {
 		GraphicsConfiguration config = this.getGraphicsConfiguration();
@@ -174,9 +167,8 @@ public class Frame_Game extends MondoRobot_Frame implements PropertyChangeListen
 
 	/**
 	 * Questo metodo viene chiamato {@link mondo_robot.Model.Casa Casa} alla
-	 * pressione di determinati tasti
-	 * sulla testiera per modificare il {@link mondo_robot.View.Panel_Game
-	 * Panel_Game} o le proprietà di questa
+	 * pressione di determinati tasti sulla testiera per modificare il
+	 * {@link mondo_robot.View.Panel_Game Panel_Game} o le proprietà di questa
 	 * classe.
 	 * 
 	 * @param evt è l'evento che è stato 'sparato' da {@link mondo_robot.Model.Casa

@@ -4,7 +4,7 @@ package mondo_robot.Model;
  * classe wrapper per la ricerca BFS del primo paviento asciutto da inondare
  * 
  */
-public class Nodo {
+class Nodo {
 
 	/**
 	 * colore del nodo

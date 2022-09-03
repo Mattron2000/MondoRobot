@@ -5,7 +5,7 @@ package mondo_robot.Model;
  * nella classe Thread 'RompiElementiThread'
  * 
  */
-public enum ColoreNodo {
+enum ColoreNodo {
 	/**
 	 * il nodo è di colore bianco.
 	 * il nodo non è stato visitato.

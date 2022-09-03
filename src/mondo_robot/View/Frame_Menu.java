@@ -4,13 +4,13 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 
+import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-
-import mondo_robot.Controller.Controller_Menu;
 
 /**
  * Questa classe è la View del menú principale
@@ -19,25 +19,19 @@ import mondo_robot.Controller.Controller_Menu;
 public class Frame_Menu extends MondoRobot_Frame {
 
 	/**
-	 * Identificatore di serializzazione.
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * JButton per poter caricare un file di testo.
-	 * 
-	 */
-	private JButton loadGame;
-
-	/**
-	 * JButton per poter creare una nuova partita.
+	 * JButton per creare una nuova partita.
 	 * 
 	 */
 	private JButton newGame;
 
 	/**
-	 * JButton per poter creare il file-guida del gioco MondoRobot.
+	 * JButton per caricare un file di testo.
+	 * 
+	 */
+	private JButton loadGame;
+
+	/**
+	 * JButton per creare il file-guida del gioco MondoRobot.
 	 * 
 	 */
 	private JButton help;
@@ -55,7 +49,7 @@ public class Frame_Menu extends MondoRobot_Frame {
 	 */
 	public Frame_Menu() {
 		/*
-		 * impostazioni della finestra del menu' principale
+		 * impostazioni della finestra del menú principale
 		 * 
 		 */
 		setMenuWindow("Menú principale di Mondo Robot", new GridLayout(4, 1, 0, 20), true);
@@ -84,7 +78,7 @@ public class Frame_Menu extends MondoRobot_Frame {
 		jbuttonPanel.add(this.loadGame);
 
 		/*
-		 * creo il bottone on/off per la modalita' sviluppatore
+		 * creo il bottone on/off per la modalitá sviluppatore
 		 * 
 		 */
 		this.gamemode = new JRadioButton("Modalitá sviluppatore");
@@ -113,24 +107,27 @@ public class Frame_Menu extends MondoRobot_Frame {
 
 	/**
 	 * Aggiungo l'ActionListener ai bottoni per poter mandare eventi a
-	 * {@link Controller_Menu}
+	 * {@link mondo_robot.Controller.Controller_Menu Controller_Menu}
 	 * 
-	 * @param controller_MondoRobot è il {@link Controller_Menu} in modo che alla
-	 *                              pressione dei bottoni, avviano
-	 *                              {@link Controller_Menu#actionPerformed(java.awt.event.ActionEvent)}
-	 * 
+	 * @param listener è il {@link mondo_robot.Controller.Controller_Menu
+	 *                 Controller_Menu} che fa in modo che alla pressione dei
+	 *                 bottoni, avviano
+	 *                 {@link mondo_robot.Controller.Controller_Menu#actionPerformed(java.awt.event.ActionEvent)
+	 *                 Controller_Menu.actionPerformed()}
 	 */
-	public void addListener(Controller_Menu controller_MondoRobot) {
-		this.newGame.addActionListener(controller_MondoRobot);
-		this.loadGame.addActionListener(controller_MondoRobot);
-		this.help.addActionListener(controller_MondoRobot);
+	public void addListener(ActionListener listener) {
+		this.newGame.addActionListener(listener);
+		this.loadGame.addActionListener(listener);
+		this.help.addActionListener(listener);
 	}
 
 	/**
 	 * Metodo per ottenere la modalitá desiderata dall'utente
 	 * 
-	 * @return ritorna lo stato del JRadioButton {@link Frame_Menu#gamemode}
+	 * @return ritorna lo stato del JRadioButton
+	 *         {@link mondo_robot.View.Frame_Menu#gamemode Frame_Menu.gamemode}
 	 * 
+	 * @see mondo_robot.View.Frame_Menu#gamemode
 	 */
 	public boolean gameModeSelected() {
 		return this.gamemode.isSelected();
@@ -144,16 +141,16 @@ public class Frame_Menu extends MondoRobot_Frame {
 	 *         richieste
 	 * 
 	 */
-	protected JButton menuButton(String title) {
+	private JButton menuButton(String title) {
 		if (title == null)
-			throw new IllegalArgumentException("Il parametro 'titlè non dev'essere null");
+			throw new IllegalArgumentException("Il parametro 'title' non dev'essere null");
 
-		JButton tmp = new JButton(title); // questo bottone crea una nuova partita creando una mappa generata dal PC
-		tmp.setFont(new Font(null, Font.BOLD, 25)); // faccio ingrandire il testo
-		tmp.setHorizontalTextPosition(JButton.CENTER); // posiziono il testo al centro
+		JButton tmp = new JButton(title);
+		tmp.setFont(new Font(null, Font.BOLD, 25));
+		tmp.setHorizontalTextPosition(JButton.CENTER);
 		tmp.setVerticalAlignment(JButton.CENTER);
-		tmp.setForeground(Color.DARK_GRAY); // colore delle lettere
-		tmp.setBackground(Color.LIGHT_GRAY); // colore del bottone
+		tmp.setForeground(Color.DARK_GRAY);
+		tmp.setBackground(Color.LIGHT_GRAY);
 		tmp.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
 		tmp.setFocusPainted(false);
 

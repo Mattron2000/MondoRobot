@@ -6,7 +6,7 @@ package mondo_robot.Model;
  * @see Drone
  * @see Animale
  */
-class CasellaMobile extends Casella {
+abstract class CasellaMobile extends Casella {
 
 	/**
 	 * Costruttore che imposta le coordinate iniziali e il tipo di casella
