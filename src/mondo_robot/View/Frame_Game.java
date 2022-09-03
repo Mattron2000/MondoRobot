@@ -1,6 +1,6 @@
 package mondo_robot.View;
 
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -8,6 +8,7 @@ import java.beans.PropertyChangeListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+
 
 import mondo_robot.Model.Casella;
 import mondo_robot.Model.GameMode;
@@ -70,7 +71,21 @@ public class Frame_Game extends MondoRobot_Frame implements PropertyChangeListen
 
 		this.setSize(this.p.dimension * this.p.dimensioneCasella, this.p.dimension * this.p.dimensioneCasella);
 
+		if (this.gamemode.equals(GameMode.DEBUG))
+			this.setLocationToTopRight();
+
 		this.setVisible(this.isVisible);
+
+	}
+
+	public void setLocationToTopRight() {
+		GraphicsConfiguration config = this.getGraphicsConfiguration();
+		Rectangle bounds = config.getBounds();
+		Insets insets = Toolkit.getDefaultToolkit().getScreenInsets(config);
+
+		int x = bounds.x + bounds.width - insets.right - this.getWidth();
+		int y = bounds.y + insets.top;
+		this.setLocation(x, y);
 	}
 
 	public void addListener(ActionListener listener) {
