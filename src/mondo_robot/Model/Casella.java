@@ -2,18 +2,61 @@ package mondo_robot.Model;
 
 import javax.swing.ImageIcon;
 
-public abstract class Casella {
+/**
+ * Superclasse di tutte e caselle de gioco 'MondoRobot'
+ * 
+ */
+public class Casella {
+	/**
+	 * Percorso della cartella 'Image' contenenti ttte le immagini del gioco
+	 * 
+	 */
 	protected static final String IMAGE_FOLDER = "src/mondo_robot/Image/";
 
+	/**
+	 * Percorso dell'immagine per visualizzare l'immagine del segnale bump
+	 * 
+	 */
 	public static final ImageIcon BUMP_SIG = new ImageIcon(Casella.IMAGE_FOLDER + "bump.png");
 
+	/**
+	 * Percorso dell'immagine per visualizzare l'immagine della nebbia che
+	 * rappresenta una casella non visitata dal drone
+	 */
 	public static final ImageIcon NEBBIA = new ImageIcon(Casella.IMAGE_FOLDER + "fog.png");
 
+	/**
+	 * coordinata x della casella
+	 * 
+	 */
 	protected int x;
+
+	/**
+	 * coordinata y della casella
+	 * 
+	 */
 	protected int y;
+
+	/**
+	 * tipo di casella nell specifico
+	 * 
+	 * @see CasellaTipo
+	 */
 	private CasellaTipo tipo;
+
+	/**
+	 * valore booleano per capire se la casella è stata visitata o meno dal drone
+	 * 
+	 */
 	protected boolean visible;
 
+	/**
+	 * Costruttore di casella
+	 * 
+	 * @param x coordinata x
+	 * @param y coordinata y
+	 * @param tipo tipo di casella
+	 */
 	protected Casella(Integer x, Integer y, CasellaTipo tipo) {
 		if (x == null || y == null || tipo == null)
 			throw new IllegalArgumentException("I parametri 'x', 'y' e 'tipo' non devono essere null");
@@ -24,30 +67,61 @@ public abstract class Casella {
 		this.visible = false;
 	}
 
+	/**
+	 * ottieni il valore di {@link visible}
+	 * @return se la casella è stata visitata dal robot
+	 */
 	boolean getVisible() {
 		return this.visible;
 	}
 
-	void setVisible(boolean visibile) {
-		this.visible = visibile;
+	/**
+	 * cambia il valore di {@link visible}
+	 * 
+	 * @param visible il nuovo stato di visibilità della casella
+	 */
+	void setVisible(boolean visible) {
+		this.visible = visible;
 	}
 
+	/**
+	 * ottieni la coordinata x della casella
+	 * 
+	 * @return coordinata x
+	 */
 	public int getX() {
 		return x;
 	}
 
+	/**
+	 * ottieni la coordinata y della casella
+	 * 
+	 * @return coordinata y
+	 */
 	public int getY() {
 		return y;
 	}
 
+	/**
+	 * ottieni il tipo della casella
+	 * 
+	 * @return tipo della casella
+	 */
 	CasellaTipo getTipo() {
 		return this.tipo;
 	}
 
+	/**
+	 * Ottieni il riferimento all'immagine della casella in base allo stato attuale
+	 * 
+	 * @param gamemode la modalità di gioco della finestra chiamante
+	 * @return	il riferimento all'immagine di gioco
+	 * 
+	 */
 	public ImageIcon getImmagine(GameMode gamemode) {
 		if (gamemode == null)
 			throw new IllegalArgumentException("Il parametro 'gamemode' non dev'essere null");
-		
+
 		if (this.getVisible() || gamemode.equals(GameMode.DEBUG))
 			switch (this.tipo) {
 				case ANIMALE:

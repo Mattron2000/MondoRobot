@@ -20,17 +20,44 @@ import mondo_robot.Model.Svolta;
 import mondo_robot.View.Frame_Game;
 import mondo_robot.View.Frame_Menu;
 
+/**
+ * Questa classe è il controller che gestisce la logica del gioco MondoRobot
+ * 
+ */
 class Controller_Game implements ActionListener, KeyListener {
 
+	/**
+	 * Una costante statica usata per essere visualizzata in una JOptionPane.
+	 * 
+	 */
 	private static final ImageIcon COMMANDS_IMG = new ImageIcon("src/mondo_robot/Image/commands.png");
 
+	/**
+	 * Una variabile che sará usata per memorizzare il {@link Casa Model}
+	 * 
+	 * @see Casa
+	 */
 	private Casa m;
+
+	/**
+	 * Una variabile che sará usata per memorizzare la {@link Frame_Game View}.
+	 * 
+	 */
 	private Frame_Game v;
 
+	/**
+	 * Il costruttore imposta i ponti comunicativi MVC tra {@link Frame_Game},
+	 * {@link Controller_Game} e {@link Casa}.
+	 * In più applica gli Observer/Observable al {@link Frame_Game} e {@link Casa}.
+	 * In fine, {@link Casa} invierà a {@link Frame_Game} la mappa da visualizzare.
+	 * 
+	  * @param frame è la {@link Frame_Game View}
+	  * @param model è il {@link Casa Model}
+	  */
 	public Controller_Game(Frame_Game frame, Casa model) {
-		if( frame == null || model == null)
+		if (frame == null || model == null)
 			throw new IllegalArgumentException("I parametri non devono mai essere null");
-			
+
 		this.v = frame;
 		this.m = model;
 
@@ -41,6 +68,14 @@ class Controller_Game implements ActionListener, KeyListener {
 		this.m.inizializzaCasa();
 	}
 
+	/**
+	 * Questo metodo gestisce l'input dei bottoni del JMenuBar: {@link Frame_Game#esciMenu},
+	 * {@link Frame_Game#salvaInFile}, {@link Frame_Game#guidaMenu} e
+	 * {@link Frame_Game#comandiGioco}
+	 * 
+	 * @param e l'evento che ha attivato questo metodo
+	 * 
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String JSourceText = ((JMenuItem) e.getSource()).getText();
@@ -108,24 +143,34 @@ class Controller_Game implements ActionListener, KeyListener {
 		}
 	}
 
+	/**
+	 * Questo metodo non viene utilizzato
+	 * 
+	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
 	}
 
+	/**
+	 * Questo metodo non viene utilizzato
+	 * 
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
 	}
 
+	/**
+	 * Questo metodo gestisce i seguenti tasti [W], [A], [D], [SPACE] e [V]
+	 * 
+	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
 		/*
-		 * Tasti da configurare
 		 * [W] il robot prova ad avanzare X
 		 * [A] il robot si gira a sinistra X
 		 * [D] il robot si gira a destra X
 		 * [SPACE] tasto interazione X
-		 * [V] attivera'/disattivera' la finestra DEBUG
-		 * 
+		 * [V] attiverà/disattiverà la finestra DEBUG
 		 */
 
 		switch (e.getKeyCode()) {

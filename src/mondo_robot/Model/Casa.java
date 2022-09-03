@@ -13,17 +13,66 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
+/**
+ * Questa classe è il Model, dov'è presente l'intera struttura dati del gioco
+ * 'MondoRobot'.
+ * 
+ */
 public class Casa {
-	private int DIFFICULTY = 20; // valora percentile della difficoltà del gioco [0 - 100]
+	/**
+	 * valore percentile della difficoltà del gioco[0-100].
+	 * 
+	 */
+	private int DIFFICULTY = 20;
 
+	/**
+	 * Variabile fondamentale per la gestione della View ai due Frames.
+	 * 
+	 */
 	private PropertyChangeSupport support;
+
+	/**
+	 * La struttura della mappa è una mappa quadrata composta solamente da caselle.
+	 * 
+	 */
 	private Casella[][] mappa;
+
+	/**
+	 * Elenco dei fornelli presenti nella mappa.
+	 * 
+	 */
 	private Fornello[] fornelli;
+
+	/**
+	 * Elenco delle lavatrici presenti nella mappa.
+	 * 
+	 */
 	private Lavatrice[] lavatrici;
+
+	/**
+	 * Elenco dei rubinetti presenti nella mappa.
+	 * 
+	 */
 	private Rubinetto[] rubinetti;
+
+	/**
+	 * Elenco degli animali presenti nella mappa.
+	 * 
+	 */
 	private Animale[] animali;
+
+	/**
+	 * Variabile contenente l'unico drone della casa.
+	 * 
+	 */
 	private Drone drone;
 
+	/**
+	 * Il costruttore creerà la mappa del gioco generata casualmente nella variabile
+	 * {@link Casa#mappa} partendo dal valore intero positivo
+	 * 
+	 * @param n valore della dimensione della mappa
+	 */
 	public Casa(Integer n) {
 		if (n == null)
 			throw new IllegalArgumentException("Il parametro 'n' non dev'essere null");
@@ -52,6 +101,12 @@ public class Casa {
 		this.avviaRompiElementi();
 	}
 
+	/**
+	 * Il costruttore creerà la mappa del gioco nella variabile
+	 * {@link Casa#mappa} partendo da un file
+	 * 
+	 * @param file è il riferimento al file '.txt' contenente la mappa
+	 */
 	public Casa(File file) {
 		if (file == null)
 			throw new IllegalArgumentException("Il parametro 'file' non dev'essere null");
@@ -67,11 +122,21 @@ public class Casa {
 		this.avviaRompiElementi();
 	}
 
+	/**
+	 * Crea una nuova mappa
+	 * 
+	 * @param n il numero di righe e colonne dela matrice
+	 */
 	private void istanziaMappa(Integer n) {
-
 		this.mappa = new Casella[n][n];
 	}
 
+	/**
+	 * imposta ai valori di default gli elementi all'interno della matrice
+	 * {@link Casa#mappa}, circondando di mura e impostando a null gli elementi al
+	 * suo interno.
+	 * 
+	 */
 	private void inizializzaMappa() {
 		for (int x = 0; x < this.mappa.length; x++)
 			for (int y = 0; y < this.mappa.length; y++) {
@@ -82,6 +147,13 @@ public class Casa {
 			}
 	}
 
+	/**
+	 * Istanzia gli array {@link Casa#fornelli}, {@link Casa#lavatrici},
+	 * {@link Casa#rubinetti} e {@link Casa#animali} con numeri randomici,
+	 * rispettando il livello di difficoltà.
+	 * 
+	 * @param occupazionePerc è la parcentuale che la mappa sia occupata dagli array
+	 */
 	private void istanziaCaselle(Integer occupazionePerc) {
 		int fornelli;
 		int lavatrici;
@@ -102,6 +174,11 @@ public class Casa {
 		this.animali = new Animale[animali];
 	}
 
+	/**
+	 * Questo metodo crea una Casella di un certo tipo e lo si aggiunge alla mappa.
+	 * 
+	 * @param tipo è il tipo della {@link Casella} da creare
+	 */
 	private void creaCaselle(CasellaTipo tipo) {
 		Integer length = null;
 		int[] coordinate = new int[2];
@@ -168,11 +245,21 @@ public class Casa {
 		}
 	}
 
+	/**
+	 * Mostra un JDialog per poi lanciare un exception
+	 * 
+	 * @param messaggio il messaggio da visualizzare
+	 */
 	private void messaggioErrore(String messaggio) {
 		JOptionPane.showMessageDialog(null, messaggio, "ERRORE", JOptionPane.ERROR_MESSAGE);
 		throw new IllegalArgumentException(messaggio);
 	}
 
+	/**
+	 * Questa funzione genera coordinate casuali per la mappa e lo rimanda indietro
+	 * 
+	 * @return La funzione ritorna un array di interi lungo 2 [x, y].
+	 */
 	private int[] getCoordinateCasuali() {
 		int[] coordinate = new int[2];
 		Random rand = new Random();
@@ -185,6 +272,11 @@ public class Casa {
 		return coordinate;
 	}
 
+	/**
+	 * Aggiungo la casella nella mappa
+	 * 
+	 * @param casella la casella da aggiungere
+	 */
 	private void aggiungiCasella(Casella casella) {
 		if (casella == null)
 			throw new IllegalArgumentException("Il parametro 'casella' non dev'essere null");
@@ -192,13 +284,21 @@ public class Casa {
 		this.mappa[casella.getX()][casella.getY()] = casella;
 	}
 
+	/**
+	 * Riempie la mappa sostituendo gli elementi nulli con una casella Pavimento
+	 * 
+	 */
 	private void riempiPavimento() {
 		for (int x = 1; x < this.mappa.length - 1; x++)
 			for (int y = 1; y < this.mappa.length - 1; y++)
 				if (this.mappa[x][y] == null)
-					this.mappa[x][y] = new Pavimento(x, y);
+					aggiungiCasella(new Pavimento(x, y));
 	}
 
+	/**
+	 * Questo metodo rende le caselle intorno al {@link Casa#drone} visibili
+	 * 
+	 */
 	private void aggiornaVisione() {
 		this.mappa[this.drone.getX()][this.drone.getY()].setVisible(true);
 		this.mappa[this.drone.getX() - 1][this.drone.getY()].setVisible(true);
@@ -207,6 +307,11 @@ public class Casa {
 		this.mappa[this.drone.getX()][this.drone.getY() + 1].setVisible(true);
 	}
 
+	/**
+	 * Questo metodo crea la mappa leggendo il file
+	 * 
+	 * @param f il file '.txt' che contiene la mappa
+	 */
 	private void controlloFile(File f) {
 		int l_x = 0;
 		int l_y = 0;
@@ -316,16 +421,23 @@ public class Casa {
 	}
 
 	/**
-	 * si capisce qual'è la casella bersaglio del robot, -> t_x, t_y
-	 * se la casella 'target' è un pavimento,
-	 * - si sostituisce la x, y del robot con un pavimento asciutto,
-	 * - cambiare le x, y del robot con t_x, t_y,
-	 * - inserire nella mappa il robot con la posizione aggiornata
-	 * se era Animale o muro, -> segnale di BUMP
-	 * altrimenti niente
+	 * Questo metodo gestisce il passo in avanti del {@link Casa#drone}, se la
+	 * casella che andrà è un Pavimento, ci andrà lasciando la posizione precendente
+	 * un Pavimento asciutto, se il drone si scontra con una casella Animale o Muro,
+	 * lancerà un messaggio di BUMP altrimenti niente.
 	 * 
 	 */
 	public void stepRobot() {
+		/*
+		 * si capisce qual'è la casella bersaglio del robot, -> t_x, t_y
+		 * se la casella 'target' è un pavimento,
+		 * - si sostituisce la x, y del robot con un pavimento asciutto,
+		 * - cambiare le x, y del robot con t_x, t_y,
+		 * - inserire nella mappa il robot con la posizione aggiornata
+		 * se era Animale o muro, -> segnale di BUMP
+		 * altrimenti niente
+		 */
+
 		int target_x = this.drone.getX();
 		int target_y = this.drone.getY();
 
@@ -389,6 +501,12 @@ public class Casa {
 		}
 	}
 
+	/**
+	 * Questo metodo fa compiere azioni di movimento o di fermo di tutti gli animali
+	 * presenti nella mappa.
+	 * 
+	 * @param LL è lista degli aggiornamenti da notificare alle Views
+	 */
 	private void muoviAnimali(LinkedList<Casella> LL) {
 		if (LL == null)
 			throw new IllegalArgumentException("Il parametro 'LL' non dev'essere null");
@@ -424,6 +542,13 @@ public class Casa {
 		}
 	}
 
+	/**
+	 * Questo metodo fa si che uno specifico animale faccia una scelta di andare
+	 * nelle caselle adiacenti possibili o di stare fermo
+	 * 
+	 * @param animale è l'animale che sta decidendo
+	 * @return le coordinate scelte dall'animale
+	 */
 	private Integer[] animaleDecide(Animale animale) {
 		if (animale == null)
 			throw new IllegalArgumentException("Il parametro 'animale' non dev'essere null");
@@ -439,6 +564,14 @@ public class Casa {
 		return scelte.get((int) (Math.random() * scelte.size()));
 	}
 
+	/**
+	 * controlla se la casella è di tipo Pavimento, se lo è lo si aggiunge nella
+	 * lista di possibili scelte per l'animale
+	 * 
+	 * @param t_x    la coordinata x della casella da controllare
+	 * @param t_y    la coordinata y della casella da controllare
+	 * @param scelte una lista di coordinate da scegliere all'animale
+	 */
 	private void controllaPavimento(Integer t_x, Integer t_y, LinkedList<Integer[]> scelte) {
 		Integer[] coordinate = new Integer[2];
 		if (this.mappa[t_x][t_y].getTipo().equals(CasellaTipo.PAVIMENTO)) {
@@ -448,20 +581,40 @@ public class Casa {
 		}
 	}
 
+	/**
+	 * Aggiungo il listener alla lista di listener da notificare quando una
+	 * proprietà viene modificata
+	 * 
+	 * @param listener Il PropertyChangeListener da aggiungere
+	 */
 	public void addListener(PropertyChangeListener listener) {
 		this.support.addPropertyChangeListener(listener);
 	}
 
+	/**
+	 * Spara un PropertyChangeEvent chiamato "InitMap" e la variabile mappa
+	 * 
+	 */
 	public void inizializzaCasa() {
 		this.support.firePropertyChange("initMap", null, this.mappa);
 	}
 
+	/**
+	 * Spara un PropertyChangeEvent chiamato "updMap" e la lista delle modifiche
+	 * della variabile mappa da aggiornare
+	 * 
+	 * @param ll lista di modifiche da aggiornare
+	 */
 	public void aggiornaCasa(LinkedList<Casella> ll) {
-		Casella[] caselle = new Casella[ll.size()];
-
-		this.support.firePropertyChange("updMap", null, ll.toArray(caselle));
+		this.support.firePropertyChange("updMap", null, ll.toArray(new Casella[ll.size()]));
 	}
 
+
+	/**
+	 * Questo metodo fa svoltare il drone alla nuova direzione specificata dal parametro 'svolta'
+	 * 
+	 * @param svolta è il parametro che può essere LEFT o RIGHT
+	 */
 	public void turnRobot(Svolta svolta) {
 		if (svolta == null)
 			throw new IllegalArgumentException("Il parametro 'svolta' non dev'essere null");
@@ -483,16 +636,20 @@ public class Casa {
 	}
 
 	/**
-	 * si capisce qual'è la casella bersaglio del robot, -> t_x, t_y
-	 * se la casella 'target' è un fornello, lavatrice o rubinetto,
-	 * - se lo è, si tenta di cambiare stato,
-	 * -- se era rotto, si aggiusta
-	 * -- se era intatto, -> messaggio di avvertenza (che non era rotto...)
-	 * - se non lo è, messaggio di avvertenza (che funziona solo se sono davanti a
-	 * un fornello, lavatrice o rubinetto...)
+	 * Controlla che tipo ch casella ha davanti il drone e tenta di ripararlo
 	 * 
 	 */
 	public void interact() {
+		/*
+		 * si capisce qual'è la casella bersaglio del robot, -> t_x, t_y
+		 * se la casella 'target' è un fornello, lavatrice o rubinetto,
+		 * - se lo è, si tenta di cambiare stato,
+		 * -- se era rotto, si aggiusta
+		 * -- se era intatto, -> messaggio di avvertenza (che non era rotto...)
+		 * - se non lo è, messaggio di avvertenza (che funziona solo se sono davanti a
+		 * un fornello, lavatrice o rubinetto...)
+		 * 
+		 */
 		int target_x = this.drone.getX();
 		int target_y = this.drone.getY();
 
@@ -551,20 +708,49 @@ public class Casa {
 					JOptionPane.QUESTION_MESSAGE);
 	}
 
+	/**
+	 * Ottieni la dimensione della mappa
+	 * 
+	 * @return la dimensione della mappa
+	 */
 	public int getDimensione() {
 		return this.mappa.length;
 	}
 
+	/**
+	 * Metodo che crea il Thread RompiElementiThread e lo esegue
+	 * 
+	 */
 	private void avviaRompiElementi() {
 		RompiElementiThread r = new RompiElementiThread();
 		Thread t = new Thread(r);
 		t.start();
 	}
 
+	/**
+	 * Questa classe è un Thread che rompe le Caselle Fornello, Lavatrice e
+	 * Rubinetto e fa allagare la casa.
+	 * 
+	 */
 	private class RompiElementiThread implements Runnable {
+		/**
+		 * Array per poter gestire la ricerca del primo pavimento asciutto tramite la
+		 * tecnica BFS
+		 * 
+		 */
 		LinkedList<Nodo> stack = new LinkedList<>();
+
+		/**
+		 * tempo di sleep
+		 * 
+		 */
 		Integer timeMillis = 20000;
 
+		/**
+		 * Questo metodo conpierà fino alla chiusura del gioco un ciclo di attesa e di
+		 * rottura di determinati tipi di caselle nella mappa.
+		 * 
+		 */
 		@Override
 		public void run() {
 			LinkedList<Casella> LL = new LinkedList<>();
@@ -596,6 +782,14 @@ public class Casa {
 			}
 		}
 
+		/**
+		 * Questo metodo andrà a rompere tutti gli elementi di un determinato tipo e li
+		 * aggiunge nella lista di modifiche.
+		 * 
+		 * @param LL   Lista delle modifiche da visualizzare
+		 * @param tipo CasellaTipo.FORNELLO, CasellaTipo.LAVATRICE,
+		 *             CasellaTipo.RUBINETTO
+		 */
 		private void rompiElementi(LinkedList<Casella> LL, CasellaTipo tipo) {
 			Casella temp = null;
 			CasellaStato[] lista = null;
@@ -615,7 +809,7 @@ public class Casa {
 					break;
 				default:
 					messaggioErrore(
-							"In questa funzione e' permesso solamente alle caselle di tipo Fornello, Lavatrice e Rubinetto.");
+							"In questa funzione è permesso solamente alle caselle di tipo Fornello, Lavatrice e Rubinetto.");
 					break;
 			}
 
@@ -623,15 +817,19 @@ public class Casa {
 				if (casella.getStato() == false) {
 					casella.setStato(true);
 					LL.add(casella);
-				} else 
-					if (!tipo.equals(CasellaTipo.FORNELLO)) {
-						temp = allagaPavimenti(casella);
-						if (temp != null)
-							LL.add(temp);
-					}
+				} else if (!tipo.equals(CasellaTipo.FORNELLO)) {
+					temp = allagaPavimenti(casella);
+					if (temp != null)
+						LL.add(temp);
+				}
 			}
 		}
 
+		/**
+		 * Questo metodo compie l'attesa per un certo periodo di tempo dettato da
+		 * {@link timeMillis}
+		 * 
+		 */
 		private void aspettando() {
 			try {
 				Thread.sleep(timeMillis);
@@ -640,6 +838,13 @@ public class Casa {
 			}
 		}
 
+		/**
+		 * Questo metodo compie la ricerca in BFS partendo dall'oggetto CasellaStato e
+		 * successivamente itera fino a che non trova una casella Pavimento asciutto.
+		 * 
+		 * @param casella La casella che si è rotta e si allaga
+		 * @return La casella Pavimento che si è bagnata
+		 */
 		private Casella allagaPavimenti(CasellaStato casella) {
 			LinkedList<Nodo> pavimentiAdiacenti = new LinkedList<>();
 			pavimentiAdiacenti = pavimentiAdiacenti(casella);
@@ -662,6 +867,16 @@ public class Casa {
 			return null;
 		}
 
+		/**
+		 * Prende un nodo come input, controlla se è grigio, se lo è, controlla se si
+		 * tratta di un pavimento o di un animale, se non è bagnato, lo
+		 * inonda e lo restituisce,
+		 * se non è un pavimento o un animale, ottiene i nodi adiacenti, li mette in
+		 * grigio, li aggiunge allo stack e imposta il nodo di input sul nero
+		 * 
+		 * @param casellaSorgente Il nodo che stiamo controllando
+		 * @return La casella che si è bagnata
+		 */
 		private Casella allagaPavimentiRic(Nodo casellaSorgente) {
 			if (casellaSorgente.getColore().equals(ColoreNodo.GRIGIO)) {
 				if (mappa[casellaSorgente.getX()][casellaSorgente.getY()].getTipo().equals(CasellaTipo.PAVIMENTO)) {
@@ -691,6 +906,12 @@ public class Casa {
 			return null;
 		}
 
+		/**
+		 * ritorna una lista di nodi adiacenti rispetto al parametro
+		 * 
+		 * @param casella Il nodo corrente
+		 * @return lista concatenata di tipo Nodo composta di nodi adiacenti
+		 */
 		private LinkedList<Nodo> pavimentiAdiacenti(Casella casella) {
 			LinkedList<Nodo> pavimentiAdiacenti = new LinkedList<>();
 
@@ -702,6 +923,13 @@ public class Casa {
 			return pavimentiAdiacenti;
 		}
 
+		/**
+		 * Aggiunge il nodo alla lista di nodi se non è già presente nella lista.
+		 * 
+		 * @param t_x                coordinata x della casella
+		 * @param t_y                coordinata y della casella
+		 * @param pavimentiAdiacenti una lista di nodi
+		 */
 		private void aggiungiNodo(Integer t_x, Integer t_y, LinkedList<Nodo> pavimentiAdiacenti) {
 			if (mappa[t_x][t_y].getTipo().equals(CasellaTipo.PAVIMENTO)
 					|| mappa[t_x][t_y].getTipo().equals(CasellaTipo.ANIMALE)) {
@@ -713,10 +941,20 @@ public class Casa {
 		}
 	}
 
+	/**
+	 * Quando questo PropertyChangeEvent viene sparato, il listener aggiornerà la
+	 * visibilità della finestra di debug.
+	 */
 	public void updVisible() {
 		this.support.firePropertyChange("setVisible", null, null);
 	}
 
+	/**
+	 * questo metodo ritorna la matrice di caratteri che corrisponde alla variabile
+	 * mappa.
+	 * 
+	 * @return una matrice di caratteri
+	 */
 	public char[][] stampaMappa() {
 		char[][] res = new char[this.getDimensione()][this.getDimensione()];
 
@@ -728,6 +966,11 @@ public class Casa {
 		return res;
 	}
 
+	/**
+	 * Spara un PropertyChangeEvent ai listener che dovranno liberare tutte le
+	 * risorse HW per la grafica.
+	 * 
+	 */
 	public void disposeAll() {
 		this.support.firePropertyChange("dispose", null, null);
 	}

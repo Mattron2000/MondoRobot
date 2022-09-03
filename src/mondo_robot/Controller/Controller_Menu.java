@@ -26,13 +26,13 @@ import mondo_robot.View.Frame_Game;
 import mondo_robot.View.Frame_Menu;
 
 /**
- * Il controller che gestisce gli input utente del menu' principale di
- * {@link Frame_Menu}
+ * Questo controller gestisce gli input utente del menú principale presente in
+ * {@link Frame_Menu}.
  * 
  */
 public class Controller_Menu implements ActionListener {
 	/**
-	 * Campo contenente la guida testuale del gioco MondoRobot.
+	 * Costante privato e statico contenente la guida testuale del gioco 'MondoRobot'.
 	 * 
 	 */
 	private final static String guidaText = "Benvenuto nella guida per la creazione di mappe per il gioco MondoRobot.\n\n\n"
@@ -169,7 +169,7 @@ public class Controller_Menu implements ActionListener {
 			"\t\t- \"D\" (Drone):  ci dev'essere solo e solamente uno per mappa (non puoi controllare due droni contemporaneamente...).\n";
 
 	/**
-	 * Campo usato per poter collegarmi all'istanza {@link Frame_Menu}
+	 * Variabile usato per poter riferire alla View {@link Frame_Menu}.
 	 * 
 	 */
 	private Frame_Menu v;
@@ -178,7 +178,7 @@ public class Controller_Menu implements ActionListener {
 	 * Il costruttore memorizza l'istanza di {@link Frame_Menu} creata nel
 	 * {@link MVC_Main#main(String[])}
 	 * 
-	 * @param v serve l'istanza {@link Frame_Menu} per poter istaurare l'ascolto
+	 * @param v l'istanza {@link Frame_Menu} per poter istaurare l'ascolto
 	 *          degli input provenienti da esso
 	 */
 	public Controller_Menu(Frame_Menu v) {
@@ -191,13 +191,11 @@ public class Controller_Menu implements ActionListener {
 	}
 
 	/**
-	 * Questa funzione gestisce tutti i bottoni del {@link Frame_Menu}
+	 * Questa funzione gestisce i bottoni del {@link Frame_Menu}
 	 * 
 	 */
 	@Override
 	public void actionPerformed(ActionEvent ae) {
-		// System.out.println(ae.getSource().toString());
-
 		switch (((JButton) ae.getSource()).getText()) {
 			case "Nuova partita":
 				/*
@@ -271,6 +269,15 @@ public class Controller_Menu implements ActionListener {
 		}
 	}
 
+
+	/**
+	 * Questa funzione crea un JOptionPane con uno slider al suo interno e lo manda indietro.
+	 * 
+	 * @param min estremo minimo dell'intervallo dello slider
+	 * @param max estremo massimo dell'intervallo dello slider
+	 * @return Un JOptionPane con un JSlider dentro.
+	 * 
+	 */
 	private JOptionPane jSliderSelectorOptionPane(int min, int max) {
 		if (min >= max)
 			throw new IllegalArgumentException("Il parametro 'min' non dev'essere uguale o maggiore di 'max'");
@@ -316,6 +323,12 @@ public class Controller_Menu implements ActionListener {
 		return optionPane;
 	}
 
+
+	/**
+	 * Crea un JFileChooser e imposta un filtro in modo che veda solo file '.txt' e cartelle.
+	 * 
+	 * @return l'istanza di JFileChooser.
+	 */
 	private JFileChooser JTextFileChooser() {
 		JFileChooser fileChooser = new JFileChooser();
 
@@ -330,6 +343,12 @@ public class Controller_Menu implements ActionListener {
 		return fileChooser;
 	}
 
+	/**
+	 * Crea un file 'guida-MondoRobot.txt' e scrive la guida al suo interno.
+	 * 
+	 * @see guidaText
+	 * 
+	 */
 	static void makeGuideTextFile() {
 		/*
 		 * creo il file 'guida-MondoRobot.txt' o se esiste scelgo quello
@@ -369,6 +388,11 @@ public class Controller_Menu implements ActionListener {
 		f.setReadOnly();
 	}
 
+	/**
+	 * Crea la finestra del gioco MondoRobot e la finestra di controllo.
+	 * 
+	 * @param model Il Model, ovvero la struttura dati del gioco MondoRobot. 
+	 */
 	private void startGame(Casa model) {
 		new Controller_Game(new Frame_Game(model.getDimensione(), GameMode.GAME, true), model);
 

@@ -4,19 +4,19 @@ import mondo_robot.Controller.Controller_Menu;
 import mondo_robot.View.Frame_Menu;
 
 /**
- * Questa classe e' il file di partenza del progetto
+ * Questo file è l'unica classe del munita della funzione main
  * 
  */
 public class MVC_Main {
 
 	/**
-	 * Questa funzione main fa solamente avviare
-	 * {@code new Controller_Menu(new Frame_Menu());}
+	 * La funzione main crea una nuova istanza del {@link Controller_Menu}, il quale
+	 * prende una nuova istanza della classe {@link Frame_Menu} come parametro.
 	 * 
-	 * @param args Argomento inutilizzato
+	 * @param args Parametro inutilizzato
+	 * 
 	 * @see Controller_Menu
 	 * @see Frame_Menu
-	 * 
 	 */
 	public static void main(String[] args) {
 		new Controller_Menu(new Frame_Menu());
