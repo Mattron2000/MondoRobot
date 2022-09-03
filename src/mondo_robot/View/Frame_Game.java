@@ -14,6 +14,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+
 import mondo_robot.Model.Casella;
 import mondo_robot.Model.GameMode;
 
@@ -136,6 +137,7 @@ public class Frame_Game extends MondoRobot_Frame implements PropertyChangeListen
 			this.setLocationToTopRight();
 
 		this.setVisible(this.isVisible);
+
 	}
 
 	/**
