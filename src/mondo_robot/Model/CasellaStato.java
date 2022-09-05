@@ -7,7 +7,7 @@ package mondo_robot.Model;
  * @see Lavatrice
  * @see Rubinetto
  */
-abstract class CasellaStato extends Casella {
+abstract class CasellaStato extends Casella implements Statable{
 	/**
 	 * valore booleano dello stato della casella [intatto / rotto]
 	 * 
@@ -27,21 +27,13 @@ abstract class CasellaStato extends Casella {
 		this.stato = false;
 	}
 
-	/**
-	 * Ottieni lo stato della casella
-	 * 
-	 * @return stato della casella
-	 */
-	boolean getStato() {
+	@Override
+	public boolean getStato() {
 		return this.stato;
 	}
 
-	/**
-	 * cambia lo stato della casella
-	 * 
-	 * @param stato il nuovo stato della casella
-	 */
-	protected void setStato(boolean stato) {
+	@Override
+	public void setStato(boolean stato) {
 		this.stato = stato;
 	}
 

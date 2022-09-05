@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
  * Classe che comprende tutte le caratteristiche utili al gioco dell'animale
  * 
  */
-class Animale extends CasellaMobile {
+class Animale extends CasellaMobile implements Statable {
 
 	/**
 	 * Costante contenente il riferimento al percorso dell'immagine dell'animale
@@ -36,6 +36,7 @@ class Animale extends CasellaMobile {
 	 * 
 	 * @return stato del pavimento
 	 */
+	@Override
 	public boolean getStato() {
 		return pavimentoStato;
 	}
@@ -45,6 +46,7 @@ class Animale extends CasellaMobile {
 	 * 
 	 * @param pavimentoStato il nuovo stato del pavimento
 	 */
+	@Override
 	public void setStato(boolean pavimentoStato) {
 		this.pavimentoStato = pavimentoStato;
 	}

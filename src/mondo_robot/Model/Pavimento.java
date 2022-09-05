@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
  * Classe della casella pavimento
  * 
  */
-class Pavimento extends CasellaStato {
+class Pavimento extends CasellaStato implements Moveable{
 
 	/**
 	 * percorso dell'immagine del pavimento bagnato
@@ -30,11 +30,7 @@ class Pavimento extends CasellaStato {
 		super(x, y, CasellaTipo.PAVIMENTO);
 	}
 
-	/**
-	 * cambia la coordinata x
-	 * 
-	 * @param x nuovo valore della coordinata x
-	 */
+	@Override
 	public void setX(int x) {
 		if (x <= 0)
 			throw new IllegalArgumentException("Il parametro 'x' dev'essere all'interno della mappa");
@@ -42,11 +38,7 @@ class Pavimento extends CasellaStato {
 		this.x = x;
 	}
 
-	/**
-	 * cambia la coordinata y
-	 * 
-	 * @param y nuovo valore della coordinata y
-	 */
+	@Override
 	public void setY(int y) {
 		if (y <= 0)
 			throw new IllegalArgumentException("Il parametro 'y' dev'essere all'interno della mappa");

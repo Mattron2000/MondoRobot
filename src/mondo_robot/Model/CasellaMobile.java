@@ -6,7 +6,7 @@ package mondo_robot.Model;
  * @see Drone
  * @see Animale
  */
-abstract class CasellaMobile extends Casella {
+abstract class CasellaMobile extends Casella implements Moveable{
 
 	/**
 	 * Costruttore che imposta le coordinate iniziali e il tipo di casella
@@ -18,29 +18,20 @@ abstract class CasellaMobile extends Casella {
 	protected CasellaMobile(Integer x, Integer y, CasellaTipo tipo) {
 		super(x, y, tipo);
 	}
-	
-	/**
-	 * cambia la coordinata x
-	 * 
-	 * @param x nuovo valore della coordinata x
-	 */
-	protected void setX(int x) {
+
+	@Override
+	public void setX(int x) {
 		if (x <= 0)
 			throw new IllegalArgumentException("Il parametro 'x' non dev'essere negativo");
 
 		this.x = x;
 	}
 
-	/**
-	 * cambia la coordinata y
-	 * 
-	 * @param y nuovo valore della coordinata y
-	 */
-	protected void setY(Integer y) {
-		if (y == null)
-			throw new IllegalArgumentException("Il parametro 'y' non dev'essere null");
+	@Override
+	public void setY(int y) {
 		if (y <= 0)
 			throw new IllegalArgumentException("Il parametro 'y' non dev'essere negativo");
+
 		this.y = y;
 	}
 }
