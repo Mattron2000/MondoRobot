@@ -218,10 +218,8 @@ public class Controller_Menu implements ActionListener {
 				 * Se chiudo il dialog con la X
 				 * 
 				 */
-				if (optionPane.getValue() == null) {
-					// System.out.println("Hai chiuso il JOptionPane!");
+				if (optionPane.getValue() == null)
 					break;
-				}
 
 				/*
 				 * libero la finestra in esecuzione e ne creo un'altra, così passo al gioco vero

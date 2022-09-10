@@ -14,12 +14,14 @@
 ###		nella whitelist, come eccezione alla regola di prima
 ###		(cambia solo il punto esclamativo all'inizio di ogni riga)
 
-
 #	gitignore stesso
 !.gitignore
 
 #	Documentazione della repo
 !README.md
+
+#	Relazione del progetto MondoRobot
+!Relazione_Mondo_Robot_PM.pdf
 
 # 	Script automatici per creare il javadoc
 !makeJavadoc.sh
