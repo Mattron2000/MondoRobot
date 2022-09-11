@@ -5,6 +5,10 @@ package mondo_robot.Model;
  * 
  * @see Drone
  * @see Animale
+ *
+ * @author Matteo Palmieri
+ * @author Davin Magi
+ *
  */
 abstract class CasellaMobile extends Casella implements Moveable{
 

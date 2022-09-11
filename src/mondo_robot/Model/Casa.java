@@ -16,7 +16,10 @@ import javax.swing.JOptionPane;
 /**
  * Questa classe è il Model, dov'è presente l'intera struttura dati del gioco
  * 'MondoRobot'
- * 
+ *
+ * @author Matteo Palmieri
+ * @author Davin Magi
+ *
  */
 public class Casa {
 	/**

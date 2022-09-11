@@ -20,6 +20,9 @@ import mondo_robot.Model.GameMode;
 /**
  * Questa classe é la View del gioco 'MondoRobot'
  * 
+ * @author Matteo Palmieri
+ * @author Davin Magi
+ *
  */
 public class Frame_Game extends MondoRobot_Frame implements PropertyChangeListener {
 	/**

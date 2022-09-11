@@ -15,6 +15,9 @@ import javax.swing.JRadioButton;
 /**
  * Questa classe è la View del menú principale
  * 
+ * @author Matteo Palmieri
+ * @author Davin Magi
+ *
  */
 public class Frame_Menu extends MondoRobot_Frame {
 

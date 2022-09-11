@@ -5,6 +5,9 @@ import javax.swing.ImageIcon;
 /**
  * Classe della casella fornello
  * 
+ * @author Matteo Palmieri
+ * @author Davin Magi
+ *
  */
 class Fornello extends CasellaStato {
 

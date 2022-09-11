@@ -3,6 +3,9 @@ package mondo_robot.Model;
 /**
  * classe wrapper per la ricerca BFS del primo paviento asciutto da inondare
  * 
+ * @author Matteo Palmieri
+ * @author Davin Magi
+ *
  */
 class Nodo {
 

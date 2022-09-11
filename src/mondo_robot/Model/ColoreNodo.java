@@ -4,6 +4,9 @@ package mondo_robot.Model;
  * Questo elenco riguarda allo stato di ricerca BFS del metodo 'allagaPavimenti'
  * nella classe Thread 'RompiElementiThread'
  * 
+ * @author Matteo Palmieri
+ * @author Davin Magi
+ *
  */
 enum ColoreNodo {
 	/**

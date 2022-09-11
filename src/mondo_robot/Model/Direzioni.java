@@ -3,6 +3,9 @@ package mondo_robot.Model;
 /**
  * Elenco delle direzioni possibili del drone
  * 
+ * @author Matteo Palmieri
+ * @author Davin Magi
+ *
  */
 enum Direzioni {
 	/**

@@ -9,6 +9,9 @@ import java.awt.*;
 /**
  * Classe pannello che contiene le immagini della mappa di gioco
  * 
+ * @author Matteo Palmieri
+ * @author Davin Magi
+ *
  */
 public class Panel_Game extends JPanel {
 

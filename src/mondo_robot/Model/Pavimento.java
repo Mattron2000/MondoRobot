@@ -5,6 +5,9 @@ import javax.swing.ImageIcon;
 /**
  * Classe della casella pavimento
  * 
+ * @author Matteo Palmieri
+ * @author Davin Magi
+ *
  */
 class Pavimento extends CasellaStato implements Moveable{
 

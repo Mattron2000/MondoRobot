@@ -28,6 +28,9 @@ import mondo_robot.View.Frame_Menu;
  * Questo controller gestisce gli input utente del menú principale presente in
  * {@link mondo_robot.View.Frame_Menu Frame_Menu}.
  * 
+ * @author Matteo Palmieri
+ * @author Davin Magi
+ *
  */
 public class Controller_Menu implements ActionListener {
 	/**
@@ -156,7 +159,7 @@ public class Controller_Menu implements ActionListener {
 			+
 			"e scrivere al suo interno solamente la mappa utilizzando unicamente le lettere presenti a inizio guida separate tra loro con uno spazio.\n"
 			+
-			"Per degli esempi, osservare i file \".txt\" presenti nella cartella \"Maps\" che hanno una chiara nomenclarura \"mappa_NxN.txt\".\n"
+			"Per degli esempi, osservare i file \".txt\" presenti nella cartella \"Map\" che hanno una chiara nomenclarura \"mappa_NxN.txt\".\n"
 			+
 			"Che sia presente che esistono limiti nel numero di un tipo di caselle:\n" +
 			"\t\t- \"M\" (Muro):  dev'essere obbligatoriamente presente per tutto il contorno della mappa.\n"

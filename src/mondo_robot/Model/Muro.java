@@ -5,6 +5,9 @@ import javax.swing.ImageIcon;
 /**
  * Classe della casella muro
  * 
+ * @author Matteo Palmieri
+ * @author Davin Magi
+ *
  */
 class Muro extends Casella {
 

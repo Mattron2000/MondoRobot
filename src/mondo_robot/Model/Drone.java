@@ -6,6 +6,9 @@ import javax.swing.ImageIcon;
 /**
  * Classe che rappresenta il drone
  * 
+ * @author Matteo Palmieri
+ * @author Davin Magi
+ *
  */
 class Drone extends CasellaMobile {
 

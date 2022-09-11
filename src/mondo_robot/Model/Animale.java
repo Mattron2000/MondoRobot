@@ -10,8 +10,11 @@ class Animale extends CasellaMobile implements Statable {
 
 	/**
 	 * Costante contenente il riferimento al percorso dell'immagine dell'animale
-	 * 
-	 */
+	 *
+	 * @author Matteo Palmieri
+ 	 * @author Davin Magi
+	 *
+	*/
 	static final ImageIcon ANIMALE = new ImageIcon(IMAGE_FOLDER + "animal.png");
 
 	/**

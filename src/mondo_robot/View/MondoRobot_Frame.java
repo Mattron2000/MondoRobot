@@ -11,6 +11,10 @@ import javax.swing.JFrame;
  * 
  * @see Frame_Menu
  * @see Frame_Game
+ *
+ * @author Matteo Palmieri
+ * @author Davin Magi
+ *
  */
 abstract class MondoRobot_Frame extends JFrame {
 

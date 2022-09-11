@@ -5,6 +5,9 @@ import javax.swing.ImageIcon;
 /**
  * Classe della casella rubinetto
  * 
+ * @author Matteo Palmieri
+ * @author Davin Magi
+ *
  */
 class Lavatrice extends CasellaStato {
 

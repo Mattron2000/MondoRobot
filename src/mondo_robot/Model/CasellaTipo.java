@@ -3,6 +3,9 @@ package mondo_robot.Model;
 /**
  * Questo elenco contiene tutti i tipi di caselle esistenti nel gioco 'MondoRobot'
  * 
+ * @author Matteo Palmieri
+ * @author Davin Magi
+ *
  */
 enum CasellaTipo {
 	/**

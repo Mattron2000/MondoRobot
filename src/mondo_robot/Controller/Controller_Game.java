@@ -23,6 +23,9 @@ import mondo_robot.View.Frame_Menu;
 /**
  * Questa classe è il controller che gestisce la logica del gioco MondoRobot
  * 
+ * @author Matteo Palmieri
+ * @author Davin Magi
+ *
  */
 class Controller_Game implements ActionListener, KeyListener {
 

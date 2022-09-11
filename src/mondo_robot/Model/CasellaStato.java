@@ -6,6 +6,10 @@ package mondo_robot.Model;
  * @see Fornello
  * @see Lavatrice
  * @see Rubinetto
+ *
+ * @author Matteo Palmieri
+ * @author Davin Magi
+ *
  */
 abstract class CasellaStato extends Casella implements Statable{
 	/**

@@ -6,6 +6,9 @@ import mondo_robot.View.Frame_Menu;
 /**
  * Questo file è l'unica classe del munita della funzione main
  * 
+ * @author Matteo Palmieri
+ * @author Davin Magi
+ *
  */
 class MVC_Main {
 	/**

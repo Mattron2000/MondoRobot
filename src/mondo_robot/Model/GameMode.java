@@ -3,6 +3,9 @@ package mondo_robot.Model;
 /**
  * Elenco delle modalità possibili delle finestre di gioco
  * 
+ * @author Matteo Palmieri
+ * @author Davin Magi
+ *
  */
 public enum GameMode {
 	/**

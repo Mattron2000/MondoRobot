@@ -5,6 +5,9 @@ import javax.swing.ImageIcon;
 /**
  * Superclasse di tutte e caselle de gioco 'MondoRobot'
  * 
+ * @author Matteo Palmieri
+ * @author Davin Magi
+ *
  */
 public abstract class Casella {
 	/**
